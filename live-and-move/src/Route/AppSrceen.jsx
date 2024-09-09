@@ -1,4 +1,5 @@
 import React from "react";
+import useWindowSize from "../hooks/useWindowSize";
 import styled from "styled-components";
 import AppPages from "./AppPages";
 
@@ -11,8 +12,9 @@ const ViewArea = styled.div`
 `;
 
 function AppSrceen(props) {
+  const windowSize = useWindowSize();
   return (
-    <ViewArea>
+    <ViewArea width={windowSize.width} height={windowSize.height}>
       <AppPages />
     </ViewArea>
   );
