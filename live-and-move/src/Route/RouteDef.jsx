@@ -1,6 +1,7 @@
 import React from "react";
 import LoginPage from "../Login/LoginPage";
 import MainPage from "../Main/MainPage";
+import ListPage from "../List/ListPage";
 
 const MainScreens = {
   Login: {
@@ -10,6 +11,10 @@ const MainScreens = {
   Main: {
     path: "/main",
     element: <MainPage />,
+  },
+  List: {
+    path: "/list",
+    element: <ListPage />,
   },
 };
 
