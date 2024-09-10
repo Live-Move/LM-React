@@ -11,6 +11,21 @@ const FieldMessage = styled.h6`
   justify-content: center;
 `;
 
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  opacity: 0.75;
+  max-width: 650px;
+  max-height: 940px;
+  width: 40%;
+  height: auto;
+  color: white;
+  margin: 20px;
+  padding: 30px;
+  gap: 9px;
+`;
+
 const isValidMessage = (message) => {
   return (
     <Form.Control.Feedback type="invalid">{message}</Form.Control.Feedback>
@@ -48,18 +63,8 @@ function LoginPage(props) {
   };
 
   return (
-    <div
-      className="m-2 p-5 d-grid gap-3"
-      style={{
-        backgroundColor: "black",
-        opacity: 0.8,
-        maxWidth: "450px",
-        minHeight: "100px",
-        color: "white",
-        marginBottom: "20px",
-      }}
-    >
-      <h3 className="fw-bold mb-4">Sign In</h3>
+    <MainContainer>
+      <h3 className="fw-bold mb-4">Live & Move</h3>
       <Form onSubmit={handleSubmit}>
         <FloatingLabel
           label="이메일"
@@ -121,7 +126,7 @@ function LoginPage(props) {
         {"\n"}
         <a href="/">Learn more.</a>
       </span>
-    </div>
+    </MainContainer>
   );
 }
 

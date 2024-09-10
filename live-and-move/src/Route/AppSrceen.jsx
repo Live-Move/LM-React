@@ -2,21 +2,15 @@ import React from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import styled from "styled-components";
 import AppPages from "./AppPages";
-
-const ViewArea = styled.div`
-  width: ${({ width }) => (width ? `calc(${width}px - 60px)` : `100%`)};
-  height: ${({ height }) => (height ? `${height}px` : `100%`)};
-  padding: 0 30px;
-  background: #f9f9f9;
-  min-width: 1200px;
-`;
+import NavForRoute from "./NavForRoute";
 
 function AppSrceen(props) {
   const windowSize = useWindowSize();
   return (
-    <ViewArea width={windowSize.width} height={windowSize.height}>
+    <>
+      <NavForRoute />
       <AppPages />
-    </ViewArea>
+    </>
   );
 }
 

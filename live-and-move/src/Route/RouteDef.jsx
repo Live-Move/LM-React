@@ -1,12 +1,12 @@
 import React from "react";
-import LoginPage from "../Login/LoginPage";
 import MainPage from "../Main/MainPage";
 import ListPage from "../List/ListPage";
+import LoginMain from "../Login/LoginMain";
 
 const MainScreens = {
   Login: {
     path: "/user/login",
-    element: <LoginPage />,
+    element: <LoginMain />,
   },
   Main: {
     path: "/main",
