@@ -57,42 +57,54 @@ function LoginPage(props) {
       })
       .then((data) => {
         alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
-        console.log(data.code);
-        console.log(data.data);
+        console.log(data.code); // ok , fail
+        console.log(data.data); // 회원정보
       });
   };
+
+  const FormDatas = [
+    {
+      label: "이메일",
+      value: email,
+      type: "email",
+      onChange: setEmail,
+      message: "이메일 형식이 옳바르지 않습니다",
+    },
+    {
+      label: "패스워드",
+      value: password,
+      type: "password",
+      onChange: setPassword,
+      message: "패스워드를 입력해주세요",
+    },
+  ];
 
   return (
     <MainContainer>
       <h3 className="fw-bold mb-4">Live & Move</h3>
+
       <Form onSubmit={handleSubmit}>
-        <FloatingLabel
-          label="이메일"
-          className="mb-3"
-          style={{ color: "darkgrey" }}
-        >
-          <Form.Control
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder=""
-            required
-            isInvalid={email === ""}
-          />
-          {isValidMessage("이메일 형식이 옳바르지 않습니다")}
-        </FloatingLabel>
-        <FloatingLabel label="패스워드" style={{ color: "darkgrey" }}>
-          <Form.Control
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="Password"
-            placeholder=""
-            required
-            isInvalid={password === ""}
-          />
-          {isValidMessage("패스워드를 입력해주세요")}
-        </FloatingLabel>
+        {FormDatas.map(({ label, value, type, onChange, message }, index) => {
+          return (
+            <FloatingLabel
+              key={label + index}
+              label={label}
+              className="mb-3"
+              style={{ color: "darkgrey" }}
+            >
+              <Form.Control
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                type={type}
+                placeholder=""
+                required
+                isInvalid={email === ""}
+              />
+              {isValidMessage(message)}
+            </FloatingLabel>
+          );
+        })}
+        {/* 로그인 버튼 */}
         <Button
           type="submit"
           variant="danger"
@@ -104,7 +116,6 @@ function LoginPage(props) {
           Sign In
         </Button>
       </Form>
-      {/* 로그인 버튼 */}
       <FieldMessage>OR</FieldMessage>
 
       {/* 회원가입 버튼 */}
