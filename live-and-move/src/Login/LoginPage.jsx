@@ -1,30 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import styled from "styled-components";
+
+// CSS from LoginCSS
+import { ALink, MainContainer, ButtonInLogin, SpanCol } from "./CSS/LoginCss";
+
+// bootstrap
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
-const FieldMessage = styled.h6`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: black;
-  opacity: 0.75;
-  max-width: 650px;
-  max-height: 940px;
-  width: 40%;
-  height: auto;
-  color: white;
-  margin: 20px;
-  padding: 30px;
-  gap: 9px;
-`;
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Col from "react-bootstrap/Col";
 
 const isValidMessage = (message) => {
   return (
@@ -68,20 +52,39 @@ function LoginPage(props) {
       value: email,
       type: "email",
       onChange: setEmail,
-      message: "이메일 형식이 옳바르지 않습니다",
+      message: "이메일을 입력해주세요",
     },
     {
-      label: "패스워드",
+      label: "비밀번호",
       value: password,
       type: "password",
       onChange: setPassword,
-      message: "패스워드를 입력해주세요",
+      message: "비밀번호를 입력해주세요",
     },
   ];
 
   return (
     <MainContainer>
       <h3 className="fw-bold mb-4">Live & Move</h3>
+
+      <ButtonGroup className="mb-3">
+        {[{ title: "로그인" }, { title: "비회원 주문조회" }].map(
+          ({ title }, index) => {
+            return (
+              <Col xs={6}>
+                <ButtonInLogin
+                  key={title + index}
+                  backColor={"#FFFFFF"}
+                  borderColor={"lightgray"}
+                  fontColor={"lightgray"}
+                >
+                  {title}
+                </ButtonInLogin>
+              </Col>
+            );
+          }
+        )}
+      </ButtonGroup>
 
       <Form onSubmit={handleSubmit}>
         {FormDatas.map(({ label, value, type, onChange, message }, index) => {
@@ -93,50 +96,60 @@ function LoginPage(props) {
               style={{ color: "darkgrey" }}
             >
               <Form.Control
+                style={{ borderRadius: 0 }}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 type={type}
                 placeholder=""
                 required
-                isInvalid={email === ""}
+                isInvalid={value === ""}
               />
               {isValidMessage(message)}
             </FloatingLabel>
           );
         })}
+        <Form.Check label="아이디 저장하기" className="mb-3" />
         {/* 로그인 버튼 */}
-        <Button
+        <ButtonInLogin
+          backColor={"lightgray"}
+          borderColor={"lightgray"}
+          fontColor={"white"}
           type="submit"
-          variant="danger"
-          style={{
-            marginTop: "15px",
-            width: "100%",
-          }}
         >
-          Sign In
-        </Button>
+          로그인
+        </ButtonInLogin>
       </Form>
-      <FieldMessage>OR</FieldMessage>
-
-      {/* 회원가입 버튼 */}
-      <Button variant="secondary">Use a Sign-In Code</Button>
-
-      {/* <FieldMessage>Forgot password?</FieldMessage> */}
-      <Form.Check label="Remember me" />
-
-      <span style={{ fontSize: "13px", color: "darkgrey" }}>
-        아이디가 없으신가요? <a href="/">회원가입</a>
+      <span
+        style={{
+          fontSize: "13px",
+          color: "darkgrey",
+          display: "flex",
+          justifyContent: "end",
+        }}
+      >
+        <ALink color="lightgray" href="/">
+          아이디 찾기
+        </ALink>
+        <ALink color="lightgray" href="/">
+          비밀번호 찾기
+        </ALink>
+        <ALink color="#005781" href="/">
+          회원가입
+        </ALink>
       </span>
 
-      <span style={{ fontSize: "13px", color: "darkgrey" }}>
-        비밀번호를 잊어버리셨나요? <a href="/">비밀번호 찾기</a>
-      </span>
-
-      <span style={{ fontSize: "13px", color: "darkgrey" }}>
-        This page is protected by Google reCAPTCHA to ensure you're not a bot.
-        {"\n"}
-        <a href="/">Learn more.</a>
-      </span>
+      <SpanCol fontSize="13px" fontColor="darkgrey">
+        로그인이 어려우신가요?
+      </SpanCol>
+      <SpanCol fontSize="16px" fontColor="lightgrey">
+        고객센터
+      </SpanCol>
+      <div
+        style={{ backgroundColor: "lightgray", width: "100%", height: "1px" }}
+      />
+      <SpanCol fontSize="15px" fontColor="lightgrey">
+        사업자 회원가입
+      </SpanCol>
     </MainContainer>
   );
 }

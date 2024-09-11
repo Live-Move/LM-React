@@ -7,7 +7,10 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
     url("https://homeamaziz.com/wp-content/uploads/2024/06/Untitled-design.png");
   background-repeat: no-repeat;
   background-size: cover;
