@@ -5,6 +5,7 @@ import LoginMain from "../Login/LoginMain";
 import LoginPage from "../Login/LoginPage";
 import SignupMain from "../Signup/SignupMain";
 import SignupPage from "../Signup/SignupPage";
+import ListDetailpage from "../ListDetail/ListDetailpage";
 
 const MainScreens = {
   Login: {
@@ -30,6 +31,10 @@ const MainScreens = {
   List: {
     path: "/list",
     element: <ListPage />,
+  },
+  ListDetail: {
+    path: "/listdetail",
+    element: <ListDetailpage />,
   },
 };
 
