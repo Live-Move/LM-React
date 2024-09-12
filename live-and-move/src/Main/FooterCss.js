@@ -23,7 +23,7 @@ export const FooterDiv = styled.div`
   align-items: center;
 
   height: 300px;
-  width: 1900px;
+  width: 100%;
 `;
 
 // container
@@ -68,7 +68,7 @@ export const BottomMenuLi = styled.li`
 /////////////////////////////////////////////////////////////////////
 // bottom tel li
 export const BottomTelLi = styled.li`
-  color: white;
+  color: #878687;
   margin-right: 15px;
   font-size: 13px;
 `;
