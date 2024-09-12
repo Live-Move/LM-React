@@ -115,7 +115,7 @@ function Footer(props) {
                   return (
                     <TopMenuLi key={title + index}>
                       <A href={path} textColor={"white"}>
-                        {title}
+                        {title} 
                       </A>
                     </TopMenuLi>
                   );
