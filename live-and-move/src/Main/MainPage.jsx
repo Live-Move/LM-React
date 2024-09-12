@@ -1,12 +1,9 @@
 import React from "react";
-import NavBar from "./NavBar";
 
 function MainPage(props) {
   return (
     <div>
-      <header>
-        <NavBar />
-      </header>
+      <header></header>
     </div>
   );
 }

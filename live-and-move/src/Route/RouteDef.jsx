@@ -3,6 +3,8 @@ import MainPage from "../Main/MainPage";
 import ListPage from "../List/ListPage";
 import LoginMain from "../Login/LoginMain";
 import LoginPage from "../Login/LoginPage";
+import SignupMain from "../Signup/SignupMain";
+import SignupPage from "../Signup/SignupPage";
 
 const MainScreens = {
   Login: {
@@ -12,6 +14,14 @@ const MainScreens = {
   LoginTest: {
     path: "/user/login/test",
     element: <LoginPage />,
+  },
+  Signup: {
+    path: "/user/signup",
+    element: <SignupMain />,
+  },
+  SignupTest: {
+    path: "/user/signup/test",
+    element: <SignupPage />,
   },
   Main: {
     path: "/main",
