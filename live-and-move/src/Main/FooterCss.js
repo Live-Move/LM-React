@@ -1,134 +1,93 @@
-//import Button from "react-bootstrap/esm/Button";
 import styled from "styled-components";
-//////
-//top설정
+/////////////////////////////////////////////////////////////////////
+// 공통
+export const Ul = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+`;
 
+export const A = styled.a`
+  text-decoration: none;
+  font-size: 13px;
+  color: ${(props) => props.textColor};
+`;
+/////////////////////////////////////////////////////////////////////
+// top
 // 제일큰 div
 export const FooterDiv = styled.div`
   background-color: #333333;
   display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 300px;
+  width: 1900px;
 `;
 
-// 왼쪽 담당 div
-export const FooterLeft = styled.div`
-  margin-left: 80px;
+// container
+export const Container = styled.div`
+  display: flex;
 `;
+
 // top div
-export const FooterTop = styled.div`
+export const Top = styled.div`
   padding: 45px 0px;
 `;
 
-// top menu ul
-export const FooterTopMenuUl = styled.ul`
-  display: flex;
-  margin: 0px;
-  padding: 0px;
-`;
-
-// Footer.jsx
-export const FooterTopMenuLi = styled.li`
+// top li
+export const TopMenuLi = styled.li`
   list-style: none;
   margin-right: 15px;
 
   &::after {
     content: "|";
     margin-left: 15px;
-    color: black;
+    color: #2c2c2c;
   }
 
   &:last-child::after {
     content: "";
   }
 `;
-
-// top <a> 설정
-export const TopATagColorChange = styled.a`
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-`;
-
-//////////////////////////////////////////////////////////////////////////////
-//bottom설정
-// Footer.jsx
-export const FooterBottomMenu = styled.div`
+/////////////////////////////////////////////////////////////////////
+// bottom left
+// Bottom Menu
+export const BottomMenu = styled.div`
   border-width: 1px 0 0 0;
   border-style: solid;
-  border-color: light-gray;
+  border-color: #4b4b4b;
   padding: 25px 0;
 `;
 
-// Footer.jsx
-export const FooterBottomMenuUl = styled.ul`
-  display: flex;
-  list-style: none;
-  font-color: white;
-  padding: 0px;
-  margin: 0px;
-`;
-
-// Footer.jsx 나중에 밑에 a태그랑 합쳐도 될듯
-export const FooterBottomMenuLi = styled.li`
+// Bottom Menu li
+export const BottomMenuLi = styled.li`
   margin-right: 50px;
 `;
-
-// bottom <a> 설정
-export const BottomATagColorChange = styled.a`
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  font-color: lightgray;
-`;
-
-////////////////////////////////////////////////////////////////
-//bottom tel ul
-export const FooterBottomTelUl = styled.ul`
-  display: flex;
-  list-style: none;
-  font-color: white;
-  padding: 0;
-  margin: 0;
-`;
+/////////////////////////////////////////////////////////////////////
 // bottom tel li
-export const FooterBottomTelLi = styled.li`
+export const BottomTelLi = styled.li`
   color: white;
   margin-right: 15px;
   font-size: 13px;
 `;
-//////////////////////////////////////////////////////////////////////////////////
-// bottom info
-
-// bottom info ul
-export const FooterBottomInfoUl = styled.ul`
-  display: flex;
-  list-style: none;
-  font-color: white;
-  padding: 0;
-  margin: 0;
-`;
-
-// bottom info li
-export const FooterBottomInfoLi = styled.li`
-  color: white;
-`;
-
-// bottom info span 내일 색깔 나누기
-export const FooterBottomInfoSpan = styled.span`
-  color: white;
+/////////////////////////////////////////////////////////////////////
+// bottom info span
+export const BottomInfoSpan = styled.span`
   font-size: 13px;
   margin-right: 15px;
+  color: ${(props) => props.textColor};
 `;
-//////////////////////////////////////////////////////////////////////////////
-//footer bottom copyright
-export const FooterBottomCopyRight = styled.div`
-  color: white;
+/////////////////////////////////////////////////////////////////////
+// footer bottom copyright
+export const BottomCopyRight = styled.div`
+  color: #878687;
   font-size: 13px;
   margin: 30px 0;
 `;
-////////////////////////////////////////////////////////
-//footer right socialMedia
-
-//footer-right
+/////////////////////////////////////////////////////////////////////
+// bottom right
 export const FooterRight = styled.div`
   margin-left: 100px;
   display: flex;
@@ -136,19 +95,26 @@ export const FooterRight = styled.div`
   align-items: flex-end;
 `;
 
-//footer bottom socialMedia a tag
-export const SocialMediaATag = styled.a`
+export const SocialMediaLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  aligin-items: center;
+`;
+
+// footer bottom socialMedia a tag
+export const SocialMediaA = styled.a`
   margin-left: 10px;
 `;
 
-//footer bottom socialMedia h3
+// footer bottom socialMedia h3
 export const SocialMediaH3 = styled.h3`
-  color: white;
+  color: #cfcccf;
   display: inline-block;
 `;
 
+// footer bottom socialMedia span
 export const SocialMediaSpan = styled.span`
-  color: white;
+  color: #cfcccf;
   font-size: 20px;
   margin-left: 10px;
 `;
