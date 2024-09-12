@@ -12,16 +12,17 @@ export const FieldMessage = styled.h6`
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: ${(props) => props.bgColor};
   opacity: 0.75;
   max-width: 650px;
+  min-width: 450px;
   max-height: 940px;
   width: 40%;
   height: auto;
   color: white;
-  margin: 20px;
-  padding: 20px 40px 12px 40px;
-  gap: 9px;
+  margin: 0px 20px 20px 20px;
+  padding: 0px 40px 12px 40px;
+  gap: 4px;
 `;
 
 // LoginPage.jsx

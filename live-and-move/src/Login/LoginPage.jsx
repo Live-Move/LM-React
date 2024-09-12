@@ -64,7 +64,7 @@ function LoginPage(props) {
   ];
 
   return (
-    <MainContainer>
+    <MainContainer bgColor="black">
       <h3 className="fw-bold mb-4">Live & Move</h3>
 
       <ButtonGroup className="mb-3">
@@ -133,7 +133,7 @@ function LoginPage(props) {
         <ALink color="lightgray" href="/">
           비밀번호 찾기
         </ALink>
-        <ALink color="#005781" href="/">
+        <ALink color="#005781" href="/user/signup">
           회원가입
         </ALink>
       </span>
