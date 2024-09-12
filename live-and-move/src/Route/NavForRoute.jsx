@@ -10,6 +10,10 @@ const NavList = {
     path: "/user/login",
     title: "LoginPage",
   },
+  Signup: {
+    path: "/user/signup",
+    title: "SignupPage",
+  },
   Main: {
     path: "/main",
     title: "MainPage",
