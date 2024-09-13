@@ -30,6 +30,9 @@ const PhotoList = [
 ];
 
 function MainPageList(props) {
+  function changeTheImg(event) {
+    console.log("가가각");
+  }
   return (
     <Container>
       <Ul>
@@ -37,7 +40,7 @@ function MainPageList(props) {
           return (
             <Li key={src + index}>
               <a href={path}>
-                <Img src={src} alt={category} />
+                <Img src={src} alt={category} onMouseOver={changeTheImg} />
                 <Span>{category}</Span>
               </a>
             </Li>

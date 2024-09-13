@@ -21,9 +21,9 @@ export const Span = styled.span`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  transform: translate(-50%, -50%);
   font-size: 15px;
   color: white;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* 가독성을 높이기 위한 그림자 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 `;
