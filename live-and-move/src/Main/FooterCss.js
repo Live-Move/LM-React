@@ -24,6 +24,7 @@ export const FooterDiv = styled.div`
 
   height: 300px;
   width: 100%;
+  min-width: 1560px;
 `;
 
 // container
