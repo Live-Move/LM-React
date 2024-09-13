@@ -21,6 +21,7 @@ export const ButtonBS = styled(Button)`
   border: none;
   &:hover {
     background-color: #696969;
+    transform: scale(1.04);
   }
   &:active {
     transform: scale(0.98);
@@ -57,6 +58,7 @@ export const ButtonJB = styled(Button)`
   border: none;
   &:hover {
     background-color: #acd2cd;
+    transform: scale(1.04);
   }
   &:active {
     transform: scale(0.98);
@@ -75,6 +77,7 @@ export const ButtonBG = styled(Button)`
   border: none;
   &:hover {
     background-color: #acd2cd;
+    transform: scale(1.04);
   }
   &:active {
     transform: scale(0.98);
@@ -92,4 +95,31 @@ export const ImageBT = styled(Image)`
   &:hover {
     transform: scale(1.04);
   }
+`;
+
+export const Button1 = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: none;
+`;
+export const Div1 = styled.div`
+  display: flex;
+  align-items:center ;
+  gap: 0px;
+  margin-bottom: 20px
+`;
+
+export const Input1 = styled.input`
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  
 `;

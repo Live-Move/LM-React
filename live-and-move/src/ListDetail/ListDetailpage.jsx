@@ -9,7 +9,7 @@ import {
   SpanColor,
   QuestionCircle,
   ButtonJB,
-  ButtonBG,ImageBT
+  ButtonBG,ImageBT,Button1,Div1,Input1
 } from "./CSS/Detail";
 
 function ListDetailpage(props) {
@@ -42,12 +42,17 @@ function ListDetailpage(props) {
 const BottomImageList = BottomImage.length >=5 
 ? BottomImage.slice(0,5)//이미지 5개 이상이면 처음 5개만 출력
 : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0]));// 5개이하 남은 공간 첫 번째 이미지로 채우기
+  
+const [name,setName] = useState('상품 이름은 여기')
+const [itemNum, setItemNum] = useState(1);// 제품 수량 
+const [price,setPrice] = useState(20000);// 제품 가격
+const price1 = price.toLocaleString('ko-KR');
+const total = price*itemNum;
   return (
     <>
       <header>
         <h1>Detail page</h1>
       </header>
-
       <body>
         <Container>
           <Row></Row>
@@ -109,8 +114,8 @@ const BottomImageList = BottomImage.length >=5
             </Col>
 
             <Col>
-              <h1>상품 이름은 여기</h1>
-              <h4 style={{ marginTop: "60px" }}>월 <span>20,000원</span> ~ </h4>
+              <h1>{name}</h1>
+              <h4 style={{ marginTop: "60px" }}>월 <span>{price1}원</span> ~ </h4>
               <Col>
                 <br />
                 <span>
@@ -128,13 +133,22 @@ const BottomImageList = BottomImage.length >=5
               </Col>
               <br />
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> 
               <span>
                 배송비 <QuestionCircle />
               </span>
-              <span>금액: <span>500</span> 원</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> 
+              <span> 총 금액:</span><span> {total.toLocaleString('ko-KR')} 원</span>
                 </div>
               <hr />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> 
+                <Div1>              
+                  <Button1 onClick={()=>setItemNum(itemNum-1)}>-</Button1>
+                  <Input1 type="number" value={itemNum} readOnly/>
+                  <Button1 onClick={()=>setItemNum(itemNum+1)}>+</Button1>
+                </Div1>
+                <span>수량 : <strong>{itemNum}</strong> 개</span>
+              </div>
+
               <Form.Select aria-label="Default select example" >
                 <option value="" selected hidden>
                   옵션 선택
