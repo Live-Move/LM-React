@@ -114,8 +114,8 @@ function Footer(props) {
                 {FooterTopMenuList.map(({ title, path }, index) => {
                   return (
                     <TopMenuLi key={title + index}>
-                      <A href={path} textColor={"white"}>
-                        {title} 
+                      <A href={path} textcolor="white">
+                        {title}
                       </A>
                     </TopMenuLi>
                   );
@@ -130,7 +130,7 @@ function Footer(props) {
                 {FooterBottomMenuList.map(({ title, path }, index) => {
                   return (
                     <BottomMenuLi key={title + index}>
-                      <A href={path} textColor={"#8D8D8D"}>
+                      <A href={path} textcolor="#8D8D8D">
                         {title}
                       </A>
                     </BottomMenuLi>
@@ -149,74 +149,41 @@ function Footer(props) {
             <div className="Bottom-Info">
               <Ul>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#BDBABD"}
-                    className="footer-bottom-info-title"
-                  >
+                  <BottomInfoSpan textcolor="#BDBABD">
                     (주)리브앤무브
                   </BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#BDBABD"}
-                    className="footer-bottom-info-title"
-                  >
-                    대표이사
-                  </BottomInfoSpan>
+                  <BottomInfoSpan textcolor="#BDBABD">대표이사</BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#878687"}
-                    className="footer-bottom-info-content"
-                  >
+                  <BottomInfoSpan textcolor="#878687">
                     조동희 이은석 위지훈
                   </BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#BDBABD"}
-                    className="footer-bottom-info-title"
-                  >
-                    본사
-                  </BottomInfoSpan>
+                  <BottomInfoSpan textcolor="#BDBABD">본사</BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#878687"}
-                    className="footer-bottom-info-content"
-                  >
+                  <BottomInfoSpan textcolor="#878687">
                     부산광역시 동래구 낙민동 온천천로 339번길
                   </BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#BDBABD"}
-                    className="footer-bottom-info-title"
-                  >
+                  <BottomInfoSpan textcolor="#BDBABD">
                     개인정보관리 책임자
                   </BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#878687"}
-                    className="footer-bottom-info-content"
-                  >
-                    고옴치
-                  </BottomInfoSpan>
+                  <BottomInfoSpan textcolor="#878687">고옴치</BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#BDBABD"}
-                    className="footer-bottom-info-title"
-                  >
+                  <BottomInfoSpan textcolor="#BDBABD">
                     사업자등록번호
                   </BottomInfoSpan>
                 </li>
                 <li>
-                  <BottomInfoSpan
-                    textColor={"#878687 "}
-                    className="footer-bottom-info-content"
-                  >
+                  <BottomInfoSpan textcolor="#878687 ">
                     001-741861-01-014
                   </BottomInfoSpan>
                 </li>
@@ -232,7 +199,7 @@ function Footer(props) {
           <div>
             <SocialMediaLogo>
               {FooterBottomSocialMediaList.map((logo, index) => (
-                <SocialMediaA key={index} href="logo.href">
+                <SocialMediaA key={index} href={logo.href}>
                   <img src={logo.src} alt="logo"></img>
                 </SocialMediaA>
               ))}
