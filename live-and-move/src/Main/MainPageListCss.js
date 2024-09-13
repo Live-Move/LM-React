@@ -19,11 +19,11 @@ export const Img = styled.img`
 `;
 export const Span = styled.span`
   position: absolute;
-  top: 50%;
+  top: ${(props) => props.sizevalue};
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 15px;
+  font-size: 25px;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 `;
