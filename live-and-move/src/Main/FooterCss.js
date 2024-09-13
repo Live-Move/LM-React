@@ -11,7 +11,7 @@ export const Ul = styled.ul`
 export const A = styled.a`
   text-decoration: none;
   font-size: 13px;
-  color: ${(props) => props.textColor};
+  color: ${(props) => props.textcolor};
 `;
 /////////////////////////////////////////////////////////////////////
 // top
@@ -78,7 +78,7 @@ export const BottomTelLi = styled.li`
 export const BottomInfoSpan = styled.span`
   font-size: 13px;
   margin-right: 15px;
-  color: ${(props) => props.textColor};
+  color: ${(props) => props.textcolor};
 `;
 /////////////////////////////////////////////////////////////////////
 // footer bottom copyright
