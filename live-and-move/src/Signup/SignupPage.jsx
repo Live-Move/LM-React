@@ -13,41 +13,41 @@ function SignupPage(props) {
   const [userPw, setUserPw] = useState("");
   const [userChkPw, setUserChkPw] = useState("");
   const [userEmail, setUserEmail] = useState("");
-
-  // 로그인 이벤트
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   let data = {
-  //     loginId: email,
-  //     password: password,
-  //   };
-  //   fetch("http://localhost:8080/api/user/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((response) => {
-  //       console.log(response);
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
-  //       console.log(data.code); // ok , fail
-  //       console.log(data.data); // 회원정보
-  //     });
+  const [userDomain, setUserDomain] = useState("선택해주세요.");
+  const [userPhone, setUserPhone] = useState("");
 
   const handleSignup = (e) => {
     e.preventDefault();
-    alert(`[userName]:${userName} [userBirth]:${userBirth}`);
 
     let data = {
       name: userName,
-      login_id: userId,
+      loginId: userId,
       password: userPw,
+      address: userAddress,
+      email: userEmail + userDomain,
+      phone: userPhone,
+      birth: userBirth,
     };
+
+    fetch("http://localhost:8080/api/user/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        alert(
+          data.code === "ok"
+            ? "회원가입 성공"
+            : "[ 회원가입 실패 ] \n>> 이미 존재하는 아이디 입니다"
+        );
+        console.log(data.code); // ok , fail
+      });
   };
 
   const FormDatas = [
@@ -73,7 +73,14 @@ function SignupPage(props) {
       messages: [],
     },
     {
-      label: "이메일 입력",
+      label: "전화번호 입력",
+      value: userPhone,
+      type: "text",
+      onChange: setUserPhone,
+      messages: [],
+    },
+    {
+      label: "아이디 입력",
       value: userId,
       type: "email",
       onChange: setUserId,
@@ -144,8 +151,8 @@ function SignupPage(props) {
               />
             </FloatingLabel>
           </Col>
-          <Col xs={6} style={{ paddingLeft: 0 }}>
-            <Form.Select style={{ borderRadius: 0, height: "58px" }}>
+          <Col xs={6} onChange={setUserDomain} style={{ paddingLeft: 0 }}>
+            <Form.Select style={{ borderRadius: 0, height: "60px" }}>
               <option>{"@naver.com"}</option>
               <option>{"@google.com"}</option>
               <option>{"@go.kr"}</option>
