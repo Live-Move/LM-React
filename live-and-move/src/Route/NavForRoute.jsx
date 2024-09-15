@@ -26,6 +26,10 @@ const NavList = {
     path: "/listdetail",
     title: "ListDetailPage",
   },
+  Cart: {
+    path: "/cart",
+    title: "Shopping Cart",
+  },
 };
 
 function NavForRoute(props) {
