@@ -108,11 +108,17 @@ export const Button1 = styled.button`
   cursor: pointer;
   background: none;
 `;
-export const Div1 = styled.div`
+export const Div1 = styled.div` 
   display: flex;
   align-items:center ;
   gap: 0px;
   margin-bottom: 20px
+`;
+
+export const Div2 = styled.div`
+  display: flex;
+  justify-content:space-between;
+  align-items:center ;
 `;
 
 export const Input1 = styled.input`

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Carousel, Col, Container, Form, Image, Row } from "react-bootstrap";
+import {Carousel,Col,Container,Form,Image,Offcanvas,Row,} from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import {
   ButtonBS,
@@ -9,7 +9,12 @@ import {
   SpanColor,
   QuestionCircle,
   ButtonJB,
-  ButtonBG,ImageBT,Button1,Div1,Input1
+  ButtonBG,
+  ImageBT,
+  Button1,
+  Div1,
+  Input1,
+  Div2,
 } from "./CSS/Detail";
 
 function ListDetailpage(props) {
@@ -19,41 +24,41 @@ function ListDetailpage(props) {
     setIndex(selectedIndex);
   };
 
-  
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   const BottomImage = [
     {
-      num:"1",
-      src:"https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
-      path:"/",
+      num: "1",
+      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
+      path: "/",
     },
     {
-      num:"2",
-      src:"https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      path:"/",
+      num: "2",
+      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
+      path: "/",
     },
     {
-      num:"3",
-      src:"https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
-      path:"/",
+      num: "3",
+      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
+      path: "/",
     },
-  ]
+  ];
 
-const BottomImageList = BottomImage.length >=5 
-? BottomImage.slice(0,5)//이미지 5개 이상이면 처음 5개만 출력
-: BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0]));// 5개이하 남은 공간 첫 번째 이미지로 채우기
-  
-const [name,setName] = useState('상품 이름은 여기')
-const [itemNum, setItemNum] = useState(1);// 제품 수량 
-const [price,setPrice] = useState(20000);// 제품 가격
-const price1 = price.toLocaleString('ko-KR');
-const total = price*itemNum;
+  const BottomImageList =
+    BottomImage.length >= 5
+      ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
+      : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
+
+  const [name, setName] = useState("상품 이름은 여기");
+  const [itemNum, setItemNum] = useState(1); // 제품 수량
+  const [price, setPrice] = useState(15000); // 제품 가격
+  const price1 = price.toLocaleString("ko-KR");
+  const total = price * itemNum;
   return (
     <>
-      <header>
-        <h1>Detail page</h1>
-      </header>
-      <body>
+      <body style={{marginTop:"5em"}}>
         <Container>
           <Row></Row>
         </Container>
@@ -61,7 +66,7 @@ const total = price*itemNum;
           <Row>
             <Col>
               <CarouselContainer>
-                <Col >
+                <Col>
                   <Carousel activeIndex={index} onSelect={handleSelect}>
                     <Carousel.Item>
                       <Image
@@ -108,14 +113,31 @@ const total = price*itemNum;
                   </Carousel>
                 </Col>
               </CarouselContainer>
-              <ButtonBS variant="secondary">
-              <PinIcon /> 배송 가능한 지역을 확인하세요!
+              <ButtonBS variant="secondary" onClick={handleShow}>
+                <PinIcon /> 배송 가능한 지역을 확인하세요!
               </ButtonBS>
             </Col>
-
+            <Offcanvas
+              show={show}
+              onHide={handleClose}
+              style={{ width: "35em", height: "auto" }}
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title>
+                  <h3>배송 가능 지역.</h3>
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Image
+                  style={{ width: "90%", height: "auto", margin:"40px"}}
+                  src="https://thesalgu.com/static/media/map.2319c8a13824e2e94c7c.png"/>
+              </Offcanvas.Body>
+            </Offcanvas>
             <Col>
               <h1>{name}</h1>
-              <h4 style={{ marginTop: "60px" }}>월 <span>{price1}원</span> ~ </h4>
+              <h4 style={{ marginTop: "60px" }}>
+                월 <span>{price1}원</span> ~{" "}
+              </h4>
               <Col>
                 <br />
                 <span>
@@ -136,20 +158,23 @@ const total = price*itemNum;
               <span>
                 배송비 <QuestionCircle />
               </span>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> 
-              <span> 총 금액:</span><span> {total.toLocaleString('ko-KR')} 원</span>
-                </div>
+              <Div2>
+                <span> 총 금액:</span>
+                <span> {total.toLocaleString("ko-KR")} 원</span>
+              </Div2>
               <hr />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> 
-                <Div1>              
-                  <Button1 onClick={()=>setItemNum(itemNum-1)}>-</Button1>
-                  <Input1 type="number" value={itemNum} readOnly/>
-                  <Button1 onClick={()=>setItemNum(itemNum+1)}>+</Button1>
+              <Div2>
+                <Div1>
+                  <Button1 onClick={() => setItemNum(itemNum - 1)}>-</Button1>
+                  <Input1 type="number" value={itemNum} readOnly />
+                  <Button1 onClick={() => setItemNum(itemNum + 1)}>+</Button1>
                 </Div1>
-                <span>수량 : <strong>{itemNum}</strong> 개</span>
-              </div>
+                <span>
+                  수량 : <strong>{itemNum}</strong> 개
+                </span>
+              </Div2>
 
-              <Form.Select aria-label="Default select example" >
+              <Form.Select aria-label="Default select example">
                 <option value="" selected hidden>
                   옵션 선택
                 </option>
@@ -157,24 +182,32 @@ const total = price*itemNum;
                 <option value="2year">24개월</option>
                 <option value="3year">36개월</option>
               </Form.Select>
-              <ButtonJB variant="secondary" href="/">장바구니</ButtonJB>
-              <ButtonBG variant="secondary" href="/">바로구매</ButtonBG>
+              <ButtonJB variant="secondary" href="/">
+                장바구니
+              </ButtonJB>
+              <ButtonBG variant="secondary" href="/">
+                바로구매
+              </ButtonBG>
             </Col>
           </Row>
         </Container>
         <Container>
-      <Row>
-        {BottomImageList.map(({src, path}, index)=>{
-          return(
-            <Col key={index}>
-              <NavLink to={path} activeClassName="selected" >
-            <ImageBT src={src} alt={`Bottom image ${index + 1}`} rounded />
-              </NavLink>
-            </Col>
-          )
-        })}
-      </Row>
-    </Container>
+          <Row>
+            {BottomImageList.map(({ src, path }, index) => {
+              return (
+                <Col key={index}>
+                  <NavLink to={path} activeClassName="selected">
+                    <ImageBT
+                      src={src}
+                      alt={`Bottom image ${index + 1}`}
+                      rounded
+                    />
+                  </NavLink>
+                </Col>
+              );
+            })}
+          </Row>
+        </Container>
       </body>
 
       <footer></footer>
