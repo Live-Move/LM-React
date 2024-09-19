@@ -15,6 +15,13 @@ function KakaoLoginPage(props) {
   return (
     <>
       <KakaoLoginButton
+        style={{
+          backgroundColor: null,
+          width: "50px",
+          height: "50px",
+          borderRadius: 100,
+          textIndent: "-99999px",
+        }}
         token={JS_SDK_KEY}
         onSuccess={kakaoOnSuccess}
         onFail={kakaoOnFailure}

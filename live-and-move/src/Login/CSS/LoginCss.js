@@ -67,8 +67,10 @@ export const SpanCol = styled.span`
 // KakaoLogin
 export const KakaoLoginButton = styled(KakaoLogin)`
   margin: 4px;
-  width: 100%;
   transition-duration: 0.3s;
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnOACrRJyk-4693gXNbbpXfQ4OVXSWm3sl5g&s");
+  background-repeat: no-repeat;
+  background-size: cover;
 
   /* 마우스 호버 이벤트 */
   &:hover {
