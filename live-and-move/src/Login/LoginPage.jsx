@@ -64,27 +64,8 @@ function LoginPage(props) {
   ];
 
   return (
-    <MainContainer bgColor="black">
-      <h3 className="fw-bold mb-4">Live & Move</h3>
-
-      <ButtonGroup className="mb-3">
-        {[{ title: "로그인" }, { title: "비회원 주문조회" }].map(
-          ({ title }, index) => {
-            return (
-              <Col xs={6}>
-                <ButtonInLogin
-                  key={title + index}
-                  backColor={"#FFFFFF"}
-                  borderColor={"lightgray"}
-                  fontColor={"lightgray"}
-                >
-                  {title}
-                </ButtonInLogin>
-              </Col>
-            );
-          }
-        )}
-      </ButtonGroup>
+    <MainContainer bg_color="black">
+      <h3 className="fw-bold mb-4">Live & Move 로그인</h3>
 
       <Form onSubmit={handleSubmit}>
         {FormDatas.map(({ label, value, type, onChange, message }, index) => {
@@ -103,6 +84,7 @@ function LoginPage(props) {
                 placeholder=""
                 required
                 isInvalid={value === ""}
+                isValid={value.length > 0}
               />
               {isValidMessage(message)}
             </FloatingLabel>
@@ -111,9 +93,9 @@ function LoginPage(props) {
         <Form.Check label="아이디 저장하기" className="mb-3" />
         {/* 로그인 버튼 */}
         <ButtonInLogin
-          backColor={"lightgray"}
-          borderColor={"lightgray"}
-          fontColor={"white"}
+          bg_color={"lightgray"}
+          border_color={"lightgray"}
+          font_color={"white"}
           type="submit"
         >
           로그인
@@ -138,16 +120,16 @@ function LoginPage(props) {
         </ALink>
       </span>
 
-      <SpanCol fontSize="13px" fontColor="darkgrey">
+      <SpanCol font_size="13px" font_color="darkgrey">
         로그인이 어려우신가요?
       </SpanCol>
-      <SpanCol fontSize="16px" fontColor="lightgrey">
+      <SpanCol font_size="16px" font_color="lightgrey">
         고객센터
       </SpanCol>
       <div
         style={{ backgroundColor: "lightgray", width: "100%", height: "1px" }}
       />
-      <SpanCol fontSize="15px" fontColor="lightgrey">
+      <SpanCol font_size="15px" font_color="lightgrey">
         사업자 회원가입
       </SpanCol>
     </MainContainer>

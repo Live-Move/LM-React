@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/esm/Button";
+import KakaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 // LoginPage.jsx
@@ -12,16 +13,17 @@ export const FieldMessage = styled.h6`
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.bgColor};
-  opacity: 0.75;
+  background-color: ${(props) => props.bg_color};
+  border-radius: 5px;
+  opacity: 0.6;
   max-width: 650px;
   min-width: 450px;
   max-height: 940px;
   width: 40%;
   height: auto;
   color: white;
-  margin: 0px 20px 20px 20px;
-  padding: 0px 40px 12px 40px;
+  margin: 20px;
+  padding: 20px 40px 12px 40px;
   gap: 4px;
 `;
 
@@ -39,9 +41,9 @@ export const ButtonInLogin = styled(Button)`
   margin-bottom: 4px;
   border-radius: 0;
   width: 100%;
-  background-color: ${(props) => props.backColor};
-  border-color: ${(props) => props.borderColor};
-  color: ${(props) => props.fontColor};
+  background-color: ${(props) => props.bg_color};
+  border-color: ${(props) => props.border_color};
+  color: ${(props) => props.font_color};
   transition-duration: 0.25s;
 
   /* 마우스 호버 이벤트 */
@@ -52,11 +54,25 @@ export const ButtonInLogin = styled(Button)`
   }
 `;
 
+// LoginPage.jsx
 export const SpanCol = styled.span`
   margin-top: 8px;
   display: flex;
   flex-direction: columns;
   justify-content: center;
-  color: ${(props) => props.fontColor};
-  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.font_color};
+  font-size: ${(props) => props.font_size};
+`;
+
+// KakaoLogin
+export const KakaoLoginButton = styled(KakaoLogin)`
+  margin: 4px;
+  width: 100%;
+  transition-duration: 0.3s;
+
+  /* 마우스 호버 이벤트 */
+  &:hover {
+    font-weight: bold;
+    opacity: 0.7;
+  }
 `;
