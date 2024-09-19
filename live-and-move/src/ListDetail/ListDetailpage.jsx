@@ -182,7 +182,7 @@ function ListDetailpage(props) {
                 <option value="2year">24개월</option>
                 <option value="3year">36개월</option>
               </Form.Select>
-              <ButtonJB variant="secondary" href="/">
+              <ButtonJB variant="secondary" href="/cart">
                 장바구니
               </ButtonJB>
               <ButtonBG variant="secondary" href="/">
