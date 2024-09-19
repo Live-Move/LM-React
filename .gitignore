@@ -2,3 +2,4 @@
 /node_modules
 /package.json
 /package-lock.json
+/live-and-move/src/Login/Social/Kakao/LM_key.js
