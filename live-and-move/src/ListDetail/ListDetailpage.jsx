@@ -182,9 +182,9 @@ function ListDetailpage(props) {
               </Form.Select>
               <Div2>
                 <Div1>
-                  <Button1 onClick={() => setItemNum(itemNum - 1)}>-</Button1>
+                  <Button1 onClick={() => {if(itemNum > 0){setItemNum(itemNum - 1)}}}> - </Button1>
                   <Input1 type="number" value={itemNum} readOnly />
-                  <Button1 onClick={() => setItemNum(itemNum + 1)}>+</Button1>
+                  <Button1 onClick={() => setItemNum(itemNum + 1)}> + </Button1>
                 </Div1>
                 <span>
                   수량 : <strong style={{color:"#4646e2"}}>{itemNum}</strong> 개
@@ -221,6 +221,11 @@ function ListDetailpage(props) {
               );
             })}
           </Row>
+          <Col>
+          <hr />
+          <h2>상품평 </h2>
+          <hr />
+          </Col>
         </Container>
       </body>
 
