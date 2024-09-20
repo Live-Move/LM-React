@@ -43,13 +43,19 @@ export const Input1 = styled.input`
 export const ButtonDel = styled(Button)`
   width: 10em;
   height: 3em;
-  color:black;
+  color:white;
   margin-bottom: 5em; 
+  background-color:#0C0F67;
   border:1px solid #ccc;
   &:hover {
     transform: scale(1.04);
+    background-color:#B0B8E6;
+    }
+    &:active {
+      transform: scale(0.98);
   }
-  &:active {
-    transform: scale(0.98);
-  }
+`;
+export const ColJM = styled(Col)`
+  border: 1px solid #878787;
+  padding: 2em;
 `;
