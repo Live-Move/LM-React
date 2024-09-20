@@ -35,10 +35,10 @@ export const PinIcon = styled(GiPositionMarker)`
 export const CheckCircle = styled(FiCheckCircle)`
   display: inline-block;
   verticalAlign: middle;
-  color: #43ada0
+  color: #4646e2
 `;
 export const SpanColor = styled.span`
-color:  #43ada0
+color: #4646e2
 `;
 export const QuestionCircle = styled(AiOutlineQuestionCircle)`
   display: inline-block;
@@ -50,14 +50,14 @@ export const ButtonJB = styled(Button)`
   font-size: 20px;
   width: 100%;
   height: 50px;
-  background-color: #3b635c;
+  background-color: ${(props)=>props.bg_Color};
   position: relative;
   left: px;
   top: 20px;
   margin-bottom: 15px; 
   border: none;
   &:hover {
-    background-color: #acd2cd;
+    background-color: #B0B8E6;
     transform: scale(1.04);
   }
   &:active {
@@ -65,24 +65,6 @@ export const ButtonJB = styled(Button)`
   }
 `;
 
-export const ButtonBG = styled(Button)`
-  font-size: 20px;
-  width: 100%;
-  height: 50px;
-  background-color: #6b9e96;
-  position: relative;
-  left: px;
-  top: 20px;
-  margin-bottom: 15px; 
-  border: none;
-  &:hover {
-    background-color: #acd2cd;
-    transform: scale(1.04);
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-`;
 
 export const ImageBT = styled(Image)`
   
@@ -127,5 +109,4 @@ export const Input1 = styled.input`
   text-align: center;
   font-size: 20px;
   border: 1px solid #ccc;
-  
 `;
