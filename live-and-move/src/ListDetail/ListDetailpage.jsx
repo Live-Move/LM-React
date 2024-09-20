@@ -9,7 +9,6 @@ import {
   SpanColor,
   QuestionCircle,
   ButtonJB,
-  ButtonBG,
   ImageBT,
   Button1,
   Div1,
@@ -28,8 +27,21 @@ function ListDetailpage(props) {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
+
+  const Items = [
+    {
+        id : 1,
+        src : "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
+        name : "가구1",
+        content : "의자1",
+        price : 60000,
+        path: "/listdetail",
+    },
+  ];
+
   const BottomImage = [
     {
+      
       num: "1",
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
       path: "/",
@@ -51,9 +63,9 @@ function ListDetailpage(props) {
       ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
       : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-  const [name, setName] = useState("상품 이름은 여기");
+  const [name, setName] = useState(Items[0].name);
   const [itemNum, setItemNum] = useState(1); // 제품 수량
-  const [price, setPrice] = useState(15000); // 제품 가격
+  const [price, setPrice] = useState(Items[0].price); // 제품 가격
   const price1 = price.toLocaleString("ko-KR");
   const total = price * itemNum;
   return (
@@ -154,27 +166,13 @@ function ListDetailpage(props) {
                 </span>
               </Col>
               <br />
-
-              <span>
-                배송비 <QuestionCircle />
-              </span>
               <Div2>
-                <span> 총 금액:</span>
-                <span> {total.toLocaleString("ko-KR")} 원</span>
+                <span>배송비 <QuestionCircle /></span>
+                <span>10000 원</span>
               </Div2>
+              
               <hr />
-              <Div2>
-                <Div1>
-                  <Button1 onClick={() => setItemNum(itemNum - 1)}>-</Button1>
-                  <Input1 type="number" value={itemNum} readOnly />
-                  <Button1 onClick={() => setItemNum(itemNum + 1)}>+</Button1>
-                </Div1>
-                <span>
-                  수량 : <strong>{itemNum}</strong> 개
-                </span>
-              </Div2>
-
-              <Form.Select aria-label="Default select example">
+              <Form.Select aria-label="Default select example" style={{marginBottom:"1em"}}>
                 <option value="" selected hidden>
                   옵션 선택
                 </option>
@@ -182,12 +180,28 @@ function ListDetailpage(props) {
                 <option value="2year">24개월</option>
                 <option value="3year">36개월</option>
               </Form.Select>
-              <ButtonJB variant="secondary" href="/cart">
+              <Div2>
+                <Div1>
+                  <Button1 onClick={() => setItemNum(itemNum - 1)}>-</Button1>
+                  <Input1 type="number" value={itemNum} readOnly />
+                  <Button1 onClick={() => setItemNum(itemNum + 1)}>+</Button1>
+                </Div1>
+                <span>
+                  수량 : <strong style={{color:"#4646e2"}}>{itemNum}</strong> 개
+                </span>
+              </Div2>
+              <hr/>
+              <Div2>
+                <strong>최종 구독가:</strong>
+                <strong style={{fontSize:"1.2rem"}}>월 {total.toLocaleString("ko-KR")} 원</strong>
+              </Div2>
+              <p style={{fontSize:"0.8rem", color:"gray", textAlign:"right"}}>최소사용기간 12개월/배송비별도</p>
+              <ButtonJB variant="secondary" href="/cart" bg_Color="#0C0F67">
                 장바구니
               </ButtonJB>
-              <ButtonBG variant="secondary" href="/">
+              <ButtonJB variant="secondary" href="/" bg_Color="#7E80AB">
                 바로구매
-              </ButtonBG>
+              </ButtonJB>
             </Col>
           </Row>
         </Container>

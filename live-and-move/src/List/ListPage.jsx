@@ -19,23 +19,23 @@ const Items = [
       name : "가구2",
       content : "의자2",
       price : 500000,
-      path: "/",
+      path: "/listdetail",
   },
   {
       id : 3,
-      src : "",
+      src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
       name : "가구3",
       content : "의자3",
       price : 400000,
-      path: "/",
+      path: "/listdetail",
   },
   {
     id : 4,
-    src : "",
+    src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
     name : "가구4",
     content : "의자4",
     price : 400000,
-    path: "/",
+    path: "/listdetail",
 },
 {
   id : 5,
@@ -43,7 +43,7 @@ const Items = [
   name : "가구5",
   content : "의자5",
   price : 400000,
-  path: "/",
+  path: "/listdetail",
 },
 ]
 function ListPage(props) {
