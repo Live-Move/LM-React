@@ -17,7 +17,10 @@ import {
   SocialMediaH3,
   SocialMediaSpan,
 } from "./FooterCss.js";
-
+import { SiKakaotalk } from "react-icons/si";
+import { IoLogoFacebook } from "react-icons/io";
+import { FaInstagramSquare } from "react-icons/fa";
+import { SiNaver } from "react-icons/si";
 function Footer(props) {
   const FooterTopMenuList = [
     {
@@ -87,19 +90,19 @@ function Footer(props) {
 
   const FooterBottomSocialMediaList = [
     {
-      src: "/",
+      src: <SiKakaotalk size="20  " color="#f9e000" />,
       href: "/",
     },
     {
-      src: "/",
+      src: <FaInstagramSquare size="25" color="#833AB4" />,
       href: "/",
     },
     {
-      src: "/",
+      src: <IoLogoFacebook size="25" color="#3b5998" />,
       href: "/",
     },
     {
-      src: "/",
+      src: <SiNaver size="20" color="#00C73C" />,
       href: "/",
     },
   ];
@@ -200,7 +203,7 @@ function Footer(props) {
             <SocialMediaLogo>
               {FooterBottomSocialMediaList.map((logo, index) => (
                 <SocialMediaA key={index} href={logo.href}>
-                  <img src={logo.src} alt="logo"></img>
+                  {logo.src}
                 </SocialMediaA>
               ))}
             </SocialMediaLogo>
