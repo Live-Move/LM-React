@@ -7,7 +7,7 @@ import Header from "../Main/Header";
 function AppSrceen(props) {
   return (
     <>
-      <NavForRoute />
+      <Header />
       <AppPages />
       <Footer />
     </>
