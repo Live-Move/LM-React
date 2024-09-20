@@ -1,11 +1,14 @@
 import React from "react";
-import { Container, Form } from "./HeaderSearchMenuCss";
-
+import { SearchBox, SearchButton, SearchTxt } from "./HeaderSearchMenuCss";
+import { IoSearchOutline } from "react-icons/io5";
 function HeaderSearchMenu(props) {
   return (
-    <Container>
-      <Form></Form>
-    </Container>
+    <SearchBox action="" method="get">
+      <SearchTxt type="text"></SearchTxt>
+      <SearchButton type="submit">
+        <IoSearchOutline />
+      </SearchButton>
+    </SearchBox>
   );
 }
 
