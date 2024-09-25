@@ -98,20 +98,21 @@ function Cart(props) {
           <label style={{display:"flex"}}>
             <FormCheck type="checkbox" label=""
               onChange={(e)=> handleAllCheck(e.target.checked)}
-              checked={checkItems.length ===Choice.length ? true:false}/>전체선택
+              checked={checkItems.length === Choice.length ? true:false}/>전체선택
               </label>
             <hr />
             <strong style={{fontSize:"1.2rem"}}>구독상품</strong>
             <ColCard>
             {Choice.map((item,index)=>{
               return (
-                  <label>
                 <Div2 key={index} >
                 <FormCheck type="checkbox"
                   id={`chB-${item.id}`}
                   onChange={(e) => handleSingleCheck(e.target.checked, item.id)}
                   checked={checkItems.includes(item.id) ? true : false} />
-                <Image src={item.src} style={{width:"10%"}}/>
+                  <label for={`chB-${item.id}`}  style={{ display: "flex", alignItems: "center"}}>
+                <Image src={item.src} style={{width:"6em"}}/>
+                  </label>
                 <span>{item.name}</span>
                 <Div1>
                   <Button1 onClick={() => handleDown(index)}>-</Button1>
@@ -121,7 +122,6 @@ function Cart(props) {
                 <span>{(item.price*itemNum[index]).toLocaleString("ko-KR")} 원</span>
                 <CloseButton />
               </Div2>
-                  </label>
               );
             })}
             </ColCard>
