@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // CSS from LoginCSS
 import { ALink, MainContainer, ButtonInLogin, SpanCol } from "./CSS/LoginCss";
@@ -9,6 +10,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Col from "react-bootstrap/Col";
+import KakaoLoginPage from "./Social/Kakao/KakaoLoginPage";
 
 const isValidMessage = (message) => {
   return (
@@ -123,12 +125,16 @@ function LoginPage(props) {
       <SpanCol font_size="13px" font_color="darkgrey">
         로그인이 어려우신가요?
       </SpanCol>
+      <SpanCol>
+        <KakaoLoginPage />
+      </SpanCol>
       <SpanCol font_size="16px" font_color="lightgrey">
         고객센터
       </SpanCol>
       <div
         style={{ backgroundColor: "lightgray", width: "100%", height: "1px" }}
       />
+
       <SpanCol font_size="15px" font_color="lightgrey">
         사업자 회원가입
       </SpanCol>
