@@ -16,8 +16,8 @@ export const Div1 = styled.div` // +,-버튼
 export const Div2 = styled.div`// 구독상품 리스트
   display: flex;
   justify-content:space-between;
-  align-items:center ;
   border-bottom: 1px solid #ccc;
+  align-items:center ;
   padding: 1em;
   &:first-child {
     border-top: 1px solid #ccc; /* 첫 번째 블록에만 윗줄 보더 추가 */
