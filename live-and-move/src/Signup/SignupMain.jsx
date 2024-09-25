@@ -6,7 +6,7 @@ import { MainContainerSignup } from "./CSS/SignupCss";
 function SignupMain(props) {
   return (
     <MainContainerSignup>
-      <img src={LM_logo} alt="" />
+      <img src={LM_logo} alt="refresh this page" />
       <SignupPage />
     </MainContainerSignup>
   );

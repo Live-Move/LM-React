@@ -9,6 +9,7 @@ import ListDetailpage from "../ListDetail/ListDetailpage";
 import Cart from "../Cart/Cart";
 import KakaoLoginPage from "../Login/Social/Kakao/KakaoLoginPage";
 import AccountMain from "../Login/Account/AccountMain";
+import AccountPage from "../Login/Account/AccountPage";
 
 const MainScreens = {
   SocialLogin: {
@@ -22,6 +23,11 @@ const MainScreens = {
   Account: {
     path: "/account",
     element: <AccountMain />,
+  },
+
+  AccountPage: {
+    path: "/account/page",
+    element: <AccountPage />,
   },
   Signup: {
     path: "/user/signup",
