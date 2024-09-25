@@ -111,10 +111,10 @@ function LoginPage(props) {
           justifyContent: "end",
         }}
       >
-        <ALink color="lightgray" href="/">
+        <ALink color="lightgray" href="/account">
           아이디 찾기
         </ALink>
-        <ALink color="lightgray" href="/">
+        <ALink color="lightgray" href="/account">
           비밀번호 찾기
         </ALink>
         <ALink color="#005781" href="/user/signup">

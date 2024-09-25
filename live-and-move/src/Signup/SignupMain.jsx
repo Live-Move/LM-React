@@ -1,22 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 import SignupPage from "./SignupPage";
 import LM_logo from "../Logo/logo.svg";
-
-const MainContainer = styled.div`
-  margin: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+import { MainContainerSignup } from "./CSS/SignupCss";
 
 function SignupMain(props) {
   return (
-    <MainContainer>
+    <MainContainerSignup>
       <img src={LM_logo} alt="" />
       <SignupPage />
-    </MainContainer>
+    </MainContainerSignup>
   );
 }
 
