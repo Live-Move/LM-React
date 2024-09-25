@@ -15,7 +15,7 @@ import {
   Input1,
   Div2,
 } from "./CSS/Detail";
-
+import { GoArrowRight } from "react-icons/go";
 function ListDetailpage(props) {
   const [index, setIndex] = useState(0);
 
@@ -128,6 +128,12 @@ function ListDetailpage(props) {
               <ButtonBS variant="secondary" onClick={handleShow}>
                 <PinIcon /> 배송 가능한 지역을 확인하세요!
               </ButtonBS>
+              
+              <hr />
+              <Div2><h2>제춤 설명</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div2>
+              <hr />
+              <Div2 type="button"><h2>상품평</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div2>
+              <hr />
             </Col>
             <Offcanvas
               show={show}
@@ -170,7 +176,6 @@ function ListDetailpage(props) {
                 <span>배송비 <QuestionCircle /></span>
                 <span>10000 원</span>
               </Div2>
-              
               <hr />
               <Form.Select aria-label="Default select example" style={{marginBottom:"1em"}}>
                 <option value="" selected hidden>
@@ -221,11 +226,6 @@ function ListDetailpage(props) {
               );
             })}
           </Row>
-          <Col>
-          <hr />
-          <h2>상품평 </h2>
-          <hr />
-          </Col>
         </Container>
       </body>
 

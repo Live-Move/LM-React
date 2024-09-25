@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, CloseButton, Col, Container, Form, Image, Row } from "react-bootstrap";
-import { Button1, ButtonDel, ColCard, ColJM, Div2, FormCheckStyled, Input1 } from "./CSS/Cart";
+import { CloseButton, Col, Container, Form, FormCheck, Image, Row } from "react-bootstrap";
+import { Button1, ButtonDel, ButtonJM, ColCard, ColJM, Div1, Div2, Div3, Icon1, Input1 } from "./CSS/Cart";
 
 
 const Choice = [
@@ -9,7 +9,8 @@ const Choice = [
       src : "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
       name : "가구1",
       content : "의자1",
-      price : 60000
+      price : 60000,
+      path: "/",
   },
   {
     id : 2,
@@ -49,7 +50,7 @@ path: "/",
 function Cart(props) {
   
   const [itemNum, setItemNum] = useState(Choice.map(() => 1)); // 제품 수량
-  
+  //개별 +,- 증가감소
   const handleUp = (index) => {
     const updateItemNum =[...itemNum];
     updateItemNum[index] = updateItemNum[index] + 1;
@@ -63,34 +64,64 @@ function Cart(props) {
     }
     setItemNum(updateItemNum);
   };
+ //총 구독상품 금액 
+  const totalGD = itemNum.reduce((total, currentNum, index)=>{
+    return total + currentNum*Choice[index].price;
+  },0);
 
+  // 체크박스 선택
+  const [checkItems, setCheckItems] = useState([]);
+// 개별선택 
+  const handleSingleCheck = (checked,id)=> {
+    if(checked){
+      setCheckItems(prev => [...prev, id]);
+    }else {
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
+// 체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if(checked) {
+      const idArray = [];
+      Choice.forEach((el)=>idArray.push(el.id));
+      setCheckItems(idArray);
+    }else{
+      setCheckItems([]);
+    }
+  };
   return (
     <>
       <Container>
         <h2 style={{ margin: "3rem" }}> 장바구니 </h2>
         <Row>
           <Col md={8}>
-            <Form>
-              <FormCheckStyled type="checkbox" id="1" label="전체선택"  />
-            </Form>
+          <label style={{display:"flex"}}>
+            <FormCheck type="checkbox" label=""
+              onChange={(e)=> handleAllCheck(e.target.checked)}
+              checked={checkItems.length ===Choice.length ? true:false}/>전체선택
+              </label>
             <hr />
             <strong style={{fontSize:"1.2rem"}}>구독상품</strong>
             <ColCard>
             {Choice.map((item,index)=>{
               return (
+                  <label>
                 <Div2 key={index} >
-                <Form.Check />
+                <FormCheck type="checkbox"
+                  id={`chB-${item.id}`}
+                  onChange={(e) => handleSingleCheck(e.target.checked, item.id)}
+                  checked={checkItems.includes(item.id) ? true : false} />
                 <Image src={item.src} style={{width:"10%"}}/>
                 <span>{item.name}</span>
-                
-                <div>
+                <Div1>
                   <Button1 onClick={() => handleDown(index)}>-</Button1>
                   <Input1 type="number" value={itemNum[index]} readOnly />
                   <Button1 onClick={() => handleUp(index)}>+</Button1>
-                </div>
+                </Div1>
                 <span>{(item.price*itemNum[index]).toLocaleString("ko-KR")} 원</span>
                 <CloseButton />
               </Div2>
+                  </label>
               );
             })}
             </ColCard>
@@ -100,12 +131,12 @@ function Cart(props) {
           <ColJM md={4}>
             <Container>
             <h3>주문 예상 금액</h3>
-            <p>총 구독상품 금액 {} 원</p>
+            <p>총 구독상품 금액 {totalGD} 원</p>
             <p>총 할인 금액  {} 원</p>
             <p>총 배송비 {} 원</p>
             <hr/>
-            <p>결제 금액: {} 원</p>
-          <ButtonDel variant="light">상품 주문하기</ButtonDel>
+            <p>결제 금액: {totalGD} 원</p>
+          <ButtonJM variant="light"><Div3>상품 주문하기<Icon1/></Div3></ButtonJM>
             </Container>
           </ColJM>
         </Row>

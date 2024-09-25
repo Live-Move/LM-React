@@ -101,6 +101,7 @@ export const Div2 = styled.div`
   display: flex;
   justify-content:space-between;
   align-items:center ;
+  
 `;
 
 export const Input1 = styled.input`
