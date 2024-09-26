@@ -5,7 +5,7 @@ import { ButtonInLogin, MainContainer, ButtonInAccount } from "../CSS/LoginCss";
 function AccountPage(props) {
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userAddress, setUserAddress] = useState("");
   const [userId, setUserId] = useState("");
   const [isFindId, setIsFindId] = useState(true);
 
@@ -26,9 +26,9 @@ function AccountPage(props) {
     },
     {
       label: "주소 입력",
-      value: userEmail,
+      value: userAddress,
       type: "text",
-      onChange: setUserEmail,
+      onChange: setUserAddress,
       messages: ["회원가입 시 입력한 이메일을 입력해주세요"],
     },
   ];
@@ -55,15 +55,42 @@ function AccountPage(props) {
     setIsFindId(b);
 
     // 버튼 클릭 시 Form태그 값 초기화
-    setUserEmail("");
+    setUserAddress("");
     setUserId("");
     setUserName("");
     setUserPhone("");
   };
 
-  const handleSubmit = (e) => {
+  const handleFindInfo = (e) => {
     e.preventDefault();
-    alert("찾기 버튼 클릭");
+
+    let data = {
+      name: userName ? userName : null,
+      loginId: userId ? userId : null,
+      address: userAddress ? userAddress : null,
+      phone: userPhone ? userPhone : null,
+    };
+
+    console.log(data);
+
+    fetch("http://localhost:8080/api/user/findInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        console.log(`[ response ] >> ${response}`);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.code); // ok , fail
+        if (data.code === "ok") {
+          if (data.type === "ID") alert(`[ 회원 아이디 ] >> ${data.data}`);
+          else alert(`[ 회원 비밀번호 ] >> ${data.data}`);
+        }
+      });
   };
 
   return (
@@ -85,7 +112,7 @@ function AccountPage(props) {
             비밀번호 찾기
           </ButtonInAccount>
         </ToggleButtonGroup>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFindInfo}>
           {(isFindId ? FormDatasFindId : FormDatasFindPw).map(
             ({ label, value, type, onChange, messages }, index) => {
               return (
