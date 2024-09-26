@@ -23,5 +23,6 @@ export const Li = styled.li`
 export const A = styled.a`
   text-decoration: none;
   color: black;
+  font-size: 20px;
   font-weight: 700;
 `;

@@ -12,6 +12,7 @@ export const CaptionContainer = styled.div`
   text-align: left;
   color: black;
   margin-left: 214px;
+  z-index: 1;
 `;
 export const TextContainer = styled.div`
   width: 570px;
