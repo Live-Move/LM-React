@@ -1,54 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
 import { StyleContainer } from "./CSS/ListCss";
 import { NavLink } from "react-router-dom";
 
-
-const Items = [
-  {
-      id : 1,
-      src : "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      name : "가구1",
-      content : "의자1",
-      price : 600000,
-      path: "/listdetail",
-  },
-  {
-      id : 2,
-      src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-      name : "가구2",
-      content : "의자2",
-      price : 500000,
-      path: "/listdetail",
-  },
-  {
-      id : 3,
-      src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-      name : "가구3",
-      content : "의자3",
-      price : 400000,
-      path: "/listdetail",
-  },
-  {
-    id : 4,
-    src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-    name : "가구4",
-    content : "의자4",
-    price : 400000,
-    path: "/listdetail",
-},
-{
-  id : 5,
-  src : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-  name : "가구5",
-  content : "의자5",
-  price : 400000,
-  path: "/listdetail",
-},
-]
 function ListPage(props) {
+  const [items, setItems] = useState([]); // 제품 목록을 저장할 상태
+  const url = "http://localhost:8080/api/products"; // API 주소
 
+  // Spring Boot API로부터 데이터를 fetch로 가져오는 함수
+  const handleRenderTest = () => {
+    fetch(url)
+      .then((response) => {
+        console.log(response);
+        // return response.json();
+      })
+      // .then((data) => {
+      // console.log(data)
+      // });
+    }
 
+  // const fetchItems = async () => {
+  //   try {
+  //     const response = await fetch(url); // API 호출
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok"); // 네트워크 오류 처리
+  //     }
+  //     const data = await response.json(); // JSON 데이터를 JavaScript 객체로 변환
+  //     console.log(data); // 데이터 확인
+  //     setItems(data); // 받아온 데이터를 상태에 저장
+  //   } catch (error) {
+  //     console.error("Error fetching product data:", error); // 에러 처리
+  //   }
+  // };
+
+useEffect(() => {
+  handleRenderTest() // 컴포넌트가 마운트될 때 데이터를 가져옴
+}, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행
 
 
   return (
@@ -60,14 +47,15 @@ function ListPage(props) {
         <h1 style={{color:"lightgray"}}>ggggg</h1>
       </Row>
     <Row>
-      {Items.map((item, index)=>(
-        <Col key={index} sm={6} md={4} xxl={3} >
+      {items.map((item)=>(
+        <Col key={item.product_id} sm={6} md={4} xxl={3} >
             <NavLink to={item.path} activeClassName="selected">
           <Card style={{marginTop:'2em', background:'', }} >
             <Card.Img variant="top" src={item.src} alt={item.name}/>
           <Card.Body>
-            <Card.Title>{item.name}</Card.Title>
-            <Card.Text>{item.content}</Card.Text>
+            <Card.Title>{item.product_name}</Card.Title>
+            <Card.Text>{item.category}</Card.Text>
+            <Card.Text>{item.brand}</Card.Text>
             <Card.Text>{item.price.toLocaleString("ko-KR")} 원</Card.Text>
           </Card.Body>
         </Card>
