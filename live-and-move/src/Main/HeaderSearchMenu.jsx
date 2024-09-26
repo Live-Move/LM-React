@@ -10,12 +10,15 @@ function HeaderSearchMenu() {
   // 실시간 검색 함수
   const fetchSuggestions = async (searchTerm) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/product/search?name=${searchTerm}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/product/search?name=${searchTerm}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -25,6 +28,7 @@ function HeaderSearchMenu() {
       setSuggestions(data); // 검색 결과 저장
       setShowDropdown(true); // 드롭다운 표시
     } catch (error) {
+      //콘솔에 에러 출력
       console.error("Error fetching search suggestions:", error);
     }
   };
@@ -42,12 +46,15 @@ function HeaderSearchMenu() {
   const handleSearch = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/api/product/search?name=${searchTerm}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/product/search?name=${searchTerm}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -68,7 +75,6 @@ function HeaderSearchMenu() {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search for products..."
         />
         <SearchButton type="submit">
           <IoSearchOutline />
@@ -77,10 +83,31 @@ function HeaderSearchMenu() {
 
       {/* 드롭다운 - 유사한 상품 목록 */}
       {showDropdown && (
-        <ul style={{ listStyleType: "none", padding: 0, marginTop: "10px", border: "1px solid black", width: "500px", backgroundColor: "white", position: "absolute" }}>
+        <ul
+          style={{
+            listStyleType: "none",
+            padding: 0,
+            marginTop: "10px",
+            border: "1px solid black",
+            width: "500px",
+            backgroundColor: "white",
+            position: "absolute",
+            zIndex: 1000,
+            maxHeight: "300px",
+            overflow: "auto",
+          }}
+        >
           {suggestions.map((product) => (
-            <li key={product.product_id} style={{ padding: "10px", cursor: "pointer" }}>
-              <a href={`/product/${product.product_id}`}>{product.productName}</a>
+            <li
+              key={product.product_id}
+              style={{ padding: "5px 10px", cursor: "pointer" }}
+            >
+              <a
+                href={`/product/${product.product_id}`}
+                style={{ textDecoration: "none", color: "red" }}
+              >
+                {product.productName}
+              </a>
             </li>
           ))}
         </ul>
