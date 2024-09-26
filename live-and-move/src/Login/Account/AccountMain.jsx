@@ -1,12 +1,14 @@
 import React from "react";
-import { MainContainer } from "../CSS/LoginCss";
+import { MainContainerSignup } from "../../Signup/CSS/SignupCss";
+import AccountPage from "./AccountPage";
 
 function AccountMain(props) {
   return (
     <>
-      <MainContainer>
+      <MainContainerSignup>
         <h1>AccountMain</h1>
-      </MainContainer>
+        <AccountPage />
+      </MainContainerSignup>
     </>
   );
 }

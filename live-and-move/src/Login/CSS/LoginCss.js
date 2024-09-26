@@ -1,3 +1,4 @@
+import { ToggleButton } from "react-bootstrap";
 import Button from "react-bootstrap/esm/Button";
 import KakaoLogin from "react-kakao-login";
 import styled from "styled-components";
@@ -77,4 +78,12 @@ export const KakaoLoginButton = styled(KakaoLogin)`
     font-weight: bold;
     opacity: 0.7;
   }
+`;
+
+// AccountPage.jsx
+export const ButtonInAccount = styled(ToggleButton)`
+  background-color: white;
+  border-color: white;
+  border-radius: 0%;
+  color: darkgray;
 `;
