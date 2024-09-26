@@ -2,7 +2,6 @@ import React from "react";
 import MainPage from "../Main/MainPage";
 import ListPage from "../List/ListPage";
 import LoginMain from "../Login/LoginMain";
-import LoginPage from "../Login/LoginPage";
 import SignupMain from "../Signup/SignupMain";
 import SignupPage from "../Signup/SignupPage";
 import ListDetailpage from "../ListDetail/ListDetailpage";
@@ -24,7 +23,6 @@ const MainScreens = {
     path: "/account",
     element: <AccountMain />,
   },
-
   AccountPage: {
     path: "/account/page",
     element: <AccountPage />,
