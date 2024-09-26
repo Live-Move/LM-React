@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FloatingLabel, Form, ToggleButtonGroup } from "react-bootstrap";
 import { ButtonInLogin, MainContainer, ButtonInAccount } from "../CSS/LoginCss";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 function AccountPage(props) {
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [isFindId, setIsFindId] = useState(true);
 
-  const FormDatas = [
+  const FormDatasFindId = [
     {
       label: "이름 입력",
       value: userName,
@@ -33,6 +33,34 @@ function AccountPage(props) {
     },
   ];
 
+  const FormDatasFindPw = [
+    {
+      label: "이름 입력",
+      value: userName,
+      type: "text",
+      onChange: setUserName,
+      messages: [],
+    },
+    {
+      label: "아이디 입력",
+      value: userId,
+      type: "text",
+      onChange: setUserId,
+      messages: [],
+    },
+  ];
+
+  const handleFindStatus = (b) => {
+    // 조건부 렌더링
+    setIsFindId(b);
+
+    // 버튼 클릭 시 Form태그 값 초기화
+    setUserEmail("");
+    setUserId("");
+    setUserName("");
+    setUserPhone("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("찾기 버튼 클릭");
@@ -41,32 +69,24 @@ function AccountPage(props) {
   return (
     <>
       <MainContainer>
-        {/* 테스트용 버튼 */}
-        <BootstrapSwitchButton
-          checked={true}
-          onstyle="light"
-          onlabel="아이디 찾기"
-          offlabel="비밀번호 찾기"
-          style={{ borderRadius: "0%" }}
-        />
         <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
           <ButtonInAccount
             id="tbg-radio-1"
             value={1}
-            onClick={() => setIsFindId(true)}
+            onClick={() => handleFindStatus(true)}
           >
             아이디 찾기
           </ButtonInAccount>
           <ButtonInAccount
             id="tbg-radio-2"
             value={2}
-            onClick={() => setIsFindId(false)}
+            onClick={() => handleFindStatus(false)}
           >
             비밀번호 찾기
           </ButtonInAccount>
         </ToggleButtonGroup>
         <Form onSubmit={handleSubmit}>
-          {(isFindId ? FormDatas : []).map(
+          {(isFindId ? FormDatasFindId : FormDatasFindPw).map(
             ({ label, value, type, onChange, messages }, index) => {
               return (
                 <FloatingLabel
