@@ -85,7 +85,7 @@ export const ButtonJM = styled(Button)` // 상품 주문하기 버튼
 `;
 export const ColJM = styled(Col)` // 주문 예상 금액
   background: #ededed;
-  padding: 1em;
+  padding: 2em;
   border-radius: 20px;
 `;
 export const Icon1 = styled(IoArrowForwardCircle)` 
