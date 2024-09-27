@@ -25,6 +25,7 @@ function LoginPage(props) {
   // 로그인 이벤트
   const handleSubmit = (e) => {
     e.preventDefault();
+    // navigate("/main");
 
     let data = {
       loginId: email,
