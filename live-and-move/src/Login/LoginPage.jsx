@@ -9,6 +9,7 @@ import { ALink, MainContainer, ButtonInLogin, SpanCol } from "./CSS/LoginCss";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import KakaoLoginPage from "./Social/Kakao/KakaoLoginPage";
+import { isSessionExists } from "./Account/AccountChk";
 
 const isValidMessage = (message) => {
   return (
@@ -43,11 +44,12 @@ function LoginPage(props) {
       .then((data) => {
         alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
         console.log(data.code); // ok , fail
-
-        sessionStorage.setItem("userData", JSON.stringify(data.data));
-        console.log(`[ session Storage ]`);
-        console.log(JSON.parse(sessionStorage.getItem("userData")).name);
-        navigate("/main");
+        if (data.code === "ok") {
+          sessionStorage.setItem("userData", JSON.stringify(data.data));
+          console.log(`[ session Storage ]`);
+          console.log(isSessionExists());
+          navigate("/main");
+        }
       });
   };
 
