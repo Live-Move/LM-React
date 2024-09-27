@@ -15,7 +15,7 @@ function ListPage(props) {
         `http://localhost:8080/api/product/list?category=${category}`
       );
       const data = await response.json(); // json형식으로 변환해서 저장
-      console.log("Fetched items:ㅁㅁㅁ", data); // 가져온 데이터 로그 확인
+      console.log("Fetched items:", data); // 가져온 데이터 로그 확인
       setItems(data);
     };
     fetchItems();
