@@ -8,8 +8,6 @@ import { ALink, MainContainer, ButtonInLogin, SpanCol } from "./CSS/LoginCss";
 // bootstrap
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Col from "react-bootstrap/Col";
 import KakaoLoginPage from "./Social/Kakao/KakaoLoginPage";
 
 const isValidMessage = (message) => {
@@ -21,6 +19,7 @@ const isValidMessage = (message) => {
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // 로그인 이벤트
   const handleSubmit = (e) => {
@@ -44,7 +43,11 @@ function LoginPage(props) {
       .then((data) => {
         alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
         console.log(data.code); // ok , fail
-        console.log(data.data); // 회원정보
+
+        sessionStorage.setItem("userData", JSON.stringify(data.data));
+        console.log(`[ session Storage ]`);
+        console.log(JSON.parse(sessionStorage.getItem("userData")).name);
+        navigate("/main");
       });
   };
 
