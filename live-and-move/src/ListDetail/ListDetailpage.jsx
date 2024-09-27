@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Carousel,Col,Container,Form,FormSelect,Image,Offcanvas,Row,} from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams,  } from "react-router-dom";
 import {
   ButtonBS,
   CarouselContainer,
@@ -21,16 +21,48 @@ import OffcanvasBS from "./OffcanvasBS";
 
 
 function ListDetailpage(props) {
+  const params = useParams();
+  console.log(`[ params ] >> ${params}`);
+  const product_id = params.product_id;
+  console.log(`[ product_id ] >> ${product_id}`);
   const [index, setIndex] = useState(0);
+  const [show, setShow] = useState(false);
 
+  const [items, setItems] = useState([]);
+  
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
-  const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
+
+
+//   fetch(`http://localhost:8080/api/listdetail?product_id=${product_id}/`, {
+//     method: "GET",
+//     })
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .then((data) => {
+//       console.log(data.code); 
+//     });
+// };
+
+  // useEffect(() => {
+  //   // API 요청 (예시)
+  //   const fetchItems = async () => {
+  //     console.log("Fetching items for product_id:", product_id); // 카테고리 로그 확인
+  //     const response = await fetch(
+  //       `http://localhost:8080/api/listdetail?product_id=${product_id}`
+  //     );
+  //     const data = await response.json(); // json형식으로 변환해서 저장
+  //     console.log("Fetched items:", data); // 가져온 데이터 로그 확인
+  //     setItems(data);
+  //   };
+  //   fetchItems();
+  // }, [product_id]);
 
   const Items = [
     {
@@ -49,19 +81,8 @@ function ListDetailpage(props) {
 
   const BottomImage = [
     {
-      
       product_id: "1",
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
-      path: "/",
-    },
-    {
-      product_id: "2",
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      path: "/",
-    },
-    {
-      product_id: "3",
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
       path: "/",
     },
   ];
@@ -71,7 +92,7 @@ function ListDetailpage(props) {
       ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
       : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-  const [name, setName] = useState(Items[0].product_name);// 제품 이름
+  const [name, setName] = useState(Items.product_name);// 제품 이름
   const [brand, setBrand] = useState(Items[0].brand);// 제품 브랜드
   const [description, setDescription] = useState(Items[0].description);// 제품 브랜드
   const [detail, setDetail] = useState(Items[0].detail);// 제품 브랜드
@@ -79,6 +100,9 @@ function ListDetailpage(props) {
   const [price, setPrice] = useState(Items[0].price); // 제품 가격
   const price1 = price.toLocaleString("ko-KR");
   const total = price * itemNum;
+
+  
+  
   return (
     <>
       <div style={{marginTop:"5em"}}>
@@ -92,48 +116,19 @@ function ListDetailpage(props) {
               <CarouselContainer>
                 <Col>
                   <Carousel activeIndex={index} onSelect={handleSelect}>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="First slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>First slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Nulla vitae elit libero, a pharetra augue mollis
-                          interdum.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="Second slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Second slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="Third slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Third slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Praesent commodo cursus magna, vel scelerisque nisl
-                          consectetur.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
+                  {Items.map((item, idx) => (
+                      <Carousel.Item key={item.product_id}>
+                        <Image
+                          style={{ width: "auto", height: "auto" }}
+                          text={`Slide ${idx + 1}`}
+                          src={item.src}
+                        />
+                        <Carousel.Caption>
+                          <h3 style={{ color: "black" }}>{item.product_name}</h3>
+                          <p style={{ color: "black" }}>{item.content}</p>
+                        </Carousel.Caption>
+                      </Carousel.Item>
+                      ))}
                   </Carousel>
                 </Col>
               </CarouselContainer>
@@ -214,8 +209,8 @@ function ListDetailpage(props) {
                 <strong style={{fontSize:"1.2rem"}}>월 {total.toLocaleString("ko-KR")} 원</strong>
               </Div2>
               <p style={{fontSize:"0.8rem", color:"gray", textAlign:"right"}}>최소사용기간 12개월/배송비별도</p>
-              <ButtonJB variant="secondary" href="/cart" bg_color="#0C0F67">
-                장바구니
+              <ButtonJB variant="secondary"   bg_color="#0C0F67">
+                장바구니 추가
               </ButtonJB>
               <ButtonJB variant="secondary" href="/" bg_color="#7E80AB">
                 바로구매

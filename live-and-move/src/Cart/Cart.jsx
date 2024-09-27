@@ -11,6 +11,7 @@ const arrChoice = [
       content : "의자1",
       price : 60000,
       path: "/",
+      
   },
   {
     id : 2,
@@ -156,7 +157,7 @@ function Cart(props) {
             <p>총 할인 금액  {} 원</p>
             <p>총 배송비 {} 원</p>
             <hr/>
-            <p>결제 금액: {totalGD} 원</p>
+            <p>결제 금액: {totalGD.toLocaleString("ko-KR")} 원</p>
           <ButtonJM variant="light"><Div3>상품 주문하기<Icon1/></Div3></ButtonJM>
             </Container>
           </ColJM>
