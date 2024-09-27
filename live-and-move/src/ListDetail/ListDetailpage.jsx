@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import {
+  Carousel,
+  Col,
+  Container,
+  FormSelect,
+  Image,
+  Offcanvas,
+  Row,
+} from "react-bootstrap";
+import { NavLink, useParams } from "react-router-dom";
 import {
   CarouselContainer,
   CheckCircle,
@@ -18,19 +27,35 @@ import OffcanvasBS from "./OffcanvasBS";
 
 function ListDetailpage(props) {
   const params = useParams();
+  const product_id = params.product_id;
+  console.log(`[ product_id ] >> ${product_id}`);
+  const URL_product = `http://localhost:8080/api/product/detail?product_id=${product_id}`;
+  const URL_img = `http://localhost:8080/api/productImg/list?product_id=${product_id}`;
+
+  useEffect(() => {
+    let productInfo = {};
+
+    fetch(URL_product)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.code);
+        productInfo = { ...data.data };
+        console.log(productInfo);
+      });
+  }, []);
 
   const [index, setIndex] = useState(0);
-  const [show, setShow] = useState(false);
 
-  const [items, setItems] = useState([]);
-  
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
+  const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
 
   const Items = [
     {
@@ -55,6 +80,16 @@ function ListDetailpage(props) {
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
       path: "/",
     },
+    {
+      product_id: "2",
+      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
+      path: "/",
+    },
+    {
+      product_id: "3",
+      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
+      path: "/",
+    },
   ];
 
   const BottomImageList =
@@ -62,14 +97,14 @@ function ListDetailpage(props) {
       ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
       : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-
+  const [name, setName] = useState(Items[0].product_name); // 제품 이름
+  const [brand, setBrand] = useState(Items[0].brand); // 제품 브랜드
+  const [description, setDescription] = useState(Items[0].description); // 제품 브랜드
+  const [detail, setDetail] = useState(Items[0].detail); // 제품 브랜드
   const [itemNum, setItemNum] = useState(1); // 제품 수량
   const [price, setPrice] = useState(Items[0].price); // 제품 가격
   const price1 = price.toLocaleString("ko-KR");
   const total = price * itemNum;
-
-  
-  
   return (
     <>
       <div style={{ marginTop: "5em" }}>
@@ -81,7 +116,50 @@ function ListDetailpage(props) {
             <Col>
               <CarouselContainer>
                 <Col>
-
+                  {/* <Carousel activeIndex={index} onSelect={handleSelect}> */}
+                  <Carousel activeIndex={index} onSelect={() => {}}>
+                    <Carousel.Item>
+                      <Image
+                        style={{ width: "auto", height: "auto" }}
+                        text="First slide"
+                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m"
+                      />
+                      <Carousel.Caption>
+                        <h3 style={{ color: "black" }}>First slide label</h3>
+                        <p style={{ color: "black" }}>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                      <Image
+                        style={{ width: "auto", height: "auto" }}
+                        text="Second slide"
+                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m"
+                      />
+                      <Carousel.Caption>
+                        <h3 style={{ color: "black" }}>Second slide label</h3>
+                        <p style={{ color: "black" }}>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit.
+                        </p>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                      <Image
+                        style={{ width: "auto", height: "auto" }}
+                        text="Third slide"
+                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m"
+                      />
+                      <Carousel.Caption>
+                        <h3 style={{ color: "black" }}>Third slide label</h3>
+                        <p style={{ color: "black" }}>
+                          Praesent commodo cursus magna, vel scelerisque nisl
+                          consectetur.
+                        </p>
+                      </Carousel.Caption>
+                    </Carousel.Item>
                   </Carousel>
                 </Col>
               </CarouselContainer>
@@ -184,7 +262,17 @@ function ListDetailpage(props) {
                   월 {total.toLocaleString("ko-KR")} 원
                 </strong>
               </Div2>
-
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  color: "gray",
+                  textAlign: "right",
+                }}
+              >
+                최소사용기간 12개월/배송비별도
+              </p>
+              <ButtonJB variant="secondary" href="/cart" bg_color="#0C0F67">
+                장바구니
               </ButtonJB>
               <ButtonJB variant="secondary" href="/" bg_color="#7E80AB">
                 바로구매
