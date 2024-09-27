@@ -3,13 +3,13 @@ import { HeaderDiv, Container } from "./HeaderCss";
 import HeaderNavigationMenu from "./HeaderNavigationMenu";
 import HeaderSearchMenu from "./HeaderSearchMenu";
 import HeaderUserMenu from "./HeaderUserMenu";
-function Header(props) {
+function Header({ loginState, setLoginState }) {
   return (
     <HeaderDiv>
       <Container>
         <HeaderNavigationMenu />
         <HeaderSearchMenu />
-        <HeaderUserMenu />
+        <HeaderUserMenu loginState={loginState} setLoginState={setLoginState} />
       </Container>
     </HeaderDiv>
   );

@@ -3,7 +3,7 @@ import { CloseButton, Col, Container, Form, FormCheck, Image, Row } from "react-
 import { Button1, ButtonDel, ButtonJM, ColCard, ColJM, Div1, Div2, Div3, Icon1, Input1 } from "./CSS/Cart";
 
 
-const Choice = [
+const arrChoice = [
   {
       id : 1,
       src : "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
@@ -49,7 +49,8 @@ path: "/",
 
 function Cart(props) {
   
-  const [itemNum, setItemNum] = useState(Choice.map(() => 1)); // 제품 수량
+  const [choice, setChoice] = useState(arrChoice); 
+  const [itemNum, setItemNum] = useState(choice.map(() => 1)); // 제품 수량
   //개별 +,- 증가감소
   const handleUp = (index) => {
     const updateItemNum =[...itemNum];
@@ -66,7 +67,7 @@ function Cart(props) {
   };
  //총 구독상품 금액 
   const totalGD = itemNum.reduce((total, currentNum, index)=>{
-    return total + currentNum*Choice[index].price;
+    return total + currentNum*choice[index].price;
   },0);
 
   // 체크박스 선택
@@ -83,12 +84,32 @@ function Cart(props) {
   const handleAllCheck = (checked) => {
     if(checked) {
       const idArray = [];
-      Choice.forEach((el)=>idArray.push(el.id));
+      choice.forEach((el)=>idArray.push(el.id));
       setCheckItems(idArray);
     }else{
       setCheckItems([]);
     }
   };
+// 선택된 항목 삭제
+  const handleDeleteSelected = () => {
+    const updatedChoice = choice.filter(item => !checkItems.includes(item.id));
+    const updatedItemNum = itemNum.filter((_, index) => !checkItems.includes(choice[index].id));
+    setCheckItems([]);
+    setItemNum(updatedItemNum); 
+    setChoice(updatedChoice);
+    
+  };
+
+  // 개별 항목 삭제
+  const handleDeleteItem = (index) => {
+    const updatedChoice = choice.filter((_, idx) => idx !== index);
+    const updatedItemNum = itemNum.filter((_, idx) => idx !== index); 
+    setChoice(updatedChoice);
+    setItemNum(updatedItemNum);
+  };
+
+
+
   return (
     <>
       <Container>
@@ -98,19 +119,19 @@ function Cart(props) {
           <label style={{display:"flex"}}>
             <FormCheck type="checkbox" label=""
               onChange={(e)=> handleAllCheck(e.target.checked)}
-              checked={checkItems.length === Choice.length ? true:false}/>전체선택
+              checked={checkItems.length === choice.length ? true:false}/>전체선택
               </label>
             <hr />
             <strong style={{fontSize:"1.2rem"}}>구독상품</strong>
             <ColCard>
-            {Choice.map((item,index)=>{
+            {choice.map((item,index)=>{
               return (
                 <Div2 key={index} >
                 <FormCheck type="checkbox"
                   id={`chB-${item.id}`}
                   onChange={(e) => handleSingleCheck(e.target.checked, item.id)}
                   checked={checkItems.includes(item.id) ? true : false} />
-                  <label for={`chB-${item.id}`}  style={{ display: "flex", alignItems: "center"}}>
+                  <label htmlFor={`chB-${item.id}`}  style={{ display: "flex", alignItems: "center"}}>
                 <Image src={item.src} style={{width:"6em"}}/>
                   </label>
                 <span>{item.name}</span>
@@ -120,13 +141,13 @@ function Cart(props) {
                   <Button1 onClick={() => handleUp(index)}>+</Button1>
                 </Div1>
                 <span>{(item.price*itemNum[index]).toLocaleString("ko-KR")} 원</span>
-                <CloseButton />
+                <CloseButton onClick={() => handleDeleteItem(index)}/>
               </Div2>
               );
             })}
             </ColCard>
             <hr />
-            <ButtonDel variant="light">선택상품삭제</ButtonDel>
+            <ButtonDel variant="light" onClick={handleDeleteSelected}>선택상품삭제</ButtonDel>
           </Col>
           <ColJM md={4}>
             <Container>
