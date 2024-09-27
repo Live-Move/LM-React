@@ -32,7 +32,11 @@ function ListPage(props) {
             <Col key={item.product_id} sm={6} md={4} xxl={3}>
               <NavLink to={item.path}>
                 <Card style={{ marginTop: "2em", background: "" }}>
-                  <Card.Img variant="top" src={item.src} alt={item.name} />
+                  <Card.Img
+                    variant="top"
+                    src={item.thumbnail}
+                    alt={item.name}
+                  />
                   <Card.Body>
                     <Card.Title>{item.product_name}</Card.Title>
                     <Card.Text>{item.category}</Card.Text>
