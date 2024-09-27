@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Carousel,Col,Container,Form,Image,Offcanvas,Row,} from "react-bootstrap";
+import {Carousel,Col,Container,Form,FormSelect,Image,Offcanvas,Row,} from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import {
   ButtonBS,
@@ -14,8 +14,12 @@ import {
   Div1,
   Input1,
   Div2,
+  Div3,
 } from "./CSS/Detail";
 import { GoArrowRight } from "react-icons/go";
+import OffcanvasBS from "./OffcanvasBS";
+
+
 function ListDetailpage(props) {
   const [index, setIndex] = useState(0);
 
@@ -30,10 +34,14 @@ function ListDetailpage(props) {
 
   const Items = [
     {
-        id : 1,
+        product_id : 1,
         src : "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-        name : "가구1",
-        content : "의자1",
+        product_name : "product_name",
+        category: "category",
+        content : "content",
+        brand:"brand",
+        description:"흰색을 좋아하는 분들을 위한 제품이에요. 깔끔한 라인과 반투명 유리의 탁상스탠드가 방 안에 따뜻하고 기분 좋은 분위기를 연출해주는 부드러운 조명을 비춰줍니다.",
+        detail:"부드러운 느낌의 무드등입니다.디자이너IKEA of Sweden디자이너IKEA of Sweden",
         price : 60000,
         path: "/listdetail",
     },
@@ -42,17 +50,17 @@ function ListDetailpage(props) {
   const BottomImage = [
     {
       
-      num: "1",
+      product_id: "1",
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
       path: "/",
     },
     {
-      num: "2",
+      product_id: "2",
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
       path: "/",
     },
     {
-      num: "3",
+      product_id: "3",
       src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
       path: "/",
     },
@@ -63,15 +71,19 @@ function ListDetailpage(props) {
       ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
       : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-  const [name, setName] = useState(Items[0].name);
+  const [name, setName] = useState(Items[0].product_name);// 제품 이름
+  const [brand, setBrand] = useState(Items[0].brand);// 제품 브랜드
+  const [description, setDescription] = useState(Items[0].description);// 제품 브랜드
+  const [detail, setDetail] = useState(Items[0].detail);// 제품 브랜드
   const [itemNum, setItemNum] = useState(1); // 제품 수량
   const [price, setPrice] = useState(Items[0].price); // 제품 가격
   const price1 = price.toLocaleString("ko-KR");
   const total = price * itemNum;
   return (
     <>
-      <body style={{marginTop:"5em"}}>
+      <div style={{marginTop:"5em"}}>
         <Container>
+        
           <Row></Row>
         </Container>
         <Container>
@@ -125,34 +137,35 @@ function ListDetailpage(props) {
                   </Carousel>
                 </Col>
               </CarouselContainer>
-              <ButtonBS variant="secondary" onClick={handleShow}>
-                <PinIcon /> 배송 가능한 지역을 확인하세요!
-              </ButtonBS>
               
+              <OffcanvasBS/>
               <hr />
-              <Div2><h2>제춤 설명</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div2>
+              <Div3 type="button" onClick={handleShow}><h2>제품 설명</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div3>
               <hr />
-              <Div2 type="button"><h2>상품평</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div2>
+              <Div3 type="button"><h2>상품평</h2><GoArrowRight style={{fontSize:"2rem"}} /></Div3>
               <hr />
             </Col>
             <Offcanvas
+              placement="end"
               show={show}
               onHide={handleClose}
-              style={{ width: "35em", height: "auto" }}
+              style={{ width: "30em", height: "auto", padding:"2em"}}
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title>
-                  <h3>배송 가능 지역.</h3>
+                  <h2>상품 설명</h2>
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Image
-                  style={{ width: "90%", height: "auto", margin:"40px"}}
-                  src="https://thesalgu.com/static/media/map.2319c8a13824e2e94c7c.png"/>
+                <h5>{description}</h5>
+                <hr />
+                <h6>{detail}</h6>
+                  <h3>{brand}</h3>
               </Offcanvas.Body>
             </Offcanvas>
             <Col>
               <h1>{name}</h1>
+              <h6>{brand}</h6>
               <h4 style={{ marginTop: "60px" }}>
                 월 <span>{price1}원</span> ~{" "}
               </h4>
@@ -177,14 +190,14 @@ function ListDetailpage(props) {
                 <span>10000 원</span>
               </Div2>
               <hr />
-              <Form.Select aria-label="Default select example" style={{marginBottom:"1em"}}>
-                <option value="" selected hidden>
+              <FormSelect aria-label="Default select example" style={{marginBottom:"1em"}}>
+                <option value="옵션 선택" defaultValue hidden>
                   옵션 선택
                 </option>
                 <option value="1year">12개월</option>
                 <option value="2year">24개월</option>
                 <option value="3year">36개월</option>
-              </Form.Select>
+              </FormSelect>
               <Div2>
                 <Div1>
                   <Button1 onClick={() => {if(itemNum > 0){setItemNum(itemNum - 1)}}}> - </Button1>
@@ -201,10 +214,10 @@ function ListDetailpage(props) {
                 <strong style={{fontSize:"1.2rem"}}>월 {total.toLocaleString("ko-KR")} 원</strong>
               </Div2>
               <p style={{fontSize:"0.8rem", color:"gray", textAlign:"right"}}>최소사용기간 12개월/배송비별도</p>
-              <ButtonJB variant="secondary" href="/cart" bg_Color="#0C0F67">
+              <ButtonJB variant="secondary" href="/cart" bg_color="#0C0F67">
                 장바구니
               </ButtonJB>
-              <ButtonJB variant="secondary" href="/" bg_Color="#7E80AB">
+              <ButtonJB variant="secondary" href="/" bg_color="#7E80AB">
                 바로구매
               </ButtonJB>
             </Col>
@@ -215,7 +228,7 @@ function ListDetailpage(props) {
             {BottomImageList.map(({ src, path }, index) => {
               return (
                 <Col key={index}>
-                  <NavLink to={path} activeClassName="selected">
+                  <NavLink to={path}>
                     <ImageBT
                       src={src}
                       alt={`Bottom image ${index + 1}`}
@@ -227,7 +240,7 @@ function ListDetailpage(props) {
             })}
           </Row>
         </Container>
-      </body>
+      </div>
 
       <footer></footer>
     </>

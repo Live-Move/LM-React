@@ -50,7 +50,7 @@ export const ButtonJB = styled(Button)`
   font-size: 20px;
   width: 100%;
   height: 50px;
-  background-color: ${(props)=>props.bg_Color};
+  background-color: ${(props)=>props.bg_color};
   position: relative;
   left: px;
   top: 20px;
@@ -101,6 +101,15 @@ export const Div2 = styled.div`
   display: flex;
   justify-content:space-between;
   align-items:center ;
+  
+`;
+export const Div3 = styled.div`
+  display: flex;
+  justify-content:space-between;
+  align-items:center ;
+  &:hover {
+    transform: scale(0.98);
+  }
   
 `;
 
