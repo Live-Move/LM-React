@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import AppPages from "./AppPages";
-import NavForRoute from "./NavForRoute";
 import Footer from "../Main/Footer";
 import Header from "../Main/Header";
 
 function AppSrceen(props) {
+  const [loginState, setLoginState] = useState(false);
+
   return (
     <>
-      <Header />
+      <Header loginState={loginState} setLoginState={setLoginState} />
       <AppPages />
       <Footer />
     </>
