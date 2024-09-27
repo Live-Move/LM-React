@@ -1,10 +1,12 @@
 import styled from "styled-components";
 /////////////////////////////////////////////////////////////////////
 export const Container = styled.div`
-  margin: 0 250px;
-  width: 1370px;
+  margin: 0px;
+  min-width: 1800px;
+  width: 100%;
 `;
 export const Ul = styled.ul`
+  margin: 0 250px;
   display: flex;
   justify-content: space-between;
   align-items: center;

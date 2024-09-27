@@ -49,7 +49,7 @@ function MainPageList(props) {
   const navigate = useNavigate();
 
   function handleCategoryClick(category) {
-    navigate(`list/${category}`);
+    navigate("/list", { state: { category } }); // 경로와 함께 상태 전달
   }
   return (
     <Container>
