@@ -49,7 +49,7 @@ const MainScreens = {
     element: <ListPage />,
   },
   ListDetail: {
-    path: "/listdetail",
+    path: "/listdetail/:product_id",
     element: <ListDetailpage />,
   },
   Cart: {

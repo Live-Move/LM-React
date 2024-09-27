@@ -11,7 +11,6 @@ function HeaderUserMenu(props) {
   const handleLogout = (e) => {
     alert("로그아웃 클릭");
     sessionStorage.clear();
-    // setLoginState(false);
   };
 
   const LogoutStatueMenu = [
