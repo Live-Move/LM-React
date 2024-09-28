@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { NavLink, useLocation } from "react-router-dom";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search); // 쿼리 파라미터를 읽어오는 함수
+}
+
 function ListPage(props) {
   const location = useLocation();
-  const category = location.state?.category || "기본 카테고리"; // 상태로 넘어온 카테고리
+  const query = useQuery();
+  const category =
+    location.state?.category || query.get("category") || "기본 카테고리"; // 상태로 넘어온 카테고리
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -30,7 +36,10 @@ function ListPage(props) {
         <Row>
           {items.map((item) => (
             <Col key={item.product_id} sm={6} md={4} xxl={3}>
-              <NavLink to={item.path}>
+              <NavLink
+                to={`/listdetail/${item.product_id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Card style={{ marginTop: "2em", background: "" }}>
                   <Card.Img
                     variant="top"
