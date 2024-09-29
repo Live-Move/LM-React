@@ -163,7 +163,7 @@ function Cart(props) {
       <Container>
         <h2 style={{ margin: "3rem" }}> 장바구니 </h2>
         <Row>
-          <Col md={8}>
+          <Col md={7}>
             <label style={{ display: "flex" }}>
               <FormCheck
                 type="checkbox"
