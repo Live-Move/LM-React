@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ButtonContainer,
   Container,
@@ -11,48 +11,117 @@ import { useNavigate } from "react-router-dom";
 
 function PaymentPage(props) {
   const navigate = useNavigate();
+  // 유저 정보
   const user = isSessionExists();
-  // console.log(user);
+  // 장바구니 정보 및 상품 정보 상태 추가
+  const [cartItems, setCartItems] = useState([]);
+  const [productInfo, setProductInfo] = useState([]);
 
+  // 현재 날짜를 구하는 함수
   const date = new Date();
   const today = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(
     2,
     "0"
   )}.${String(date.getDate()).padStart(2, "0")}`;
 
-  const handlePayment = async () => {
-    const rentalData = {
-      user_id: user.id, // 예시 데이터, 실제 사용자 ID
-      product_id: "12WE23123", // 상품 ID
-      rental_fee: 20800, // 렌탈 요금
-      start_date: new Date().toISOString().split("T")[0], // 오늘 날짜
-      end_date: "2024-12-31", // 종료일 예시
-      rental_status: "대여중", // 상태
-    };
-
+  // 장바구니 데이터를 불러오는 함수
+  const fetchCartData = async (userId) => {
     try {
+      const response = await fetch("http://localhost:8080/api/cart/list", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: user.user_id }), // user_id를 포함하여 서버로 전송
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCartItems(data.data_cart); // 장바구니 정보 설정
+        setProductInfo(data.data_img); // 상품 정보 설정
+      } else {
+        console.error("Failed to fetch cart data");
+      }
+    } catch (error) {
+      console.error("Error while fetching cart data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartData();
+  }, []);
+
+  // 결제 요청을 처리하는 함수 (대여테이블에 상품 정보 create)
+  const handlePayment = async () => {
+    // 보유 포인트와 총 결제 금액 비교
+    const totalPayment = Number(totalPrice) + Number(deliveryFee);
+    if (user.point < totalPayment) {
+      alert("포인트가 부족합니다. 결제를 진행할 수 없습니다.");
+      return; // 결제 진행 중단
+    }
+
+    const rentalData = cartItems.map((item, index) => {
+      // 현재 날짜로 시작일 설정
+      const startDate = new Date();
+
+      // 개월 수를 더해서 종료일을 계산
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + item.month); // item.month 만큼 개월을 더함
+
+      return {
+        user_id: user.user_id, // 실제 사용자 ID
+        product_id: item.product_id, // 상품 ID
+        rental_fee: item.price, // 렌탈 요금
+        start_date: startDate.toISOString().split("T")[0], // 시작일 (YYYY-MM-DD)
+        end_date: endDate.toISOString().split("T")[0], // 종료일 (YYYY-MM-DD)
+        rental_status: "대여중", // 상태
+      };
+    });
+
+    // rentalData 배열을 개별적으로 보내기
+    rentalData.forEach(async (rentalItem) => {
       const response = await fetch("http://localhost:8080/api/rental/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(rentalData),
+        body: JSON.stringify(rentalItem),
       });
 
-      if (response.ok) {
-        alert("결제가 완료되었습니다.");
-        navigate("/CompletionPaymentPage");
+      if (!response.ok) {
+        console.error("Failed to send rental data for:", rentalItem);
       } else {
-        alert("결제에 실패했습니다.");
+        console.log("Rental data sent successfully for:", rentalItem);
       }
-    } catch (error) {
-      console.error("결제 요청 중 오류가 발생했습니다.", error);
-    }
+    });
+
+    // 결제 완료 후 페이지 이동
+    alert("결제가 완료되었습니다.");
+    navigate("/CompletionPaymentPage");
   };
 
+  let totalPrice = 0; // 전체 금액
+  let totalMonth = 0; // 총 개월 수
+  const deliveryFee = 10000; // 배송비
+
+  // 장바구니 상품 정보 렌더링 전에 총 금액과 개월 수 계산
+  cartItems.forEach((item) => {
+    const product = productInfo.find(
+      (product) => product.product_id === item.product_id
+    );
+
+    const productPrice = product?.price * item.quantity || 0;
+    totalPrice += productPrice;
+    totalMonth += item.month;
+  });
+
+  // 총 금액을 총 개월 수로 나눔
+  totalPrice = totalPrice / totalMonth;
+  totalPrice = totalPrice.toFixed(0);
   return (
     <Container>
       <div>
+        {/* 장바구니 상품 정보 */}
         <OrderProduct>
           <table>
             <thead>
@@ -63,24 +132,40 @@ function PaymentPage(props) {
             <tbody>
               <tr>
                 <td></td>
-                <td style={{ fontWeight: "bold" }}>상품명</td>
-                <td style={{ fontWeight: "bold" }}>수량</td>
-                <td style={{ fontWeight: "bold" }}>할인금액</td>
-                <td style={{ fontWeight: "bold" }}>결제금액</td>
-                <td style={{ fontWeight: "bold" }}>개월</td>
+                <td>상품명</td>
+                <td>수량</td>
+                <td>할인금액</td>
+                <td>결제금액</td>
+                <td>개월</td>
               </tr>
-              <tr>
-                <td>상품이미지</td>
-                <td>깔쌈한 신발</td>
-                <td>1</td>
-                <td>3,000 원</td>
-                <td>20,800 원</td>
-                <td>12 개월</td>
-              </tr>
+              {cartItems.map((item, index) => {
+                // 각 상품에 해당하는 이미지와 이름을 가져옴
+                const product = productInfo.find(
+                  (product) => product.product_id === item.product_id
+                );
+
+                return (
+                  <tr key={index}>
+                    <td>
+                      <img
+                        src={product?.thumbnail || "default-image.jpg"}
+                        alt="상품이미지"
+                        width="50" // 이미지 크기 조정
+                        height="50"
+                      />
+                    </td>
+                    <td>{product?.productName || "상품 이름"}</td>
+                    <td>{item.quantity}</td>
+                    <td>0 원</td>
+                    <td>{product?.price * item.quantity} 원</td>
+                    <td>{item.month} 개월</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </OrderProduct>
-
+        {/* 결제 정보 */}
         <PaymentInfo>
           <table>
             <thead>
@@ -90,29 +175,34 @@ function PaymentPage(props) {
             </thead>
             <tbody>
               <tr>
-                <td style={{ fontWeight: "bold" }}>상품금액</td>
-                <td>12,354,835,123 원</td>
+                <td>상품금액</td>
+                <td>{totalPrice} 원</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: "bold" }}>배송비</td>
-                <td>5000 원</td>
+                <td>배송비</td>
+                <td>{deliveryFee} 원</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: "bold" }}>총 결제 금액</td>
-                <td>12,361,620,123 원</td>
+                <td>총 결제 금액</td>
+                <td>{Number(totalPrice) + Number(deliveryFee)} 원</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: "bold" }}>보유 포인트</td>
+                <td>보유 포인트</td>
                 <td>{user.point} point</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: "bold" }}>남는 포인트</td>
-                <td>80000 point</td>
+                <td>남는 포인트</td>
+                <td>
+                  {Number(user.point) -
+                    Number(totalPrice) -
+                    Number(deliveryFee)}{" "}
+                  point
+                </td>
               </tr>
             </tbody>
           </table>
         </PaymentInfo>
-
+        {/* 유저 정보 */}
         <UserInfoContainer>
           <div className="user-info">
             <table>
@@ -123,53 +213,30 @@ function PaymentPage(props) {
               </thead>
               <tbody>
                 <tr>
-                  <td style={{ fontWeight: "bold" }}>주문코드</td>
-                  <td>{user.point + 123456789}</td>
+                  <td>주문코드</td>
+                  <td>{user.point + 13579}</td>
                 </tr>
                 <tr>
-                  <td style={{ fontWeight: "bold" }}>주문일</td>
+                  <td>주문일</td>
                   <td>{today}</td>
                 </tr>
                 <tr>
-                  <td style={{ fontWeight: "bold" }}>이름</td>
+                  <td>이름</td>
                   <td>{user.name}</td>
                 </tr>
                 <tr>
-                  <td style={{ fontWeight: "bold" }}>휴대폰번호</td>
+                  <td>휴대폰번호</td>
                   <td>{user.phone}</td>
                 </tr>
                 <tr>
-                  <td style={{ fontWeight: "bold" }}>이메일</td>
+                  <td>이메일</td>
                   <td>{user.email}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <div className="delivery-info">
-            <table>
-              <thead>
-                <tr>
-                  <th colSpan="2">배송지 정보</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>이름</td>
-                  <td>{user.name}</td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>휴대폰번호</td>
-                  <td>{user.phone}</td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>배송지주소</td>
-                  <td>{user.address}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </UserInfoContainer>
+        {/* 결제 버튼 */}
         <ButtonContainer>
           <button className="pay-button" onClick={handlePayment}>
             결제 하기
