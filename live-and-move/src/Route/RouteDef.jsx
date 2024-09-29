@@ -10,6 +10,8 @@ import KakaoLoginPage from "../Login/Social/Kakao/KakaoLoginPage";
 import AccountMain from "../Login/Account/AccountMain";
 import AccountPage from "../Login/Account/AccountPage";
 import MyPageMain from "../MyPage/MyPageMain";
+import CompletionPaymentPage from "../Payment/CompletionPaymentPage";
+import PaymentPage from "../Payment/PaymentPage";
 
 const MainScreens = {
   SocialLogin: {
@@ -55,6 +57,14 @@ const MainScreens = {
   Cart: {
     path: "/cart",
     element: <Cart />,
+  },
+  PaymentPage: {
+    path: "/PaymentPage",
+    element: <PaymentPage />,
+  },
+  CompletionPaymentPage: {
+    path: "/CompletionPaymentPage",
+    element: <CompletionPaymentPage />,
   },
 };
 
