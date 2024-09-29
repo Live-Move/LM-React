@@ -190,10 +190,24 @@ function Cart(props) {
                           style={{ width: "6em" }}
                         />
                       </div>
-                      <span style={{ width: "250px", margin: "0px 25px" }}>
+                      <span style={{ width: "290px", margin: "0px 15px" }}>
+                        <p
+                          style={{
+                            fontSize: "19px",
+                            fontWeight: "bold",
+                            marginBottom: "0px",
+                          }}
+                        >
+                          {cartData.productInfo[index].brand}
+                        </p>
                         {cartData.productInfo[index].productName}
                       </span>
-                      <Div1 style={{ width: "150px", marginRight: "8px" }}>
+                      <Div1
+                        style={{
+                          width: "80px",
+                          margin: "0px 8px",
+                        }}
+                      >
                         <Button1 onClick={() => handleDown(index)}>-</Button1>
                         <Input1
                           type="number"
@@ -206,15 +220,20 @@ function Cart(props) {
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          justifyContent: "center",
-                          width: "180px",
+                          justifyContent: "end",
+                          textAlign: "center",
+                          width: "220px",
+                          marginRight: "15px",
                         }}
                       >
                         {(
                           Math.ceil(cartData.productInfo[index].price / month) *
                           cartData.itemNum[index]
                         ).toLocaleString("ko-KR")}{" "}
-                        원
+                        원{" "}
+                        <p style={{ marginLeft: "6px", fontWeight: "bold" }}>
+                          [{cartData.cartInfo[index].month}개월]
+                        </p>
                       </span>
                       <CloseButton onClick={() => handleDeleteItem(index)} />
                     </Div2>
