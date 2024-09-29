@@ -68,7 +68,7 @@ const MainScreens = {
     element: <CompletionPaymentPage />,
   },
   StartPage: {
-    path: "/StartPage",
+    path: "/",
     element: <Startpage />,
   },
 };
