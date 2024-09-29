@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Carousel,
   Col,
   Container,
+  Form,
   FormSelect,
   Image,
   Offcanvas,
@@ -24,28 +25,42 @@ import {
 } from "./CSS/Detail";
 import { GoArrowRight } from "react-icons/go";
 import OffcanvasBS from "./OffcanvasBS";
+import { isSessionExists } from "../Login/Account/AccountChk";
 
 function ListDetailpage(props) {
+  const [productData, setProductData] = useState({
+    info: {},
+    images: [],
+  });
+  const isLoadData = useRef(true);
+
   const params = useParams();
-  const product_id = params.product_id;
-  console.log(`[ product_id ] >> ${product_id}`);
-  const URL_product = `http://localhost:8080/api/product/detail?product_id=${product_id}`;
-  const URL_img = `http://localhost:8080/api/productImg/list?product_id=${product_id}`;
+  const product_id = useRef(params.product_id);
+  const URL_product = useRef(
+    `http://localhost:8080/api/product/detail?product_id=${product_id.current}`
+  );
 
   useEffect(() => {
-    let productInfo = {};
-
-    fetch(URL_product)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.code);
-        productInfo = { ...data.data };
-        console.log(productInfo);
-      });
-  }, []);
+    console.log("[ useEffect ]");
+    const fetchData = async () => {
+      console.log("[ fetchData ]");
+      try {
+        isLoadData.current = false;
+        const response = await fetch(URL_product.current);
+        const data = await response.json();
+        setProductData({
+          ...productData,
+          info: { ...data.detail },
+          images: data.images,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    if (isLoadData.current) {
+      fetchData();
+    }
+  }, [isLoadData, productData]);
 
   const [index, setIndex] = useState(0);
 
@@ -53,58 +68,46 @@ function ListDetailpage(props) {
     setIndex(selectedIndex);
   };
 
+  // 장바구니 담기
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addCartData();
+  };
+
+  const addCartData = async () => {
+    console.log(isSessionExists().user_id);
+    let obj = {
+      product_id: productData.info.product_id,
+      user_id: isSessionExists().user_id,
+      quantity: itemNum,
+    };
+
+    console.log(obj);
+    const response = await fetch("http://localhost:8080/api/cart/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
+    // console.log(response.json());
+    const data = await response.json();
+    console.log(data.code);
+    // console.log(data.data);
+  };
+
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  const Items = [
-    {
-      product_id: 1,
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      product_name: "product_name",
-      category: "category",
-      content: "content",
-      brand: "brand",
-      description:
-        "흰색을 좋아하는 분들을 위한 제품이에요. 깔끔한 라인과 반투명 유리의 탁상스탠드가 방 안에 따뜻하고 기분 좋은 분위기를 연출해주는 부드러운 조명을 비춰줍니다.",
-      detail:
-        "부드러운 느낌의 무드등입니다.디자이너IKEA of Sweden디자이너IKEA of Sweden",
-      price: 60000,
-      path: "/listdetail",
-    },
-  ];
-
-  const BottomImage = [
-    {
-      product_id: "1",
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m",
-      path: "/",
-    },
-    {
-      product_id: "2",
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      path: "/",
-    },
-    {
-      product_id: "3",
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m",
-      path: "/",
-    },
-  ];
-
   const BottomImageList =
-    BottomImage.length >= 5
-      ? BottomImage.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
-      : BottomImage.concat(Array(5 - BottomImage.length).fill(BottomImage[0])); // 5개이하 남은 공간 첫 번째 이미지로 채우기
+    productData.images.length >= 5
+      ? productData.images.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
+      : productData.images; // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-  const [name, setName] = useState(Items[0].product_name); // 제품 이름
-  const [brand, setBrand] = useState(Items[0].brand); // 제품 브랜드
-  const [description, setDescription] = useState(Items[0].description); // 제품 브랜드
-  const [detail, setDetail] = useState(Items[0].detail); // 제품 브랜드
   const [itemNum, setItemNum] = useState(1); // 제품 수량
-  const [price, setPrice] = useState(Items[0].price); // 제품 가격
-  const price1 = price.toLocaleString("ko-KR");
-  const total = price * itemNum;
+  // const price1 = price.toLocaleString("ko-KR");
+  const total = productData.info.price * itemNum;
   return (
     <>
       <div style={{ marginTop: "5em" }}>
@@ -112,189 +115,167 @@ function ListDetailpage(props) {
           <Row></Row>
         </Container>
         <Container>
-          <Row>
-            <Col>
-              <CarouselContainer>
-                <Col>
-                  {/* <Carousel activeIndex={index} onSelect={handleSelect}> */}
-                  <Carousel activeIndex={index} onSelect={() => {}}>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="First slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>First slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Nulla vitae elit libero, a pharetra augue mollis
-                          interdum.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="Second slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1306384_ph197204_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Second slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <Image
-                        style={{ width: "auto", height: "auto" }}
-                        text="Third slide"
-                        src="https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1341194_ph198635_s5.jpg?f=m"
-                      />
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Third slide label</h3>
-                        <p style={{ color: "black" }}>
-                          Praesent commodo cursus magna, vel scelerisque nisl
-                          consectetur.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                  </Carousel>
-                </Col>
-              </CarouselContainer>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col>
+                <CarouselContainer>
+                  <Col>
+                    <Carousel activeIndex={index} onSelect={handleSelect}>
+                      {(productData.images.length >= 5
+                        ? productData.images.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
+                        : productData.images
+                      ).map(({ img_id, img_path }, index) => {
+                        return (
+                          <Carousel.Item key={img_id + index}>
+                            <Image
+                              style={{ width: "auto", height: "auto" }}
+                              text={img_id}
+                              src={img_path}
+                            />
+                          </Carousel.Item>
+                        );
+                      })}
+                    </Carousel>
+                  </Col>
+                </CarouselContainer>
 
-              <OffcanvasBS />
-              <hr />
-              <Div3 type="button" onClick={handleShow}>
-                <h2>제품 설명</h2>
-                <GoArrowRight style={{ fontSize: "2rem" }} />
-              </Div3>
-              <hr />
-              <Div3 type="button">
-                <h2>상품평</h2>
-                <GoArrowRight style={{ fontSize: "2rem" }} />
-              </Div3>
-              <hr />
-            </Col>
-            <Offcanvas
-              placement="end"
-              show={show}
-              onHide={handleClose}
-              style={{ width: "30em", height: "auto", padding: "2em" }}
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title>
-                  <h2>상품 설명</h2>
-                </Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <h5>{description}</h5>
+                <OffcanvasBS />
                 <hr />
-                <h6>{detail}</h6>
-                <h3>{brand}</h3>
-              </Offcanvas.Body>
-            </Offcanvas>
-            <Col>
-              <h1>{name}</h1>
-              <h6>{brand}</h6>
-              <h4 style={{ marginTop: "60px" }}>
-                월 <span>{price1}원</span> ~{" "}
-              </h4>
+                <Div3 type="button" onClick={handleShow}>
+                  <h2>제품 설명</h2>
+                  <GoArrowRight style={{ fontSize: "2rem" }} />
+                </Div3>
+                <hr />
+                <Div3 type="button">
+                  <h2>상품평</h2>
+                  <GoArrowRight style={{ fontSize: "2rem" }} />
+                </Div3>
+                <hr />
+              </Col>
+              <Offcanvas
+                placement="end"
+                show={show}
+                onHide={handleClose}
+                style={{ width: "30em", height: "auto", padding: "2em" }}
+              >
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title>
+                    <h2>상품 설명</h2>
+                  </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <h5>{productData.info.description}</h5>
+                  <hr />
+                  <h6>{productData.info.detail}</h6>
+                  <h3>{productData.info.brand}</h3>
+                </Offcanvas.Body>
+              </Offcanvas>
               <Col>
+                <h1>{productData.info.productName}</h1>
+                <h6>{productData.info.brand}</h6>
+                <h4 style={{ marginTop: "60px" }}>
+                  월 <span>{productData.info.price}원</span> ~{" "}
+                </h4>
+                <Col>
+                  <br />
+                  <span>
+                    <CheckCircle /> <SpanColor>12개월</SpanColor> 사용후
+                    <SpanColor>소유</SpanColor>
+                    하시거나 <SpanColor>무료로 회수</SpanColor>를 신청할 수
+                    있어요.
+                  </span>
+                </Col>
+                <Col>
+                  <span>
+                    <CheckCircle /> 한번도 사용하지 않은{" "}
+                    <SpanColor>새 제품</SpanColor> 이에요.
+                  </span>
+                </Col>
                 <br />
-                <span>
-                  <CheckCircle /> <SpanColor>12개월</SpanColor> 사용후
-                  <SpanColor>소유</SpanColor>
-                  하시거나 <SpanColor>무료로 회수</SpanColor>를 신청할 수
-                  있어요.
-                </span>
+                <Div2>
+                  <span>
+                    배송비 <QuestionCircle />
+                  </span>
+                  <span>10000 원</span>
+                </Div2>
+                <hr />
+                <FormSelect
+                  aria-label="Default select example"
+                  style={{ marginBottom: "1em" }}
+                >
+                  <option value="옵션 선택" defaultValue hidden>
+                    옵션 선택
+                  </option>
+                  <option value="1year">12개월</option>
+                  <option value="2year">24개월</option>
+                  <option value="3year">36개월</option>
+                </FormSelect>
+                <Div2>
+                  <Div1>
+                    <Button1
+                      onClick={() => {
+                        if (itemNum > 1) {
+                          setItemNum(itemNum - 1);
+                        }
+                      }}
+                    >
+                      {" "}
+                      -{" "}
+                    </Button1>
+                    <Input1 type="number" value={itemNum} readOnly />
+                    <Button1 onClick={() => setItemNum(itemNum + 1)}>
+                      {" "}
+                      +{" "}
+                    </Button1>
+                  </Div1>
+                  <span>
+                    수량 :{" "}
+                    <strong style={{ color: "#4646e2" }}>{itemNum}</strong> 개
+                  </span>
+                </Div2>
+                <hr />
+                <Div2>
+                  <strong>최종 구독가:</strong>
+                  <strong style={{ fontSize: "1.2rem" }}>
+                    월 {total.toLocaleString("ko-KR")} 원
+                  </strong>
+                </Div2>
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "gray",
+                    textAlign: "right",
+                  }}
+                >
+                  최소사용기간 12개월/배송비별도
+                </p>
+                <ButtonJB type="submit" bg_color="#0C0F67">
+                  장바구니 담기
+                </ButtonJB>
+                <ButtonJB href="/cart" bg_color="#7E80AB">
+                  바로구매
+                </ButtonJB>
               </Col>
-              <Col>
-                <span>
-                  <CheckCircle /> 한번도 사용하지 않은{" "}
-                  <SpanColor>새 제품</SpanColor> 이에요.
-                </span>
-              </Col>
-              <br />
-              <Div2>
-                <span>
-                  배송비 <QuestionCircle />
-                </span>
-                <span>10000 원</span>
-              </Div2>
-              <hr />
-              <FormSelect
-                aria-label="Default select example"
-                style={{ marginBottom: "1em" }}
-              >
-                <option value="옵션 선택" defaultValue hidden>
-                  옵션 선택
-                </option>
-                <option value="1year">12개월</option>
-                <option value="2year">24개월</option>
-                <option value="3year">36개월</option>
-              </FormSelect>
-              <Div2>
-                <Div1>
-                  <Button1
-                    onClick={() => {
-                      if (itemNum > 0) {
-                        setItemNum(itemNum - 1);
-                      }
-                    }}
-                  >
-                    {" "}
-                    -{" "}
-                  </Button1>
-                  <Input1 type="number" value={itemNum} readOnly />
-                  <Button1 onClick={() => setItemNum(itemNum + 1)}> + </Button1>
-                </Div1>
-                <span>
-                  수량 : <strong style={{ color: "#4646e2" }}>{itemNum}</strong>{" "}
-                  개
-                </span>
-              </Div2>
-              <hr />
-              <Div2>
-                <strong>최종 구독가:</strong>
-                <strong style={{ fontSize: "1.2rem" }}>
-                  월 {total.toLocaleString("ko-KR")} 원
-                </strong>
-              </Div2>
-              <p
-                style={{
-                  fontSize: "0.8rem",
-                  color: "gray",
-                  textAlign: "right",
-                }}
-              >
-                최소사용기간 12개월/배송비별도
-              </p>
-              <ButtonJB variant="secondary" href="/cart" bg_color="#0C0F67">
-                장바구니
-              </ButtonJB>
-              <ButtonJB variant="secondary" href="/" bg_color="#7E80AB">
-                바로구매
-              </ButtonJB>
-            </Col>
-          </Row>
+            </Row>
+          </Form>
         </Container>
         <Container>
           <Row>
-            {BottomImageList.map(({ src, path }, index) => {
-              return (
-                <Col key={index}>
-                  <NavLink to={path}>
-                    <ImageBT
-                      src={src}
-                      alt={`Bottom image ${index + 1}`}
-                      rounded
-                    />
-                  </NavLink>
-                </Col>
-              );
-            })}
+            {BottomImageList.length > 0
+              ? BottomImageList.map(({ img_path, img_id }, index) => {
+                  return (
+                    <Col key={img_id + index}>
+                      <NavLink>
+                        <ImageBT
+                          src={img_path}
+                          alt={`Bottom image ${index + 1}`}
+                          rounded
+                        />
+                      </NavLink>
+                    </Col>
+                  );
+                })
+              : ""}
           </Row>
         </Container>
       </div>
