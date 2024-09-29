@@ -3,7 +3,6 @@ import {
   CloseButton,
   Col,
   Container,
-  Form,
   FormCheck,
   Image,
   Row,
@@ -72,6 +71,8 @@ function Cart(props) {
   const URL = useRef("http://localhost:8080/api/cart/list");
 
   const fetchData = async () => {
+    isLoadData.current = false;
+
     console.log("[ load cart data ]");
     const user_info = await isSessionExists();
     console.log(user_info);
@@ -86,16 +87,14 @@ function Cart(props) {
 
     console.log(`[ response ]`);
     const data = await response.json();
-    console.log(data);
+    console.log(data.data_cart);
 
     // const data = response.json();
     // console.log(data);
-
-    isLoadData.current = false;
   };
 
   useEffect(() => {
-    console.log("[ effect ]");
+    console.log("[ useEffect ]");
     if (isLoadData.current) {
       fetchData();
     }

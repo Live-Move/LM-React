@@ -3,13 +3,12 @@ import {
   Carousel,
   Col,
   Container,
-  Form,
   FormSelect,
   Image,
   Offcanvas,
   Row,
 } from "react-bootstrap";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
   CarouselContainer,
   CheckCircle,
@@ -28,7 +27,7 @@ import OffcanvasBS from "./OffcanvasBS";
 import { isSessionExists } from "../Login/Account/AccountChk";
 
 function ListDetailpage(props) {
-  // const [itemNum, setItemNum] = useState(1); // 제품 수량
+  const navigate = useNavigate();
   const itemNum = useRef(1);
   const chkMonth = useRef(12);
   const [productData, setProductData] = useState({
@@ -83,26 +82,33 @@ function ListDetailpage(props) {
   };
 
   const addCartData = async () => {
-    console.log(isSessionExists().user_id);
-    let obj = {
-      product_id: productData.info.product_id,
-      userId: isSessionExists().user_id,
-      quantity: itemNum.current,
-      price: productData.totalPrice,
-    };
+    let userData = isSessionExists();
+    if (userData == null) {
+      alert("* 로그인 후에 이용가능한 서비스 입니다.");
+      navigate("/user/login");
+    } else {
+      let obj = {
+        product_id: productData.info.product_id,
+        userId: userData.user_id,
+        quantity: itemNum.current,
+        price: productData.totalPrice,
+      };
 
-    console.log(obj);
-    const response = await fetch("http://localhost:8080/api/cart/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
-    // console.log(response.json());
-    const data = await response.json();
-    console.log(data.code);
-    // console.log(data.data);
+      console.log(obj);
+      const response = await fetch("http://localhost:8080/api/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      });
+
+      const data = await response.json();
+      if (data.code === "fail") {
+        alert("* 장바구니에 등록된 상품입니다.");
+      }
+      console.log(data.code);
+    }
   };
 
   const [show, setShow] = useState(false);
