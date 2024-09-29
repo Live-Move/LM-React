@@ -63,4 +63,17 @@ export const Button001 = styled(Button)`
   background: black;
   border: none;
   opacity: 0.7;
+  width: 10em;
+  height: 3em;
+  display: flex;        /* Flexbox 사용 */
+  justify-content: center;  /* 가로 중앙 정렬 */
+  align-items: center;      /* 세로 중앙 정렬 */
+`;
+export const Img02 = styled.img`
+  position: absolute;  /* 부모 요소를 기준으로 절대 위치 설정 */
+  top: 80px;            /* 수직 중앙 */
+  left: 90px;           /* 수평 중앙 */
+  transform: translate(-50%, -50%);  /* 중앙 정렬을 위한 변환 */
+  width: 10em;
+  height: 8em;
 `;

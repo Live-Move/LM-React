@@ -4,7 +4,7 @@ import { AppRouteDef } from "./RouteDef";
 
 function AppPages(props) {
   return (
-    <BrowserRouter>
+    
       <Routes>
         {Object.entries({ ...AppRouteDef }).map(
           ([name, { path, element }], index) => (
@@ -12,7 +12,7 @@ function AppPages(props) {
           )
         )}
       </Routes>
-    </BrowserRouter>
+    
   );
 }
 
