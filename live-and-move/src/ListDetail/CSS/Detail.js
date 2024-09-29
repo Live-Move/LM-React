@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button,Image } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import { GiPositionMarker } from "react-icons/gi";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
@@ -17,13 +17,15 @@ export const ButtonBS = styled(Button)`
   position: relative;
   left: 15px;
   top: 20px;
-  margin-bottom: 40px; 
+  margin-bottom: 40px;
   border: none;
   &:hover {
     background-color: #696969;
+    transition-duration: 0.35s;
     transform: scale(1.04);
   }
   &:active {
+    transition-duration: 0.35s;
     transform: scale(0.98);
   }
 `;
@@ -34,47 +36,47 @@ export const PinIcon = styled(GiPositionMarker)`
 `;
 export const CheckCircle = styled(FiCheckCircle)`
   display: inline-block;
-  verticalAlign: middle;
-  color: #4646e2
+  verticalalign: middle;
+  color: #4646e2;
 `;
 export const SpanColor = styled.span`
-color: #4646e2
+  color: #4646e2;
 `;
 export const QuestionCircle = styled(AiOutlineQuestionCircle)`
   display: inline-block;
-  verticalAlign: middle;
-  color: #
+  verticalalign: middle;
 `;
 
 export const ButtonJB = styled(Button)`
   font-size: 20px;
   width: 100%;
   height: 50px;
-  background-color: ${(props)=>props.bg_color};
+  background-color: ${(props) => props.bg_color};
   position: relative;
   left: px;
   top: 20px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
   border: none;
   &:hover {
-    background-color: #B0B8E6;
+    background-color: #b0b8e6;
+    transition-duration: 0.4s;
     transform: scale(1.04);
   }
   &:active {
+    transition-duration: 0.4s;
     transform: scale(0.98);
   }
 `;
 
-
 export const ImageBT = styled(Image)`
-  
   width: 100%;
   height: auto;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   position: relative;
   left: px;
   top: 10px;
   &:hover {
+    transition-duration: 0.2s;
     transform: scale(1.04);
   }
 `;
@@ -90,27 +92,26 @@ export const Button1 = styled.button`
   cursor: pointer;
   background: none;
 `;
-export const Div1 = styled.div` 
+export const Div1 = styled.div`
   display: flex;
-  align-items:center ;
+  align-items: center;
   gap: 0px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 `;
 
 export const Div2 = styled.div`
   display: flex;
-  justify-content:space-between;
-  align-items:center ;
-  
+  justify-content: space-between;
+  align-items: center;
 `;
 export const Div3 = styled.div`
   display: flex;
-  justify-content:space-between;
-  align-items:center ;
+  justify-content: space-between;
+  align-items: center;
   &:hover {
+    transition-duration: 0.2s;
     transform: scale(0.98);
   }
-  
 `;
 
 export const Input1 = styled.input`
