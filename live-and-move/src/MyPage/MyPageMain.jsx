@@ -7,6 +7,7 @@ import {
   Div01,
   Div02,
   Div1,
+  Div3,
   Icon1,
   Image01,
   MainContainer,
@@ -14,44 +15,28 @@ import {
   MyInfoContainer,
   TopCol,
 } from "./MyPageMainCss";
-import { Button, Card, Col, Image, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Image,
+  Modal,
+  Offcanvas,
+  Row,
+} from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { isSessionExists } from "../Login/Account/AccountChk";
 
 function MyPageMain(props) {
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState("");
-
-
-
-///////////////////
-  const params = useParams();
-  const user_id = params.user_id;
-  console.log(`[ user_id ] >> ${user_id}`);
-
-  const URL_user = `http://localhost:8080/api/mypage/user?user_id=${user_id}`;
-
+  ///////////////////
   // userInfo 상태 정의
-  const [userInfo, setUserInfo] = useState({}); // 초기값은 빈 객체
+  const [userInfo, setUserInfo] = useState(isSessionExists()); // 초기값은 빈 객체
 
-
-  useEffect(() => {
-    // let userInfo = {};
-
-    fetch(URL_user)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.code);
-        // userInfo = { ...data.data };
-        setUserInfo(data.data);
-        console.log(userInfo);
-      });
-  }, []);
-
-//////////////////////
-
+  const [show, setShow] = useState(false); //택배가능지역
+  //내정보
+  const [show2, setShow2] = useState(false);
+  const handleShow2 = () => setShow2(true);
+  const handleClose2 = () => setShow2(false);
   const User = {
     user_id: "1",
     login_id: "test@gmail.com",
@@ -148,30 +133,61 @@ function MyPageMain(props) {
                 </h6>
               </div>
             </TopCol>
-    
-    <BodyContainer>
-      <Row>
-        <Col ><Div1><h4>내 정보1</h4><Icon1/></Div1></Col>
-        <Col ><Div1><h4>택배 가능지역 확인</h4><Icon1/></Div1></Col>
-        <Col ><Div1><h4>내 정보3</h4><Icon1/></Div1></Col>
-      </Row>
-    </BodyContainer>
+
+            <BodyContainer>
+              <Row>
+                <Col>
+                  <Div1 type="button" onClick={handleShow2}>
+                    <h4>내 정보1</h4>
+                    <Icon1 />
+                  </Div1>
+                </Col>
+                <Col>
+                  <Div1 type="button" onClick={() => setShow(true)}>
+                    <h4>택배 가능지역 확인</h4>
+                    <Icon1 />
+                  </Div1>
+                </Col>
+                <Col>
+                  <a
+                    href="/main"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Div1>
+                      <h4>이벤트 참여하기</h4>
+                      <Icon1 />
+                    </Div1>
+                  </a>
+                </Col>
+              </Row>
+            </BodyContainer>
             <BodyContainer>
               <h3 style={{ color: "#707070" }}>구독중인 상품</h3>
               <ColCard>
                 {choice.map((item, index) => {
                   return (
                     <Card01 key={index}>
-                      <Card.Body style={{margin:"-0.5em"}}>
-                        <span><h5>{item.name}</h5></span>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>{itemNum[index]}개</span>
-                        <span>{(item.price * itemNum[index]).toLocaleString("ko-KR")} 원</span>
+                      <Card.Body style={{ margin: "-0.5em" }}>
+                        <span>
+                          <h5>{item.name}</h5>
+                        </span>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <span>{itemNum[index]}개</span>
+                          <span>
+                            {(item.price * itemNum[index]).toLocaleString(
+                              "ko-KR"
+                            )}{" "}
+                            원
+                          </span>
                         </div>
                       </Card.Body>
-                      <Image01 src={item.src}/>
-                      <Card.ImgOverlay>
-                      </Card.ImgOverlay>
+                      <Image01 src={item.src} />
+                      <Card.ImgOverlay></Card.ImgOverlay>
                     </Card01>
                   );
                 })}
@@ -196,7 +212,9 @@ function MyPageMain(props) {
                   <Div02>
                     <div>아이디 : {userInfo.loginId}</div>
                     <span>포인트 : </span>
-                    <span style={{ color: "#fedd06"}}>{User.piont.toLocaleString("ko-KR")} </span> 
+                    <span style={{ color: "#fedd06" }}>
+                      {User.piont.toLocaleString("ko-KR")}{" "}
+                    </span>
                     <span>점</span>
                   </Div02>
                 </MyInfoContainer>
@@ -205,6 +223,53 @@ function MyPageMain(props) {
           </MyInfoCol>
         </Row>
       </MainContainer>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            배송가능지역
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            style={{ width: "90%", height: "auto", margin: "40px" }}
+            src="https://cdn.crowdpic.net/detail-thumb/thumb_d_DBFE2FF99E92CD9611BBD55448660FF3.png"
+          />
+          <h5>* 서울전지역 당일 배송 가능 * </h5>
+          <h5>* 전국 배송가능 지역 *</h5>
+        </Modal.Body>
+      </Modal>
+
+      <Offcanvas
+        show={show2}
+        onHide={handleClose2}
+        style={{ width: "35em", height: "auto" }}
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <Div3>
+              <h3>내 정보 </h3>
+            </Div3>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <hr />
+          <h4>아이디 : {userInfo.loginId}</h4>
+          <hr />
+          <h4>주소 : {userInfo.address}</h4>
+          <hr />
+          <h4>전화번호 : {userInfo.phone}</h4>
+          <hr />
+          <h4>생일 : {userInfo.birth}</h4>
+          <hr />
+          <Button variant="secondary">회원탈퇴</Button>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 }
