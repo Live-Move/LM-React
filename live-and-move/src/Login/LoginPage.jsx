@@ -49,7 +49,7 @@ function LoginPage(props) {
           sessionStorage.setItem("userData", JSON.stringify(data.data));
           console.log(`[ session Storage ]`);
           console.log(isSessionExists());
-          navigate("/main");
+          navigate("/");
         }
       });
   };

@@ -261,12 +261,15 @@ function MyPageMain(props) {
           <hr />
           <h4>아이디 : {userInfo.loginId}</h4>
           <hr />
-          <h4>주소 : {userInfo.address}</h4>
+          <h4>비밀번호 : {userInfo.password}</h4>
           <hr />
           <h4>전화번호 : {userInfo.phone}</h4>
           <hr />
           <h4>생일 : {userInfo.birth}</h4>
           <hr />
+          <h4>주소 : {userInfo.address}</h4>
+          <hr />
+          <Button variant="secondary" >비밀번호 변경</Button> {' '}
           <Button variant="secondary">회원탈퇴</Button>
         </Offcanvas.Body>
       </Offcanvas>
