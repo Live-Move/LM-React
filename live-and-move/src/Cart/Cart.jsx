@@ -84,7 +84,10 @@ function Cart(props) {
       body: JSON.stringify(user_info),
     });
 
-    console.log(`[ response ] >> ${response}`);
+    console.log(`[ response ]`);
+    const data = await response.json();
+    console.log(data);
+
     // const data = response.json();
     // console.log(data);
 

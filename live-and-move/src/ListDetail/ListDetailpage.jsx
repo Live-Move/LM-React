@@ -28,9 +28,15 @@ import OffcanvasBS from "./OffcanvasBS";
 import { isSessionExists } from "../Login/Account/AccountChk";
 
 function ListDetailpage(props) {
+  // const [itemNum, setItemNum] = useState(1); // 제품 수량
+  const itemNum = useRef(1);
+  const chkMonth = useRef(12);
   const [productData, setProductData] = useState({
     info: {},
     images: [],
+    itemNum: 1,
+    totalPrice: 0,
+    chkMonth: 12,
   });
   const isLoadData = useRef(true);
 
@@ -52,6 +58,8 @@ function ListDetailpage(props) {
           ...productData,
           info: { ...data.detail },
           images: data.images,
+          totalPrice: Math.ceil(data.detail.price / 12),
+          chkMonth: 12,
         });
       } catch (e) {
         console.log(e);
@@ -78,8 +86,9 @@ function ListDetailpage(props) {
     console.log(isSessionExists().user_id);
     let obj = {
       product_id: productData.info.product_id,
-      user_id: isSessionExists().user_id,
-      quantity: itemNum,
+      userId: isSessionExists().user_id,
+      quantity: itemNum.current,
+      price: productData.totalPrice,
     };
 
     console.log(obj);
@@ -105,9 +114,6 @@ function ListDetailpage(props) {
       ? productData.images.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
       : productData.images; // 5개이하 남은 공간 첫 번째 이미지로 채우기
 
-  const [itemNum, setItemNum] = useState(1); // 제품 수량
-  // const price1 = price.toLocaleString("ko-KR");
-  const total = productData.info.price * itemNum;
   return (
     <>
       <div style={{ marginTop: "5em" }}>
@@ -115,149 +121,193 @@ function ListDetailpage(props) {
           <Row></Row>
         </Container>
         <Container>
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col>
-                <CarouselContainer>
-                  <Col>
-                    <Carousel activeIndex={index} onSelect={handleSelect}>
-                      {(productData.images.length >= 5
-                        ? productData.images.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
-                        : productData.images
-                      ).map(({ img_id, img_path }, index) => {
-                        return (
-                          <Carousel.Item key={img_id + index}>
-                            <Image
-                              style={{ width: "auto", height: "auto" }}
-                              text={img_id}
-                              src={img_path}
-                            />
-                          </Carousel.Item>
-                        );
-                      })}
-                    </Carousel>
-                  </Col>
-                </CarouselContainer>
+          <Row>
+            <Col>
+              <CarouselContainer>
+                <Col>
+                  <Carousel activeIndex={index} onSelect={handleSelect}>
+                    {(productData.images.length >= 5
+                      ? productData.images.slice(0, 5) //이미지 5개 이상이면 처음 5개만 출력
+                      : productData.images
+                    ).map(({ img_id, img_path }, index) => {
+                      return (
+                        <Carousel.Item key={img_id + index}>
+                          <Image
+                            style={{ width: "auto", height: "auto" }}
+                            text={img_id}
+                            src={img_path}
+                          />
+                        </Carousel.Item>
+                      );
+                    })}
+                  </Carousel>
+                </Col>
+              </CarouselContainer>
 
-                <OffcanvasBS />
+              <OffcanvasBS />
+              <hr />
+              <Div3 type="button" onClick={handleShow}>
+                <h2>제품 설명</h2>
+                <GoArrowRight style={{ fontSize: "2rem" }} />
+              </Div3>
+              <hr />
+              <Div3 type="button">
+                <h2>상품평</h2>
+                <GoArrowRight style={{ fontSize: "2rem" }} />
+              </Div3>
+              <hr />
+            </Col>
+            <Offcanvas
+              placement="end"
+              show={show}
+              onHide={handleClose}
+              style={{ width: "30em", height: "auto", padding: "2em" }}
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title>
+                  <h2>상품 설명</h2>
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <h5>{productData.info.description}</h5>
                 <hr />
-                <Div3 type="button" onClick={handleShow}>
-                  <h2>제품 설명</h2>
-                  <GoArrowRight style={{ fontSize: "2rem" }} />
-                </Div3>
-                <hr />
-                <Div3 type="button">
-                  <h2>상품평</h2>
-                  <GoArrowRight style={{ fontSize: "2rem" }} />
-                </Div3>
-                <hr />
-              </Col>
-              <Offcanvas
-                placement="end"
-                show={show}
-                onHide={handleClose}
-                style={{ width: "30em", height: "auto", padding: "2em" }}
-              >
-                <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>
-                    <h2>상품 설명</h2>
-                  </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  <h5>{productData.info.description}</h5>
-                  <hr />
-                  <h6>{productData.info.detail}</h6>
-                  <h3>{productData.info.brand}</h3>
-                </Offcanvas.Body>
-              </Offcanvas>
+                <h6>{productData.info.detail}</h6>
+                <h3>{productData.info.brand}</h3>
+              </Offcanvas.Body>
+            </Offcanvas>
+            <Col>
+              <h1>{productData.info.productName}</h1>
+              <h6>{productData.info.brand}</h6>
+              <h4 style={{ marginTop: "60px" }}>
+                월{" "}
+                <span>
+                  {Math.ceil(productData.info.price / 36).toLocaleString(
+                    "ko-KR"
+                  )}
+                  원
+                </span>{" "}
+                ~{" "}
+              </h4>
               <Col>
-                <h1>{productData.info.productName}</h1>
-                <h6>{productData.info.brand}</h6>
-                <h4 style={{ marginTop: "60px" }}>
-                  월 <span>{productData.info.price}원</span> ~{" "}
-                </h4>
-                <Col>
-                  <br />
-                  <span>
-                    <CheckCircle /> <SpanColor>12개월</SpanColor> 사용후
-                    <SpanColor>소유</SpanColor>
-                    하시거나 <SpanColor>무료로 회수</SpanColor>를 신청할 수
-                    있어요.
-                  </span>
-                </Col>
-                <Col>
-                  <span>
-                    <CheckCircle /> 한번도 사용하지 않은{" "}
-                    <SpanColor>새 제품</SpanColor> 이에요.
-                  </span>
-                </Col>
                 <br />
-                <Div2>
-                  <span>
-                    배송비 <QuestionCircle />
-                  </span>
-                  <span>10000 원</span>
-                </Div2>
-                <hr />
-                <FormSelect
-                  aria-label="Default select example"
-                  style={{ marginBottom: "1em" }}
-                >
-                  <option value="옵션 선택" defaultValue hidden>
-                    옵션 선택
-                  </option>
-                  <option value="1year">12개월</option>
-                  <option value="2year">24개월</option>
-                  <option value="3year">36개월</option>
-                </FormSelect>
-                <Div2>
-                  <Div1>
-                    <Button1
-                      onClick={() => {
-                        if (itemNum > 1) {
-                          setItemNum(itemNum - 1);
-                        }
-                      }}
-                    >
-                      {" "}
-                      -{" "}
-                    </Button1>
-                    <Input1 type="number" value={itemNum} readOnly />
-                    <Button1 onClick={() => setItemNum(itemNum + 1)}>
-                      {" "}
-                      +{" "}
-                    </Button1>
-                  </Div1>
-                  <span>
-                    수량 :{" "}
-                    <strong style={{ color: "#4646e2" }}>{itemNum}</strong> 개
-                  </span>
-                </Div2>
-                <hr />
-                <Div2>
-                  <strong>최종 구독가:</strong>
-                  <strong style={{ fontSize: "1.2rem" }}>
-                    월 {total.toLocaleString("ko-KR")} 원
-                  </strong>
-                </Div2>
-                <p
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "gray",
-                    textAlign: "right",
-                  }}
-                >
-                  최소사용기간 12개월/배송비별도
-                </p>
-                <ButtonJB type="submit" bg_color="#0C0F67">
-                  장바구니 담기
-                </ButtonJB>
-                <ButtonJB href="/cart" bg_color="#7E80AB">
-                  바로구매
-                </ButtonJB>
+                <span>
+                  <CheckCircle /> <SpanColor>{chkMonth.current}개월</SpanColor>{" "}
+                  사용후
+                  <SpanColor>소유</SpanColor>
+                  하시거나 <SpanColor>무료로 회수</SpanColor>를 신청할 수
+                  있어요.
+                </span>
               </Col>
-            </Row>
-          </Form>
+              <Col>
+                <span>
+                  <CheckCircle /> 한번도 사용하지 않은{" "}
+                  <SpanColor>새 제품</SpanColor> 이에요.
+                </span>
+              </Col>
+              <br />
+              <Div2>
+                <span>
+                  배송비 <QuestionCircle />
+                </span>
+                <span>10,000 원</span>
+              </Div2>
+              <hr />
+              <FormSelect
+                aria-label="Default select example"
+                style={{ marginBottom: "1em" }}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  chkMonth.current = e.target.value;
+                  setProductData({
+                    ...productData,
+                    totalPrice: Math.ceil(
+                      (productData.info.price / chkMonth.current) *
+                        productData.itemNum
+                    ),
+                    chkMonth: e.target.value,
+                  });
+                }}
+                value={productData.chkMonth}
+              >
+                <option value="개월 선택" defaultValue hidden>
+                  옵션 선택
+                </option>
+                <option value={12}>12개월</option>
+                <option value={24}>24개월</option>
+                <option value={36}>36개월</option>
+              </FormSelect>
+              <Div2>
+                <Div1>
+                  <Button1
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      if (itemNum.current > 1) {
+                        itemNum.current -= 1;
+                      }
+                      setProductData({
+                        ...productData,
+                        totalPrice: Math.ceil(
+                          (productData.info.price / productData.chkMonth) *
+                            itemNum.current
+                        ),
+                        itemNum: itemNum.current,
+                      });
+                    }}
+                  >
+                    {" "}
+                    -{" "}
+                  </Button1>
+                  <Input1 type="number" value={productData.itemNum} readOnly />
+                  <Button1
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      itemNum.current += 1;
+                      setProductData({
+                        ...productData,
+                        totalPrice: Math.ceil(
+                          (productData.info.price / productData.chkMonth) *
+                            itemNum.current
+                        ),
+                        itemNum: itemNum.current,
+                      });
+                    }}
+                  >
+                    {" "}
+                    +{" "}
+                  </Button1>
+                </Div1>
+                <span>
+                  수량 :{" "}
+                  <strong style={{ color: "#4646e2" }}>
+                    {productData.itemNum}
+                  </strong>{" "}
+                  개
+                </span>
+              </Div2>
+              <hr />
+              <Div2>
+                <strong>최종 구독가:</strong>
+                <strong style={{ fontSize: "1.2rem" }}>
+                  월 {productData.totalPrice.toLocaleString("ko-KR")} 원
+                </strong>
+              </Div2>
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  color: "gray",
+                  textAlign: "right",
+                }}
+              >
+                최소사용기간 12개월/배송비별도
+              </p>
+              <ButtonJB onClick={handleSubmit} bg_color="#0C0F67">
+                장바구니 담기
+              </ButtonJB>
+              <ButtonJB href="/cart" bg_color="#7E80AB">
+                바로구매
+              </ButtonJB>
+            </Col>
+          </Row>
         </Container>
         <Container>
           <Row>
