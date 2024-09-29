@@ -12,6 +12,7 @@ import AccountPage from "../Login/Account/AccountPage";
 import MyPageMain from "../MyPage/MyPageMain";
 import CompletionPaymentPage from "../Payment/CompletionPaymentPage";
 import PaymentPage from "../Payment/PaymentPage";
+import Startpage from "../Start/Startpage";
 
 const MainScreens = {
   SocialLogin: {
@@ -31,7 +32,7 @@ const MainScreens = {
     element: <AccountPage />,
   },
   MyPage: {
-    path: "/mypage/:user_id",
+    path: "/mypage",
     element: <MyPageMain />,
   },
   Signup: {
@@ -65,6 +66,10 @@ const MainScreens = {
   CompletionPaymentPage: {
     path: "/CompletionPaymentPage",
     element: <CompletionPaymentPage />,
+  },
+  StartPage: {
+    path: "/StartPage",
+    element: <Startpage />,
   },
 };
 

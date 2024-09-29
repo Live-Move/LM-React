@@ -11,7 +11,7 @@ export const TopContainer = styled.div`
   align-items: center;
   width: 70%;
   margin-bottom: 100px
-`;
+`;   
 
 export const MyInfoContainer = styled.div`
   margin: 0px 00px;
@@ -59,7 +59,7 @@ export const Div1 = styled.div` // 바로가기
   // margin: 0px;
   padding: 20px;
   min-width:250px;
-  height: 200px;
+  height: 150px;
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
@@ -78,12 +78,12 @@ export const Div2 = styled.div`// 구독상품 리스트
     border-top: 1px solid #ccc; /* 첫 번째 블록에만 윗줄 보더 추가 */
   }
 `;
-export const Div3 = styled.div` //상품주문하기 버튼
+export const Div3 = styled.div` //내정보
   display: flex;
-  justify-content:space-between;
+  // justify-content:space-between;
   align-items:center ;
   padding: 1em;
-  
+  text-align: cent
 `;
 export const ColCard = styled(Col)` //구독중인 상품 
   //border-top: 1px solid #878787;
@@ -145,7 +145,7 @@ export const Icon1 = styled(SlArrowRightCircle)`
   background: #ffffff;
   border-radius: 50%;
   display: block; /* 아이콘을 아래로 내림 */
-  margin-top: 100px;
+  margin-top: 50px;
 `;
 export const MainContainer = styled.div`
   // display: flex;
