@@ -65,8 +65,13 @@ const arrChoice = [
 ];
 
 function Cart(props) {
+  const [cartData, setCartData] = useState({
+    cartInfo: [],
+    productInfo: [],
+    itemNum: [],
+  });
   const [choice, setChoice] = useState(arrChoice);
-  const [itemNum, setItemNum] = useState(choice.map(() => 1)); // 제품 수량
+  // const [itemNum, setItemNum] = useState(choice.map(() => 1)); // 제품 수량
   const isLoadData = useRef(true);
   const URL = useRef("http://localhost:8080/api/cart/list");
 
@@ -87,10 +92,16 @@ function Cart(props) {
 
     console.log(`[ response ]`);
     const data = await response.json();
+    console.log("[ cart data ]");
     console.log(data.data_cart);
+    await setCartData({
+      cartInfo: [...data.data_cart],
+      productInfo: [...data.data_img],
+      itemNum: [...data.data_img.map(() => 1)],
+    });
 
-    // const data = response.json();
-    // console.log(data);
+    console.log("[ product data ]");
+    console.log(data.data_img);
   };
 
   useEffect(() => {
@@ -102,20 +113,20 @@ function Cart(props) {
 
   //개별 +,- 증가감소
   const handleUp = (index) => {
-    const updateItemNum = [...itemNum];
+    const updateItemNum = [...cartData.itemNum];
     updateItemNum[index] = updateItemNum[index] + 1;
-    setItemNum(updateItemNum);
+    setCartData({ ...cartData, itemNum: updateItemNum });
   };
 
   const handleDown = (index) => {
-    const updateItemNum = [...itemNum];
+    const updateItemNum = [...cartData.itemNum];
     if (updateItemNum[index] > 1) {
       updateItemNum[index] = updateItemNum[index] - 1;
     }
-    setItemNum(updateItemNum);
+    setCartData({ ...cartData, itemNum: updateItemNum });
   };
   //총 구독상품 금액
-  const totalGD = itemNum.reduce((total, currentNum, index) => {
+  const totalGD = cartData.itemNum.reduce((total, currentNum, index) => {
     return total + currentNum * choice[index].price;
   }, 0);
 
@@ -144,20 +155,20 @@ function Cart(props) {
     const updatedChoice = choice.filter(
       (item) => !checkItems.includes(item.id)
     );
-    const updatedItemNum = itemNum.filter(
+    const updatedItemNum = cartData.itemNum.filter(
       (_, index) => !checkItems.includes(choice[index].id)
     );
     setCheckItems([]);
-    setItemNum(updatedItemNum);
+    setCartData({ ...cartData, itemNum: updatedItemNum });
     setChoice(updatedChoice);
   };
 
   // 개별 항목 삭제
   const handleDeleteItem = (index) => {
     const updatedChoice = choice.filter((_, idx) => idx !== index);
-    const updatedItemNum = itemNum.filter((_, idx) => idx !== index);
+    const updatedItemNum = cartData.itemNum.filter((_, idx) => idx !== index);
     setChoice(updatedChoice);
-    setItemNum(updatedItemNum);
+    setCartData({ ...cartData, itemNum: updatedItemNum });
   };
 
   return (
@@ -165,7 +176,7 @@ function Cart(props) {
       <Container>
         <h2 style={{ margin: "3rem" }}> 장바구니 </h2>
         <Row>
-          <Col md={7}>
+          <Col md={8}>
             <label style={{ display: "flex" }}>
               <FormCheck
                 type="checkbox"
@@ -178,43 +189,71 @@ function Cart(props) {
             <hr />
             <strong style={{ fontSize: "1.2rem" }}>구독상품</strong>
             <ColCard>
-              {choice.map((item, index) => {
-                return (
-                  <Div2 key={index}>
-                    <FormCheck
-                      type="checkbox"
-                      id={`chB-${item.id}`}
-                      onChange={(e) =>
-                        handleSingleCheck(e.target.checked, item.id)
-                      }
-                      checked={checkItems.includes(item.id) ? true : false}
-                    />
-                    <label
-                      htmlFor={`chB-${item.id}`}
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
-                      <Image src={item.src} style={{ width: "6em" }} />
-                    </label>
-                    <span>{item.name}</span>
-                    <Div1>
-                      <Button1 onClick={() => handleDown(index)}>-</Button1>
-                      <Input1 type="number" value={itemNum[index]} readOnly />
-                      <Button1 onClick={() => handleUp(index)}>+</Button1>
-                    </Div1>
-                    <span>
-                      {(item.price * itemNum[index]).toLocaleString("ko-KR")} 원
-                    </span>
-                    <CloseButton onClick={() => handleDeleteItem(index)} />
-                  </Div2>
-                );
-              })}
+              {cartData.cartInfo.map(
+                ({ cart_id, month, product_id, quantity, user_id }, index) => {
+                  return (
+                    <Div2 key={index}>
+                      <FormCheck
+                        style={{
+                          marginRight: "5px",
+                        }}
+                        type="checkbox"
+                        id={`chB-${cart_id}`}
+                        onChange={(e) =>
+                          handleSingleCheck(e.target.checked, cart_id)
+                        }
+                        checked={checkItems.includes(cart_id) ? true : false}
+                      />
+                      <div
+                        style={{
+                          margin: "0 10px",
+                          padding: "0px 20px",
+                        }}
+                      >
+                        <Image
+                          src={cartData.productInfo[index].thumbnail}
+                          alt="now loading"
+                          style={{ width: "6em" }}
+                        />
+                      </div>
+                      <span style={{ width: "250px", margin: "0px 25px" }}>
+                        {cartData.productInfo[index].productName}
+                      </span>
+                      <Div1 style={{ width: "150px", marginRight: "8px" }}>
+                        <Button1 onClick={() => handleDown(index)}>-</Button1>
+                        <Input1
+                          type="number"
+                          value={cartData.itemNum[index]}
+                          readOnly
+                        />
+                        <Button1 onClick={() => handleUp(index)}>+</Button1>
+                      </Div1>
+                      <span
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          width: "180px",
+                        }}
+                      >
+                        {(
+                          Math.ceil(cartData.productInfo[index].price / month) *
+                          cartData.itemNum[index]
+                        ).toLocaleString("ko-KR")}{" "}
+                        원
+                      </span>
+                      <CloseButton onClick={() => handleDeleteItem(index)} />
+                    </Div2>
+                  );
+                }
+              )}
             </ColCard>
             <hr />
             <ButtonDel variant="light" onClick={handleDeleteSelected}>
               선택상품삭제
             </ButtonDel>
           </Col>
-          <ColJM md={4}>
+          <ColJM md={3}>
             <Container>
               <h3>주문 예상 금액</h3>
               <p>총 구독상품 금액 {totalGD} 원</p>
