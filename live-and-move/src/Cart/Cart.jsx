@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CloseButton, Col, Container, Form, FormCheck, Image, Row } from "react-bootstrap";
-import { Button1, ButtonDel, ButtonJM, ColCard, ColJM, Div1, Div2, Div3, Icon1, Input1 } from "./CSS/Cart";
+import { Button1, ButtonDel, ButtonJM, ColCard, ColJM, Div1, Div2, Div3, Icon1, Input1, JMContainer } from "./CSS/Cart";
 
 
 const arrChoice = [
@@ -109,7 +109,23 @@ function Cart(props) {
     setItemNum(updatedItemNum);
   };
 
+//스크롤
+const [barPosition, setBarPosition] = useState(0);
 
+const handleScroll = () => {
+  const currentScrollY =window.scrollY;
+  console.log("Current Scroll Y:", currentScrollY);
+  const position =  window.scrollY;
+  console.log("Bar Position:", position);
+  setBarPosition(position);
+};
+useEffect(() => {
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
 
   return (
     <>
@@ -150,17 +166,21 @@ function Cart(props) {
             <hr />
             <ButtonDel variant="light" onClick={handleDeleteSelected}>선택상품삭제</ButtonDel>
           </Col>
-          <ColJM md={4}>
-            <Container>
-            <h3>주문 예상 금액</h3>
-            <p>총 구독상품 금액 {totalGD} 원</p>
-            <p>총 할인 금액  {} 원</p>
-            <p>총 배송비 {} 원</p>
-            <hr/>
-            <p>결제 금액: {totalGD.toLocaleString("ko-KR")} 원</p>
-          <ButtonJM variant="light"><Div3>상품 주문하기<Icon1/></Div3></ButtonJM>
-            </Container>
-          </ColJM>
+            <ColJM  md={3}>
+          <div className="side-bar" style={{ top: barPosition }}>
+              {
+              <JMContainer>
+                <h3>주문 예상 금액</h3>
+                <p>총 구독상품 금액 {totalGD} 원</p>
+                <p>총 할인 금액  {} 원</p>
+                <p>총 배송비 {} 원</p>
+                <hr/>
+                <p>결제 금액: {totalGD.toLocaleString("ko-KR")} 원</p>
+                <ButtonJM variant="light"><Div3>상품 주문하기<Icon1/></Div3></ButtonJM>
+              </JMContainer>
+              }
+            </div>
+            </ColJM>
         </Row>
       </Container>
     </>

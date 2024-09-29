@@ -29,7 +29,7 @@ const MainScreens = {
     element: <AccountPage />,
   },
   MyPage: {
-    path: "/mypage",
+    path: "/mypage/:user_id",
     element: <MyPageMain />,
   },
   Signup: {

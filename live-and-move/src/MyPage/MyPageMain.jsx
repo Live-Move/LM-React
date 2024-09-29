@@ -2,22 +2,56 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   BodyContainer,
-  Button1,
+  Card01,
   ColCard,
   Div01,
   Div02,
   Div1,
-  Div2,
-  Input1,
+  Icon1,
+  Image01,
   MainContainer,
   MyInfoCol,
   MyInfoContainer,
   TopCol,
-  TopContainer,
 } from "./MyPageMainCss";
-import { Col, Image, Row } from "react-bootstrap";
+import { Button, Card, Col, Image, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 function MyPageMain(props) {
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState("");
+
+
+
+///////////////////
+  const params = useParams();
+  const user_id = params.user_id;
+  console.log(`[ user_id ] >> ${user_id}`);
+
+  const URL_user = `http://localhost:8080/api/mypage/user?user_id=${user_id}`;
+
+  // userInfo 상태 정의
+  const [userInfo, setUserInfo] = useState({}); // 초기값은 빈 객체
+
+
+  useEffect(() => {
+    // let userInfo = {};
+
+    fetch(URL_user)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.code);
+        // userInfo = { ...data.data };
+        setUserInfo(data.data);
+        console.log(userInfo);
+      });
+  }, []);
+
+//////////////////////
+
   const User = {
     user_id: "1",
     login_id: "test@gmail.com",
@@ -26,6 +60,7 @@ function MyPageMain(props) {
     address: "test-address",
     phone: "0000",
     birth: "1999-11-17",
+    piont: "10000",
   };
 
   const arrChoice = [
@@ -80,12 +115,12 @@ function MyPageMain(props) {
   }, 0);
 
   //스크롤
-  const [barPosition, setBarPosition] = useState(5);
+  const [barPosition, setBarPosition] = useState();
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
     console.log("Current Scroll Y:", currentScrollY);
-    const position = 956  < 5 + window.scrollY ? 956  : 5 + window.scrollY;
+    const position = window.scrollY;
     console.log("Bar Position:", position);
     setBarPosition(position);
   };
@@ -101,7 +136,7 @@ function MyPageMain(props) {
     <>
       <MainContainer style={{ color: "#111111" }}>
         <Row>
-          <Col md={8}>
+          <Col md={9}>
             <TopCol>
               <div>
                 <h1 style={{ fontWeight: "bold" }}>
@@ -113,27 +148,37 @@ function MyPageMain(props) {
                 </h6>
               </div>
             </TopCol>
+    
+    <BodyContainer>
+      <Row>
+        <Col ><Div1><h4>내 정보1</h4><Icon1/></Div1></Col>
+        <Col ><Div1><h4>택배 가능지역 확인</h4><Icon1/></Div1></Col>
+        <Col ><Div1><h4>내 정보3</h4><Icon1/></Div1></Col>
+      </Row>
+    </BodyContainer>
             <BodyContainer>
-              <h3>구독중인 상품</h3>
+              <h3 style={{ color: "#707070" }}>구독중인 상품</h3>
               <ColCard>
                 {choice.map((item, index) => {
                   return (
-                    <Div2 key={index}>
-                      <Image src={item.src} style={{ width: "6em" }} />
-                      <span>{item.name}</span>
-                      <Div1>
-                        <Input1 type="number" value={itemNum[index]} readOnly />
-                      </Div1>
-                      <span>
-                        {(item.price * itemNum[index]).toLocaleString("ko-KR")}{" "}
-                        원
-                      </span>
-                    </Div2>
+                    <Card01 key={index}>
+                      <Card.Body style={{margin:"-0.5em"}}>
+                        <span><h5>{item.name}</h5></span>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <span>{itemNum[index]}개</span>
+                        <span>{(item.price * itemNum[index]).toLocaleString("ko-KR")} 원</span>
+                        </div>
+                      </Card.Body>
+                      <Image01 src={item.src}/>
+                      <Card.ImgOverlay>
+                      </Card.ImgOverlay>
+                    </Card01>
                   );
                 })}
               </ColCard>
             </BodyContainer>
           </Col>
+
           <MyInfoCol>
             <div className="side-bar" style={{ top: barPosition }}>
               {
@@ -141,8 +186,19 @@ function MyPageMain(props) {
                   <Div01>
                     <p>Live&Move 카드</p>
                   </Div01>
-                  <div><h3 style={{color:"#fedd06"}}>{User.name}</h3><h3>님</h3></div>
-                  구독료 : 월 {totalGD.toLocaleString("ko-KR")}원
+                  <div>
+                    <strong style={{ color: "#fedd06", fontSize: "2em" }}>
+                      {userInfo.name}
+                    </strong>
+                    <span style={{ fontSize: "2em" }}>님</span>
+                  </div>
+                  <span>구독료 : 월 {totalGD.toLocaleString("ko-KR")} 원</span>
+                  <Div02>
+                    <div>아이디 : {userInfo.loginId}</div>
+                    <span>포인트 : </span>
+                    <span style={{ color: "#fedd06"}}>{User.piont.toLocaleString("ko-KR")} </span> 
+                    <span>점</span>
+                  </Div02>
                 </MyInfoContainer>
               }
             </div>
