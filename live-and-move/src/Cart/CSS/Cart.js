@@ -33,6 +33,7 @@ export const Div3 = styled.div` //상품주문하기 버튼
 export const ColCard = styled(Col)` //구독상품 리스트 테두리 
   //border-top: 1px solid #878787;
   padding:2em;
+  
 `;
 export const Button1 = styled.button`// +,-버튼
   font-size: 30px;
@@ -84,10 +85,17 @@ export const ButtonJM = styled(Button)` // 상품 주문하기 버튼
   }
 `;
 export const ColJM = styled(Col)` // 주문 예상 금액
+  margin-left: 50px;
+`;
+export const JMContainer = styled.div` // 주문 예상 금액
   background: #ededed;
   padding: 2em;
   border-radius: 20px;
+  position: fixed;
+  width: 25%;
+  max-height: 350px;
 `;
+
 export const Icon1 = styled(IoArrowForwardCircle)` 
   font-size: 2rem;
 `;

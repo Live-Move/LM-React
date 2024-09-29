@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   CloseButton,
@@ -21,6 +22,7 @@ import {
   Input1,
 } from "./CSS/Cart";
 import { isSessionExists } from "../Login/Account/AccountChk";
+
 
 const arrChoice = [
   {
@@ -158,6 +160,8 @@ function Cart(props) {
     setItemNum(updatedItemNum);
   };
 
+
+
   return (
     <>
       <Container>
@@ -212,6 +216,7 @@ function Cart(props) {
               선택상품삭제
             </ButtonDel>
           </Col>
+
           <ColJM md={4}>
             <Container>
               <h3>주문 예상 금액</h3>
@@ -228,6 +233,7 @@ function Cart(props) {
               </ButtonJM>
             </Container>
           </ColJM>
+
         </Row>
       </Container>
     </>

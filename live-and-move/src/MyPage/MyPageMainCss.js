@@ -1,4 +1,5 @@
-import { Button, Col } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
+import { SlArrowRightCircle } from "react-icons/sl";
 import styled from "styled-components";
 
 
@@ -13,7 +14,7 @@ export const TopContainer = styled.div`
 `;
 
 export const MyInfoContainer = styled.div`
-  margin: 0px 100px;
+  margin: 0px 00px;
   padding: 10px;
   width: 30%;
   max-width: 340px;
@@ -24,12 +25,14 @@ export const MyInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1.5px solid #076ca39f;
+  // border: 1.5px solid #076ca39f;
   border-radius: 7%;
-  background-color: #0484ca;
+  // background-color: #0484ca;
+  background-color: #6db3df;
   color: white;
-  box-shadow: 0px 0px 5px black;
+  box-shadow: 0px 0px 5px #474747;
   position: fixed;
+  opacity: 0.9;
 `;
 
 export const Div01 = styled.div`
@@ -41,21 +44,28 @@ export const Div01 = styled.div`
 `;
 export const Div02 = styled.div`
  position: absolute; /* 절대 위치로 설정 */
-  bottom: 1px; /* 위쪽 여백 */
+  bottom: 10px; /* 위쪽 여백 */
   left: 10px; /* 왼쪽 여백 */
   color: white; /* 텍스트 색상 */
-  font-size: 0.8rem; /* 텍스트 크기 조정 */
+  font-size: 0.9rem; /* 텍스트 크기 조정 */
 `;
 
 export const BodyContainer = styled.div`
-  
+  margin-left: 100px;
 `;
 
 
-export const Div1 = styled.div` // +,-버튼
-  display: flex;
+export const Div1 = styled.div` // 바로가기
+  // margin: 0px;
+  padding: 20px;
+  min-width:250px;
+  height: 200px;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  color: ;
   align-items:center ;
-  gap: 0px;
   margin-bottom: 20px
 `;
 export const Div2 = styled.div`// 구독상품 리스트
@@ -75,20 +85,16 @@ export const Div3 = styled.div` //상품주문하기 버튼
   padding: 1em;
   
 `;
-export const ColCard = styled(Col)` //구독상품 리스트 테두리 
+export const ColCard = styled(Col)` //구독중인 상품 
   //border-top: 1px solid #878787;
   padding:2em;
-`;
-export const Button1 = styled.button`// +,-버튼
-  font-size: 30px;
-  width: 40px;
-  height: 40px;
   display: flex;
-  align-items:center;
-  border: none;
-  cursor: pointer;
-  background:none ;
+  flex-wrap: wrap; /* 화면 크기에 맞춰 줄바꿈 */
+  gap: 20px; /* 카드 사이 간격 */
+  // justify-content: space-between; /* 카드 간 간격 균등 */
+  
 `;
+
 export const Input1 = styled.input` // + 숫자 -
   width: 60px;
   height: 40px;
@@ -133,15 +139,23 @@ export const ColJM = styled(Col)` // 주문 예상 금액
   padding: 2em;
   border-radius: 20px;
 `;
+
+export const Icon1 = styled(SlArrowRightCircle)` 
+  font-size: 2rem;
+  background: #ffffff;
+  border-radius: 50%;
+  display: block; /* 아이콘을 아래로 내림 */
+  margin-top: 100px;
+`;
 export const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   background-color: ${(props) => props.bg_color};
-  border-radius: 5px;
-  opacity: 0.6;
-  max-width: px;
-  min-width: px;
-  max-height: px;
+  // border-radius: 5px;
+  // opacity: 0.7;
+  // max-width: px;
+  // min-width: px;
+  // max-height: px;
   width: 90%;
   height: auto;
   color: white;
@@ -154,14 +168,47 @@ export const MainContainer = styled.div`
 export const TopCol = styled(Col)`
   display: flex;
   align-items: center; 
-  justify-content: center; 
+  // justify-content: center; 
   height: 30vh; 
-  
+  margin-left: 100px;
+  opacity: 0.6;
 `;
 export const MyInfoCol = styled(Col)`
   display: flex;
   align-items: center; 
-  height: 30vh; 
+  height: 10vh; 
   position: relative;
-  margin-left: 80px;
+  // margin: 00px, 50px;
+  margin-right: 100px;
+  // justify-content: center; 
 `;
+export const Card01 = styled(Card)`
+  // display: flex;
+  // align-items: center; 
+  width: 200px;
+  color:black;
+  padding:3px;
+  // height: 10vh; 
+  // position: relative;
+  // margin: 00px, 50px;
+  // margin-right: 100px;
+  // justify-content: center; 
+  border-radius: 0.3em;
+  background-color:#f5f5f5;
+  box-shadow: 0px 0px 2px #474747;
+  
+  `;
+export const Image01 = styled.img`
+  display: flex;
+  width: 100%;
+  // align-items: center; 
+  // color:black;
+  // padding:10px;
+  // height: 10vh; 
+  // position: relative;
+  // margin: 00px, 50px;
+  // margin-right: 100px;
+  // justify-content: center; 
+  border-radius: 0.2em;
+  opacity: 0.6;
+  `;
