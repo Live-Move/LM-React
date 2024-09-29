@@ -91,7 +91,7 @@ function ListDetailpage(props) {
         product_id: productData.info.product_id,
         userId: userData.user_id,
         quantity: itemNum.current,
-        price: productData.totalPrice,
+        month: productData.chkMonth,
       };
 
       console.log(obj);
