@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { ButtonInLogin, MainContainer } from "../Login/CSS/LoginCss";
+import { ButtonInLogin, DivSignup, MainContainer } from "../Login/CSS/LoginCss";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function SignupPage(props) {
   const [userName, setUserName] = useState("");
@@ -15,6 +17,7 @@ function SignupPage(props) {
   const [userEmail, setUserEmail] = useState("");
   const [userDomain, setUserDomain] = useState("선택해주세요.");
   const [userPhone, setUserPhone] = useState("");
+  const navigage = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -27,6 +30,7 @@ function SignupPage(props) {
       email: userEmail + userDomain,
       phone: userPhone,
       birth: userBirth,
+      point: 100000,
     };
 
     fetch("http://localhost:8080/api/user/signup", {
@@ -41,12 +45,22 @@ function SignupPage(props) {
         return response.json();
       })
       .then((data) => {
-        alert(
-          data.code === "ok"
-            ? "회원가입 성공"
-            : "[ 회원가입 실패 ] \n>> 이미 존재하는 아이디 입니다"
-        );
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: data.code === "ok" ? "회원가입 성공" : "[ 회원가입 실패 ]",
+          text:
+            data.code === "ok"
+              ? `첫 가입 ${100000} 포인트를 지급 해드렸습니다.`
+              : "이미 존재하는 아이디 입니다",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         console.log(data.code); // ok , fail
+
+        if (data.code === "ok") {
+          navigage("/user/login");
+        }
       });
   };
 
@@ -106,7 +120,7 @@ function SignupPage(props) {
   ];
 
   return (
-    <MainContainer>
+    <DivSignup>
       <Form onSubmit={handleSignup}>
         {FormDatas.map(({ label, value, type, onChange, messages }, index) => {
           return (
@@ -168,7 +182,7 @@ function SignupPage(props) {
           회원가입
         </ButtonInLogin>
       </Form>
-    </MainContainer>
+    </DivSignup>
   );
 }
 

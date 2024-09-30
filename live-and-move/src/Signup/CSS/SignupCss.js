@@ -9,8 +9,7 @@ export const FormInput = styled(Form.Control)`
 export const FormLabel = styled(FloatingLabel)``;
 
 export const MainContainerSignup = styled.div`
-  height: 70vh;
-  margin: 49px;
+  height: 90vh;
   font-family: "apple";
   display: flex;
   flex-direction: column;

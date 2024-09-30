@@ -64,6 +64,22 @@ export const SpanCol = styled.span`
   font-size: ${(props) => props.font_size};
 `;
 
+export const DivSignup = styled.div`
+  display: flex;
+  font-family: "apple";
+  flex-direction: column;
+  justify-content: center;
+  background-color: ${(props) => props.bg_color};
+  border-radius: 5px;
+  opacity: 0.6;
+  max-width: 400px;
+  min-width: 500px;
+  min-height: 520px;
+  color: white;
+  padding: 20px 45px 20px 45px;
+  gap: 4px;
+`;
+
 // KakaoLogin
 export const KakaoLoginButton = styled(KakaoLogin)`
   margin: 4px;
