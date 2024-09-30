@@ -3,11 +3,13 @@ import {
   ButtonContainer,
   Container,
   OrderProduct,
+  PayButton,
   PaymentInfo,
   UserInfoContainer,
 } from "./PaymentPageCss";
 import { isSessionExists } from "../Login/Account/AccountChk";
 import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "react-bootstrap";
 
 function PaymentPage(props) {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function PaymentPage(props) {
   // 장바구니 정보 및 상품 정보 상태 추가
   const [cartItems, setCartItems] = useState([]);
   const [productInfo, setProductInfo] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   // 현재 날짜를 구하는 함수
   const date = new Date();
@@ -51,9 +54,24 @@ function PaymentPage(props) {
     fetchCartData();
   }, []);
 
+  // 모달 열기 함수
+  const handleOpenModal = () => {
+    setShowModal(true); // 모달을 열기
+  };
+
+  // 모달 닫기 함수
+  const handleCloseModal = () => {
+    setShowModal(false); // 모달을 닫기
+  };
+
+  // 모달에서 결제하기를 눌렀을 때 결제 함수 호출
+  const handleConfirmPayment = () => {
+    handlePayment();
+    setShowModal(false); // 결제 후 모달 닫기
+  };
+
   // 결제 요청을 처리하는 함수 (대여테이블에 상품 정보 create)
   const handlePayment = async () => {
-    // 보유 포인트와 총 결제 금액 비교
     const totalPayment = Number(totalPrice) + Number(deliveryFee);
     if (user.point < totalPayment) {
       alert("포인트가 부족합니다. 결제를 진행할 수 없습니다.");
@@ -283,14 +301,25 @@ function PaymentPage(props) {
         </UserInfoContainer>
         {/* 결제 버튼 */}
         <ButtonContainer>
-          <button
-            className="pay-button"
-            onClick={handlePayment}
-            style={{ backgroundColor: "#b37840" }}
-          >
-            결제 하기
-          </button>
+          {/* 모달을 열기 위한 핸들러 */}
+          <PayButton onClick={handleOpenModal}>결제 하기</PayButton>
         </ButtonContainer>
+
+        {/* 확인용 모달 */}
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>결제 확인</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>결제하시겠습니까?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              취소
+            </Button>
+            <Button variant="primary" onClick={handleConfirmPayment}>
+              결제하기
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </Container>
   );
