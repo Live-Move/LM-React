@@ -41,11 +41,6 @@ const PhotoList = [
 ];
 
 function MainPageList(props) {
-  // 애니메이션 테스트용 최종하기전 지워야함
-  function changeTheImg(event) {
-    console.log("가가각");
-  }
-
   const navigate = useNavigate();
 
   function handleCategoryClick(category) {
@@ -66,12 +61,7 @@ function MainPageList(props) {
                   cursor: "pointer",
                 }} // a 태그 스타일과 비슷하게 수정
               >
-                <Img
-                  src={photo.src}
-                  alt={photo.category1}
-                  onMouseOver={changeTheImg}
-                  onMouseOut={changeTheImg}
-                />
+                <Img src={photo.src} alt={photo.category1} />
                 {/* a에서 버튼으로 변경했으니 밑에 span 필요없을거같음 시간 나면 고치기*/}
                 <Span sizevalue={photo.value1}>{photo.category1}</Span>
                 <Span sizevalue={photo.value2}>{photo.category2}</Span>
