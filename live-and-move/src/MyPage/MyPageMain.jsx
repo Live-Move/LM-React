@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   BodyContainer,
+  ButtonDel,
   Card01,
   ColCard,
   Div01,
   Div02,
   Div1,
   Div3,
+  Divfont,
   Icon1,
   Image01,
   MainContainer,
@@ -29,9 +31,17 @@ import { isSessionExists } from "../Login/Account/AccountChk";
 
 function MyPageMain(props) {
   ///////////////////
+
   // userInfo 상태 정의
   const [userInfo, setUserInfo] = useState(isSessionExists()); // 초기값은 빈 객체
+  console.log(userInfo)
+  
 
+
+
+
+
+  ////////////////////////
   const [show, setShow] = useState(false); //택배가능지역
   //내정보
   const [show2, setShow2] = useState(false);
@@ -118,19 +128,20 @@ function MyPageMain(props) {
   }, []);
 
   return (
-    <>
+    <Divfont>
       <MainContainer style={{ color: "#111111" }}>
         <Row>
           <Col md={9}>
             <TopCol>
               <div>
                 <h1 style={{ fontWeight: "bold" }}>
-                  <span style={{ color: "#007CC1" }}>MyPage</span>Main
+                  <span style={{ color: "#b37840" }}>MyPage</span>Main
                 </h1>
                 <h6>
                   Live and Move를 방문해주셔서 감사합니다.
                   <br />이 곳에서 회원님의 모든정보를 한눈에 확인할 수 있습니다.
                 </h6>
+                
               </div>
             </TopCol>
 
@@ -162,14 +173,14 @@ function MyPageMain(props) {
               </Row>
             </BodyContainer>
             <BodyContainer>
-              <h3 style={{ color: "#707070" }}>구독중인 상품</h3>
+              <h3 style={{ color: "#95775a" }}>구독중인 상품</h3>
               <ColCard>
                 {choice.map((item, index) => {
                   return (
                     <Card01 key={index}>
                       <Card.Body style={{ margin: "-0.5em" }}>
                         <span>
-                          <h5>{item.name}</h5>
+                          <h5>{}</h5>
                         </span>
                         <div
                           style={{
@@ -203,7 +214,7 @@ function MyPageMain(props) {
                     <p>Live&Move 카드</p>
                   </Div01>
                   <div>
-                    <strong style={{ color: "#fedd06", fontSize: "2em" }}>
+                    <strong style={{ color: "#ffffff", fontSize: "2em" }}>
                       {userInfo.name}
                     </strong>
                     <span style={{ fontSize: "2em" }}>님</span>
@@ -213,7 +224,7 @@ function MyPageMain(props) {
                     <div>아이디 : {userInfo.loginId}</div>
                     <span>포인트 : </span>
                     <span style={{ color: "#fedd06" }}>
-                      {User.piont.toLocaleString("ko-KR")}{" "}
+                    {userInfo.point.toLocaleString("ko-KR")} {" "}
                     </span>
                     <span>점</span>
                   </Div02>
@@ -269,11 +280,13 @@ function MyPageMain(props) {
           <hr />
           <h4>주소 : {userInfo.address}</h4>
           <hr />
-          <Button variant="secondary" >비밀번호 변경</Button> {' '}
-          <Button variant="secondary">회원탈퇴</Button>
+          <h4>보유 포인트 : {userInfo.point.toLocaleString("ko-KR")}</h4>
+          <hr />
+          <ButtonDel variant="secondary">비밀번호 변경</ButtonDel> {' '}
+          <ButtonDel variant="secondary">회원탈퇴</ButtonDel>
         </Offcanvas.Body>
       </Offcanvas>
-    </>
+    </Divfont>
   );
 }
 

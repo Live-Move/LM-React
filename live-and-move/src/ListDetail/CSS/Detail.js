@@ -13,14 +13,14 @@ export const ButtonBS = styled(Button)`
   font-size: 20px;
   width: 95%;
   height: 50px;
-  background-color: #808080;
+  background-color: #c1ab86;
   position: relative;
   left: 15px;
   top: 20px;
   margin-bottom: 40px;
   border: none;
   &:hover {
-    background-color: #696969;
+    background-color: #b37840;
     transition-duration: 0.35s;
     transform: scale(1.04);
   }
@@ -37,10 +37,10 @@ export const PinIcon = styled(GiPositionMarker)`
 export const CheckCircle = styled(FiCheckCircle)`
   display: inline-block;
   verticalalign: middle;
-  color: #4646e2;
+  color: #b37840;
 `;
 export const SpanColor = styled.span`
-  color: #4646e2;
+  color: #b37840;
 `;
 export const QuestionCircle = styled(AiOutlineQuestionCircle)`
   display: inline-block;

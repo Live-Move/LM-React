@@ -305,10 +305,10 @@ function ListDetailpage(props) {
               >
                 최소사용기간 12개월 / 배송비별도
               </p>
-              <ButtonJB onClick={handleSubmit} bg_color="#c1ab86">
+              <ButtonJB variant="secondary"onClick={handleSubmit} bg_color="#c1ab86">
                 장바구니 담기
               </ButtonJB>
-              <ButtonJB href="/cart" bg_color="#edd6b9">
+              <ButtonJB variant="secondary"href="/cart" bg_color="#edd6b9">
                 장바구니 이동
               </ButtonJB>
             </Col>

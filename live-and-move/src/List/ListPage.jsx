@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { NavLink, useLocation } from "react-router-dom";
+import { Divfont } from "./CSS/ListCss";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search); // 쿼리 파라미터를 읽어오는 함수
@@ -28,7 +29,7 @@ function ListPage(props) {
   }, [category]);
 
   return (
-    <div style={{ background: "#424242", paddingTop: "2em" }}>
+    <Divfont style={{ background: "#424242", paddingTop: "2em" }}>
       <Container>
         <Row style={{ border: "1px solid #878787" }}>
           <h1 style={{ color: "lightgray" }}>광고배너</h1>
@@ -60,7 +61,7 @@ function ListPage(props) {
           ))}
         </Row>
       </Container>
-    </div>
+    </Divfont>
   );
 }
 
