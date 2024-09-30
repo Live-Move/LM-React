@@ -91,24 +91,25 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
+`;
 
-  .pay-button {
-    padding: 10px 20px;
-    background-color: #228be6;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    outline: none;
-    font-size: 1rem;
+export const PayButton = styled.button`
+  padding: 10px 20px;
+  background-color: #228be6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  outline: none;
+  font-size: 1rem;
 
-    &:hover {
-      background: #95775a;
-    }
+  background-color: #b37840;
+  &:hover {
+    background: #95775a;
+  }
 
-    &:active {
-      background: #95775a;
-    }
+  &:active {
+    background: #95775a;
   }
 `;
