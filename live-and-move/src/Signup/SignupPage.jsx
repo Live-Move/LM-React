@@ -164,7 +164,9 @@ function SignupPage(props) {
         <p style={{ color: "darkgray" }}>
           {"ㆍ특수문자[-], [_]만 사용가능합니다."}
         </p>
-        <ButtonInLogin type="submit">회원가입</ButtonInLogin>
+        <ButtonInLogin font_color={"white"} type="submit">
+          회원가입
+        </ButtonInLogin>
       </Form>
     </MainContainer>
   );
