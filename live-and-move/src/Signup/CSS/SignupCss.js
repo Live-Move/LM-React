@@ -10,6 +10,7 @@ export const FormLabel = styled(FloatingLabel)``;
 
 export const MainContainerSignup = styled.div`
   margin: 49px;
+  font-family: "apple";
   display: flex;
   flex-direction: column;
   justify-content: center;
