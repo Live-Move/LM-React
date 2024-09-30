@@ -1,12 +1,6 @@
 import React from "react";
 import { A, Container, Li, Ul } from "./HeaderNavigationMenuCss";
 
-const MenuList = [
-  { title: "홈", href: "/main" },
-  { title: "가구", href: "/list" },
-  { title: "소품", href: "/list" },
-];
-
 function HeaderNavigationMenu(props) {
   return (
     <Container>
@@ -19,13 +13,6 @@ function HeaderNavigationMenu(props) {
             />
           </A>
         </Li>
-        {MenuList.map((munuItem, index) => {
-          return (
-            <Li key={index}>
-              <A href={munuItem.href}>{munuItem.title}</A>
-            </Li>
-          );
-        })}
       </Ul>
     </Container>
   );

@@ -21,6 +21,7 @@ export const Li = styled.li`
 `;
 
 export const A = styled.a`
+font-family: 'apple'
   text-decoration: none;
   color: black;
   font-size: 20px;

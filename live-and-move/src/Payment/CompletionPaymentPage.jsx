@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Button,
+  ButtonComp,
   Container,
   TextContainer,
   OrderInfo,
@@ -10,7 +10,7 @@ import {
 
 function CompletionPaymentPage(props) {
   return (
-    <Container>
+    <Container style={{ fontFamily: "apple" }}>
       <div>
         <UpperSection>
           <ImageContainer>
@@ -27,10 +27,10 @@ function CompletionPaymentPage(props) {
 
         <div className="lower-section">
           <a href="/mypage">
-            <Button>마이 페이지</Button>
+            <ButtonComp bgcolor={"#edd6b9"}>마이 페이지</ButtonComp>
           </a>
           <a href="/main">
-            <Button style={{ background: "#ff6b6b" }}>계속 쇼핑하기</Button>
+            <ButtonComp bgcolor={"#c1ab86"}>계속 쇼핑하기</ButtonComp>
           </a>
         </div>
       </div>
@@ -39,3 +39,4 @@ function CompletionPaymentPage(props) {
 }
 
 export default CompletionPaymentPage;
+//"#edd6b9" "#c1ab86"

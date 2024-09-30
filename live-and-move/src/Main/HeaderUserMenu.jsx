@@ -9,7 +9,7 @@ import { FaHeadset } from "react-icons/fa";
 import { isSessionExists } from "../Login/Account/AccountChk";
 function HeaderUserMenu(props) {
   const handleLogout = (e) => {
-    alert("로그아웃 클릭");
+    alert("로그아웃");
     sessionStorage.clear();
   };
 
@@ -24,7 +24,7 @@ function HeaderUserMenu(props) {
   const LoginStatusMenu = [
     {
       icon: <MdOutlineLogout size="30" />,
-      href: "/main",
+      href: "/",
       content: "로그아웃",
       click: handleLogout,
     },

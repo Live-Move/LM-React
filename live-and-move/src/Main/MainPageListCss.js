@@ -28,4 +28,5 @@ export const Span = styled.span`
   color: white;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-family: "apple";
 `;

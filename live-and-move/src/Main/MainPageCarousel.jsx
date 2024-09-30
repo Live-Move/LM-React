@@ -22,8 +22,13 @@ const PhotoList = [
   {
     src: "https://github.com/Live-Move/LM-Photos/blob/main/MainPage%20Image/MainCarousel/3.png?raw=true",
     title: "가을, 따뜻한 공간을 위한 프리미엄 가구",
-    content:
-      "쌀쌀해지는 계절, 따뜻한 분위기를 더해줄 웜톤 가구로 집 안을 포근하게 꾸며보세요. 가을에 어울리는 프리미엄 가구를 합리적인 가격으로 만나보세요.",
+    content: (
+      <>
+        쌀쌀해지는 계절, 따뜻한 분위기를 더해줄 웜톤
+        <br />
+        가구로 집 안을 포근하게 꾸며보세요.
+      </>
+    ),
   },
 ];
 

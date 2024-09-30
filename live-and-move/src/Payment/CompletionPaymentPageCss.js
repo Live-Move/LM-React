@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "react-bootstrap";
 
 export const Container = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ export const OrderInfo = styled.p`
   margin: 5px 0;
 `;
 
-export const Button = styled.button`
+export const ButtonComp = styled(Button)`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -52,13 +53,13 @@ export const Button = styled.button`
   padding-right: 1rem;
   font-size: 1rem;
 
-  background: #228be6;
+  background-color: ${(props) => props.bgcolor};
 
   &:hover {
-    background: #1a73e8;
+    background: #b37840;
   }
 
   &:active {
-    background: #0d47a1;
+    background: #95775a;
   }
 `;
