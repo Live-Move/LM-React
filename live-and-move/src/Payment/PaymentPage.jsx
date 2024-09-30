@@ -63,7 +63,6 @@ function PaymentPage(props) {
     const rentalData = cartItems.map((item, index) => {
       // 현재 날짜로 시작일 설정
       const startDate = new Date();
-
       // 개월 수를 더해서 종료일을 계산
       const endDate = new Date(startDate);
       endDate.setMonth(endDate.getMonth() + item.month); // item.month 만큼 개월을 더함
@@ -79,25 +78,47 @@ function PaymentPage(props) {
     });
 
     // rentalData 배열을 개별적으로 보내기
-    rentalData.forEach(async (rentalItem) => {
-      const response = await fetch("http://localhost:8080/api/rental/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rentalItem),
-      });
+    try {
+      for (const rentalItem of rentalData) {
+        const response = await fetch("http://localhost:8080/api/rental/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(rentalItem),
+        });
 
-      if (!response.ok) {
-        console.error("Failed to send rental data for:", rentalItem);
-      } else {
-        console.log("Rental data sent successfully for:", rentalItem);
+        if (!response.ok) {
+          throw new Error("Failed to send rental data for: " + rentalItem);
+        }
       }
-    });
 
-    // 결제 완료 후 페이지 이동
-    alert("결제가 완료되었습니다.");
-    navigate("/CompletionPaymentPage");
+      // 결제 완료 후 장바구니 비우기 API 호출
+      const clearCartResponse = await fetch(
+        "http://localhost:8080/api/cart/clear",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: user.user_id, // user_id 포함
+            point: user.point - totalPayment, // 결제 금액 추가
+          }),
+        }
+      );
+
+      if (!clearCartResponse.ok) {
+        throw new Error("Failed to clear cart after payment.");
+      }
+
+      // 결제 완료 후 페이지 이동
+      alert("결제가 완료되었습니다.");
+      navigate("/CompletionPaymentPage");
+    } catch (error) {
+      console.error("결제 과정 중 오류 발생:", error);
+      alert("결제 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   let totalPrice = 0; // 전체 금액
@@ -195,7 +216,7 @@ function PaymentPage(props) {
                 <td>
                   {Number(user.point) -
                     Number(totalPrice) -
-                    Number(deliveryFee)}{" "}
+                    Number(deliveryFee)}
                   point
                 </td>
               </tr>
@@ -231,6 +252,30 @@ function PaymentPage(props) {
                 <tr>
                   <td>이메일</td>
                   <td>{user.email}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="delivery-info">
+            <table>
+              <thead>
+                <tr>
+                  <th colSpan="2">배송지 정보</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>이름</td>
+                  <td>{user.name}</td>
+                </tr>
+                <tr>
+                  <td>휴대폰번호</td>
+                  <td>{user.phone}</td>
+                </tr>
+                <tr>
+                  <td>배송지주소</td>
+                  <td>{user.address}</td>
                 </tr>
               </tbody>
             </table>
