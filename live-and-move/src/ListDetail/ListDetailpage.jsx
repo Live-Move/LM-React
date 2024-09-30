@@ -25,6 +25,7 @@ import {
 import { GoArrowRight } from "react-icons/go";
 import OffcanvasBS from "./OffcanvasBS";
 import { isSessionExists } from "../Login/Account/AccountChk";
+import DetailBottomImages from "./DetailBottomImages";
 
 function ListDetailpage(props) {
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ function ListDetailpage(props) {
 
   return (
     <>
-      <div style={{ marginTop: "5em" }}>
+      <div style={{ marginTop: "5em", fontFamily: "apple" }}>
         <Container>
           <Row></Row>
         </Container>
@@ -246,7 +247,6 @@ function ListDetailpage(props) {
                 <Div1>
                   <Button1
                     onClick={(e) => {
-                      // e.preventDefault();
                       if (itemNum.current > 1) {
                         itemNum.current -= 1;
                       }
@@ -266,7 +266,6 @@ function ListDetailpage(props) {
                   <Input1 type="number" value={productData.itemNum} readOnly />
                   <Button1
                     onClick={(e) => {
-                      // e.preventDefault();
                       itemNum.current += 1;
                       setProductData({
                         ...productData,
@@ -304,35 +303,19 @@ function ListDetailpage(props) {
                   textAlign: "right",
                 }}
               >
-                최소사용기간 12개월/배송비별도
+                최소사용기간 12개월 / 배송비별도
               </p>
-              <ButtonJB onClick={handleSubmit} bg_color="#0C0F67">
+              <ButtonJB onClick={handleSubmit} bg_color="#c1ab86">
                 장바구니 담기
               </ButtonJB>
-              <ButtonJB href="/cart" bg_color="#7E80AB">
-                바로구매
+              <ButtonJB href="/cart" bg_color="#edd6b9">
+                장바구니 이동
               </ButtonJB>
             </Col>
           </Row>
         </Container>
         <Container>
-          <Row>
-            {BottomImageList.length > 0
-              ? BottomImageList.map(({ img_path, img_id }, index) => {
-                  return (
-                    <Col key={img_id + index}>
-                      <NavLink>
-                        <ImageBT
-                          src={img_path}
-                          alt={`Bottom image ${index + 1}`}
-                          rounded
-                        />
-                      </NavLink>
-                    </Col>
-                  );
-                })
-              : ""}
-          </Row>
+          <DetailBottomImages imageList={BottomImageList} />
         </Container>
       </div>
 
