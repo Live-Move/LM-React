@@ -140,7 +140,7 @@ function PaymentPage(props) {
   totalPrice = totalPrice / totalMonth;
   totalPrice = totalPrice.toFixed(0);
   return (
-    <Container>
+    <Container style={{ fontFamily: "apple" }}>
       <div>
         {/* 장바구니 상품 정보 */}
         <OrderProduct>
@@ -283,7 +283,11 @@ function PaymentPage(props) {
         </UserInfoContainer>
         {/* 결제 버튼 */}
         <ButtonContainer>
-          <button className="pay-button" onClick={handlePayment}>
+          <button
+            className="pay-button"
+            onClick={handlePayment}
+            style={{ backgroundColor: "#b37840" }}
+          >
             결제 하기
           </button>
         </ButtonContainer>

@@ -104,11 +104,11 @@ export const ButtonContainer = styled.div`
     font-size: 1rem;
 
     &:hover {
-      background: #1a73e8;
+      background: #95775a;
     }
 
     &:active {
-      background: #0d47a1;
+      background: #95775a;
     }
   }
 `;

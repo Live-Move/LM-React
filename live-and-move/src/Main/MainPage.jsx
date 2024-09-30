@@ -11,7 +11,7 @@ function MainPage(props) {
       </CarouselContainer>
 
       <CarouselContainer>
-        <MainPageList />
+        <MainPageList style={{ backgroundColor: "#E6E3E1" }} />
       </CarouselContainer>
     </Container>
   );

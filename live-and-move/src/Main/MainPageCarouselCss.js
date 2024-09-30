@@ -30,7 +30,8 @@ font-family: 'apple'
 `;
 export const Span = styled.span`
 font-family: 'apple'
+font-weight: bold;
   weight: 700;
-  font-size: 20px;
+  font-size: 25px;
   color: black;
 `;

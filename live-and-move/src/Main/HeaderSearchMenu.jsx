@@ -80,7 +80,7 @@ function HeaderSearchMenu() {
   };
 
   return (
-    <div>
+    <div style={{ fontFamily: "apple" }}>
       <SearchBox onSubmit={handleSearch}>
         <SearchTxt
           type="text"
