@@ -8,7 +8,6 @@ function App() {
       <AppSrceen />
     </BrowserRouter>
   );
-
 }
 
 export default App;
