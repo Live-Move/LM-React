@@ -59,38 +59,27 @@ export const Input1 = styled.input`
   color: #2020d9;
 `;
 
-export const ButtonDel = styled(Button)`
-  // 선택상품삭제 버튼
-  width: 10em;
-  height: 3em;
-  color: white;
-  margin-bottom: 5em;
-  background-color: #0c0f67;
-  border: 1px solid #ccc;
-  &:hover {
-    transform: scale(1.04);
-    background-color: #b0b8e6;
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-export const ButtonJM = styled(Button)`
+export const ButtonInCart = styled(Button)`
   // 상품 주문하기 버튼
-  width: 100%;
-  height: 5em;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   color: white;
   margin-bottom: 5em;
-  background-color: #0c0f67;
-  border: 1px solid #ccc;
+  background-color: #c1ab86;
+  /* border: 1px solid #ccc; */
   &:hover {
     transform: scale(1.04);
-    background-color: #b0b8e6;
+    transition-duration: 0.4s;
+    background-color: #b37840;
+    color: white;
+    font-weight: "bold";
   }
   &:active {
+    transition-duration: 0.4s;
     transform: scale(0.98);
   }
 `;
+
 export const ColJM = styled(Col)`
   // 주문 예상 금액
   margin-left: 50px;

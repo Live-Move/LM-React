@@ -58,7 +58,7 @@ export const ButtonJB = styled(Button)`
   margin-bottom: 15px;
   border: none;
   &:hover {
-    background-color: #b0b8e6;
+    background-color: #b37840;
     transition-duration: 0.4s;
     transform: scale(1.04);
   }

@@ -11,6 +11,7 @@ import {
 import {
   Button1,
   ButtonDel,
+  ButtonInCart,
   ButtonJM,
   ColCard,
   ColJM,
@@ -195,7 +196,7 @@ function Cart(props) {
 
   return (
     <>
-      <Container>
+      <Container style={{ fontFamily: "apple" }}>
         <h1 style={{ fontWeight: "bold", margin: "3rem" }}> 장바구니 </h1>
         <Row>
           <Col md={8}>
@@ -292,9 +293,14 @@ function Cart(props) {
               )}
             </ColCard>
             <hr />
-            <ButtonDel variant="light" onClick={handleDeleteSelected}>
+            <ButtonInCart
+              width={"10em"}
+              height={"3em"}
+              variant="light"
+              onClick={handleDeleteSelected}
+            >
               선택상품삭제
-            </ButtonDel>
+            </ButtonInCart>
           </Col>
           <ColJM md={3} id="costAmount">
             <Container
@@ -344,7 +350,7 @@ function Cart(props) {
                 <p
                   style={{
                     margin: "0px 5px 0px 70px",
-                    color: "lightskyblue",
+                    color: "#0a8abcc6",
                   }}
                 >
                   {(
@@ -355,12 +361,12 @@ function Cart(props) {
                 </p>{" "}
                 원
               </p>
-              <ButtonJM variant="light">
+              <ButtonInCart width={"100%"} height={"5em"} variant="light">
                 <Div3 onClick={() => navigate("/paymentpage")}>
                   상품 주문하기
                   <Icon1 />
                 </Div3>
-              </ButtonJM>
+              </ButtonInCart>
             </Container>
           </ColJM>
         </Row>
