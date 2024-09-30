@@ -60,6 +60,6 @@ export const ButtonComp = styled(Button)`
   }
 
   &:active {
-    background: #95775a;
+    background: #95775a !important;
   }
 `;
