@@ -6,7 +6,7 @@ function AccountMain(props) {
   return (
     <>
       <MainContainerSignup>
-        <h1>AccountMain</h1>
+        <h2>아이디, 패스워드를 찾고 계시나요?</h2>
         <AccountPage />
       </MainContainerSignup>
     </>

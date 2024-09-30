@@ -100,12 +100,7 @@ function LoginPage(props) {
         })}
         <Form.Check label="아이디 저장하기" className="mb-3" />
         {/* 로그인 버튼 */}
-        <ButtonInLogin
-          bg_color={"lightgray"}
-          border_color={"lightgray"}
-          font_color={"white"}
-          type="submit"
-        >
+        <ButtonInLogin font_color={"white"} type="submit">
           로그인
         </ButtonInLogin>
       </Form>

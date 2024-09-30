@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage";
 
 const MainContainer = styled.div`
   display: flex;
+  font-family: "apple";
   flex-direction: column;
   justify-content: center;
   align-items: center;

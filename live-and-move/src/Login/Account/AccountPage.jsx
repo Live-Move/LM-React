@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { FloatingLabel, Form, ToggleButtonGroup } from "react-bootstrap";
-import { ButtonInLogin, MainContainer, ButtonInAccount } from "../CSS/LoginCss";
+import { ButtonGroup, FloatingLabel, Form } from "react-bootstrap";
+import {
+  ButtonInLogin,
+  MainContainer,
+  AccountStateButton,
+} from "../CSS/LoginCss";
 
 function AccountPage(props) {
   const [userName, setUserName] = useState("");
@@ -96,22 +100,22 @@ function AccountPage(props) {
   return (
     <>
       <MainContainer>
-        <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-          <ButtonInAccount
-            id="tbg-radio-1"
-            value={1}
+        <ButtonGroup>
+          <AccountStateButton
+            bgcolor={isFindId ? "#c1ab86" : "white"}
+            font_color={isFindId ? "white" : "none"}
             onClick={() => handleFindStatus(true)}
           >
             아이디 찾기
-          </ButtonInAccount>
-          <ButtonInAccount
-            id="tbg-radio-2"
-            value={2}
+          </AccountStateButton>
+          <AccountStateButton
+            bgcolor={!isFindId ? "#c1ab86" : "white"}
+            font_color={!isFindId ? "white" : "none"}
             onClick={() => handleFindStatus(false)}
           >
             비밀번호 찾기
-          </ButtonInAccount>
-        </ToggleButtonGroup>
+          </AccountStateButton>
+        </ButtonGroup>
         <Form onSubmit={handleFindInfo}>
           {(isFindId ? FormDatasFindId : FormDatasFindPw).map(
             ({ label, value, type, onChange, messages }, index) => {

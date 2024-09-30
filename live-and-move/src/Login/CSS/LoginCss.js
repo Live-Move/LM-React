@@ -13,6 +13,7 @@ export const FieldMessage = styled.h6`
 // LoginPage.jsx
 export const MainContainer = styled.div`
   display: flex;
+  font-family: "apple";
   flex-direction: column;
   background-color: ${(props) => props.bg_color};
   border-radius: 5px;
@@ -41,17 +42,17 @@ export const ALink = styled.a`
 export const ButtonInLogin = styled(Button)`
   margin-bottom: 4px;
   border-radius: 0;
+  border: none;
+  font-size: 20px;
   width: 100%;
-  background-color: ${(props) => props.bg_color};
-  border-color: ${(props) => props.border_color};
+  background-color: #c1ab86;
   color: ${(props) => props.font_color};
   transition-duration: 0.25s;
 
   /* 마우스 호버 이벤트 */
   &:hover {
-    border-color: lightskyblue;
-    background-color: lightskyblue;
-    font-weight: bold;
+    background-color: #b37840;
+    transition-duration: 0.25s;
   }
 `;
 
@@ -80,10 +81,24 @@ export const KakaoLoginButton = styled(KakaoLogin)`
   }
 `;
 
-// AccountPage.jsx
-export const ButtonInAccount = styled(ToggleButton)`
-  background-color: white;
-  border-color: white;
-  border-radius: 0%;
+// AccountPage ToggleButton
+export const AccountStateButton = styled(Button)`
+  margin: 0px 0px 8px 0px;
+  border-radius: 0;
+  border: none;
   color: darkgray;
+  font-size: 20px;
+  width: 100%;
+  background-color: ${(props) => props.bgcolor};
+  color: ${(props) => props.font_color};
+
+  &:hover {
+    background-color: #b37840;
+    transition-duration: 0.2s;
+  }
+
+  &:active {
+    background-color: #64502e !important;
+    transition-duration: 0.2s;
+  }
 `;
