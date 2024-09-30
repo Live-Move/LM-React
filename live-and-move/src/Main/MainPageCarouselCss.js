@@ -22,11 +22,14 @@ export const TextContainer = styled.div`
 `;
 
 export const H1 = styled.h1`
-  weight: 700;
+font-family: 'apple'
+  weight: 600;
+  font-weight: bold;
   font-size: 50px;
   color: black;
 `;
 export const Span = styled.span`
+font-family: 'apple'
   weight: 700;
   font-size: 20px;
   color: black;
