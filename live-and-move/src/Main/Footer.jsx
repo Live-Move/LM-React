@@ -108,7 +108,7 @@ function Footer(props) {
   ];
 
   return (
-    <FooterDiv style={{ position: "fixed", bottom: "0" }}>
+    <FooterDiv>
       <Container>
         <div className="Left">
           <Top>

@@ -10,9 +10,7 @@ import {
 } from "react-bootstrap";
 import {
   Button1,
-  ButtonDel,
   ButtonInCart,
-  ButtonJM,
   ColCard,
   ColJM,
   Div1,
@@ -22,6 +20,7 @@ import {
   Input1,
 } from "./CSS/Cart";
 import { isSessionExists } from "../Login/Account/AccountChk";
+import Swal from "sweetalert2";
 
 function Cart(props) {
   const navigate = useNavigate();
@@ -121,45 +120,71 @@ function Cart(props) {
     }
   };
 
+  const isDeleteChk = () => {
+    Swal.fire({
+      title: "상품을 삭제하시겠습니까?",
+      text: `장바구니에서 해당 상품을 삭제합니다`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#edd6b9",
+      cancelButtonColor: "#c1ab86",
+      confirmButtonText: "삭제하겠습니다!",
+      cancelButtonText: "조금 더 고민해볼게요",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "상품이 삭제되었습니다!",
+          icon: "success",
+        });
+        return true;
+      }
+      return false;
+    });
+  };
+
   // 선택된 항목 삭제
   const handleDeleteSelected = () => {
-    const updatedChoice = cartData.cartInfo.filter(
-      (item) => !checkItems.includes(item.cart_id)
-    );
+    if (isDeleteChk()) {
+      const updatedChoice = cartData.cartInfo.filter(
+        (item) => !checkItems.includes(item.cart_id)
+      );
 
-    const updatedItemNum = cartData.itemNum.filter(
-      (_, index) => !checkItems.includes(cartData.cartInfo[index].cart_id)
-    );
+      const updatedItemNum = cartData.itemNum.filter(
+        (_, index) => !checkItems.includes(cartData.cartInfo[index].cart_id)
+      );
 
-    // 서버로 보낼 삭제 목록 추출
-    const deleteTarget = cartData.cartInfo
-      .filter((item) => checkItems.includes(item.cart_id))
-      .map((item, index) => item.cart_id);
+      // 서버로 보낼 삭제 목록 추출
+      const deleteTarget = cartData.cartInfo
+        .filter((item) => checkItems.includes(item.cart_id))
+        .map((item, index) => item.cart_id);
 
-    console.log(`** deleteTarget : ${deleteTarget}`);
-    fetchDeleteData(deleteTarget);
+      console.log(`** deleteTarget : ${deleteTarget}`);
+      fetchDeleteData(deleteTarget);
 
-    setCheckItems([]);
-    setCartData({
-      ...cartData,
-      cartInfo: updatedChoice,
-      itemNum: updatedItemNum,
-    });
+      setCheckItems([]);
+      setCartData({
+        ...cartData,
+        cartInfo: updatedChoice,
+        itemNum: updatedItemNum,
+      });
+    }
   };
 
   // 개별 항목 삭제
   const handleDeleteItem = (index) => {
-    const updatedChoice = cartData.cartInfo.filter((_, idx) => idx !== index);
-    const updatedItemNum = cartData.itemNum.filter((_, idx) => idx !== index);
-    const target = [cartData.cartInfo[index].cart_id];
+    if (isDeleteChk()) {
+      const updatedChoice = cartData.cartInfo.filter((_, idx) => idx !== index);
+      const updatedItemNum = cartData.itemNum.filter((_, idx) => idx !== index);
+      const target = [cartData.cartInfo[index].cart_id];
 
-    fetchDeleteData(target);
+      fetchDeleteData(target);
 
-    setCartData({
-      ...cartData,
-      cartInfo: updatedChoice,
-      itemNum: updatedItemNum,
-    });
+      setCartData({
+        ...cartData,
+        cartInfo: updatedChoice,
+        itemNum: updatedItemNum,
+      });
+    }
   };
 
   const fetchDeleteData = async (index) => {
