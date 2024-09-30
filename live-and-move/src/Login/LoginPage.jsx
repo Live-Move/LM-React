@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // CSS from LoginCSS
 import { ALink, MainContainer, ButtonInLogin, SpanCol } from "./CSS/LoginCss";
@@ -55,8 +56,17 @@ function LoginPage(props) {
         return response.json();
       })
       .then((data) => {
-        alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
+        // alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
+        Swal.fire({
+          position: "center",
+          icon: data.code === "ok" ? "success" : "error",
+          title: data.code === "ok" ? "로그인 성공" : "로그인 실패",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+
         console.log(data.code); // ok , fail
+
         if (data.code === "ok") {
           // 세션 저장
           sessionStorage.setItem("userData", JSON.stringify(data.data));
@@ -73,6 +83,7 @@ function LoginPage(props) {
               JSON.stringify(data.data.loginId)
             );
           }
+
           navigate("/");
         }
       });
@@ -153,10 +164,14 @@ function LoginPage(props) {
         </ALink>
       </span>
 
-      <SpanCol font_size="13px" font_color="darkgrey">
+      <SpanCol
+        style={{ marginBottom: "20px" }}
+        font_size="13px"
+        font_color="darkgrey"
+      >
         로그인이 어려우신가요?
       </SpanCol>
-      <SpanCol>
+      <SpanCol style={{ marginBottom: "60px" }}>
         <KakaoLoginPage />
       </SpanCol>
       <SpanCol font_size="16px" font_color="lightgrey">
