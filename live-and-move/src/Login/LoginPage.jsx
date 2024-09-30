@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,19 @@ const isValidMessage = (message) => {
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const renderStatus = useRef(true);
+  const chkMyLog = useRef(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (renderStatus.current) {
+      renderStatus.current = false;
+
+      if (localStorage.lastUserId) {
+        setEmail(localStorage.lastUserId.split('"')[1]);
+      }
+    }
+  }, []);
 
   // 로그인 이벤트
   const handleSubmit = (e) => {
@@ -46,9 +58,21 @@ function LoginPage(props) {
         alert(data.code === "ok" ? "로그인 성공" : "로그인 실패");
         console.log(data.code); // ok , fail
         if (data.code === "ok") {
+          // 세션 저장
           sessionStorage.setItem("userData", JSON.stringify(data.data));
           console.log(`[ session Storage ]`);
           console.log(isSessionExists());
+
+          // 기존에 있던 로컬 데이터 삭제
+          localStorage.clear();
+
+          // "아이디 저장" 선택 시 마지막 로그인 유저 저장
+          if (chkMyLog.current) {
+            localStorage.setItem(
+              "lastUserId",
+              JSON.stringify(data.data.loginId)
+            );
+          }
           navigate("/");
         }
       });
@@ -98,7 +122,13 @@ function LoginPage(props) {
             </FloatingLabel>
           );
         })}
-        <Form.Check label="아이디 저장하기" className="mb-3" />
+        <Form.Check
+          onClick={() => {
+            chkMyLog.current = !chkMyLog.current;
+          }}
+          label="아이디 저장하기"
+          className="mb-3"
+        />
         {/* 로그인 버튼 */}
         <ButtonInLogin font_color={"white"} type="submit">
           로그인

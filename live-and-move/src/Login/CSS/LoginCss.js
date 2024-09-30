@@ -18,14 +18,11 @@ export const MainContainer = styled.div`
   background-color: ${(props) => props.bg_color};
   border-radius: 5px;
   opacity: 0.6;
-  max-width: 650px;
-  min-width: 450px;
-  max-height: 940px;
-  width: 40%;
-  height: auto;
+  max-width: 400px;
+  min-width: 500px;
   color: white;
   margin: 20px;
-  padding: 20px 40px 12px 40px;
+  padding: 45px;
   gap: 4px;
 `;
 
