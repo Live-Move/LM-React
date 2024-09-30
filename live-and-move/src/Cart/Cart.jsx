@@ -32,7 +32,7 @@ function Cart(props) {
   });
 
   const isLoadData = useRef(true);
-  const URL = useRef("http://localhost:8080/api/cart/list");
+  const URL = useRef("http://localhost:8080/api/cart");
 
   const fetchData = async () => {
     isLoadData.current = false;
@@ -41,7 +41,7 @@ function Cart(props) {
     const user_info = await isSessionExists();
     console.log(user_info);
 
-    const response = await fetch(URL.current, {
+    const response = await fetch(URL.current + "/list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,6 +105,7 @@ function Cart(props) {
       setCheckItems(checkItems.filter((el) => el !== id));
     }
   };
+
   // 체크박스 전체 선택
   const handleAllCheck = (checked) => {
     if (checked) {
@@ -115,32 +116,63 @@ function Cart(props) {
       setCheckItems([]);
     }
   };
+
   // 선택된 항목 삭제
   const handleDeleteSelected = () => {
     const updatedChoice = cartData.cartInfo.filter(
       (item) => !checkItems.includes(item.cart_id)
     );
+
     const updatedItemNum = cartData.itemNum.filter(
       (_, index) => !checkItems.includes(cartData.cartInfo[index].cart_id)
     );
+
+    // 서버로 보낼 삭제 목록 추출
+    const deleteTarget = cartData.cartInfo
+      .filter((item) => checkItems.includes(item.cart_id))
+      .map((item, index) => item.cart_id);
+
+    console.log(`** deleteTarget : ${deleteTarget}`);
+    fetchDeleteData(deleteTarget);
+
     setCheckItems([]);
     setCartData({
       ...cartData,
       cartInfo: updatedChoice,
       itemNum: updatedItemNum,
     });
-    // setChoice(updatedChoice);
   };
 
   // 개별 항목 삭제
   const handleDeleteItem = (index) => {
     const updatedChoice = cartData.cartInfo.filter((_, idx) => idx !== index);
     const updatedItemNum = cartData.itemNum.filter((_, idx) => idx !== index);
+    const target = [cartData.cartInfo[index].cart_id];
+
+    fetchDeleteData(target);
+
     setCartData({
       ...cartData,
       cartInfo: updatedChoice,
       itemNum: updatedItemNum,
     });
+  };
+
+  const fetchDeleteData = async (index) => {
+    console.log("[ fetchDeleteData ]");
+    const user_id = isSessionExists().user_id;
+    const cart_id = index.reduce((total, current) => `${total}&${current}`);
+
+    console.log(`** URL >> ${URL.current + `/delete/${user_id}/${cart_id}`}`);
+    const response = await fetch(
+      URL.current + `/delete/${user_id}/${cart_id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+    console.log(`[ data ] >> ${data.code}`);
   };
 
   return (
@@ -166,7 +198,7 @@ function Cart(props) {
               {cartData.cartInfo.map(
                 ({ cart_id, month, product_id, quantity, user_id }, index) => {
                   return (
-                    <Div2 key={index}>
+                    <Div2 key={index + product_id}>
                       <FormCheck
                         style={{
                           marginRight: "5px",
@@ -246,8 +278,11 @@ function Cart(props) {
               선택상품삭제
             </ButtonDel>
           </Col>
-          <ColJM md={3}>
-            <Container style={{ width: "370px", fontSize: "18px" }}>
+          <ColJM md={3} key="costAmountArea" id="costAmount">
+            <Container
+              key="billArea"
+              style={{ width: "370px", fontSize: "18px" }}
+            >
               <h3 style={{ marginBottom: "20px" }}>주문 예상 금액</h3>
               {[
                 {
@@ -266,6 +301,7 @@ function Cart(props) {
                 return (
                   <>
                     <p
+                      key={title + index}
                       style={{
                         display: "flex",
                         flexDirection: "row",
@@ -290,6 +326,7 @@ function Cart(props) {
               })}
               <hr />
               <p
+                key="cost"
                 style={{
                   display: "flex",
                   flexDirection: "row",
