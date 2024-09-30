@@ -10,9 +10,9 @@ function MainPage(props) {
         <MainPageCarousel />
       </CarouselContainer>
 
-      <CarouselContainer>
-        <MainPageList style={{ backgroundColor: "#E6E3E1" }} />
-      </CarouselContainer>
+      <MainPageList style={{ backgroundColor: "#E6E3E1" }} />
+      {/* <CarouselContainer>
+      </CarouselContainer> */}
     </Container>
   );
 }

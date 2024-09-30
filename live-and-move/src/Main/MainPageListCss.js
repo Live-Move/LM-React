@@ -2,18 +2,25 @@ import styled from "styled-components";
 /////////////////////////////////////////////////////////////////////
 export const Container = styled.div`
   margin: 0px;
-  min-width: 1800px;
+  /* min-width: 1800px; */
   width: 100%;
 `;
 export const Ul = styled.ul`
-  margin: 0 250px;
+  margin-bottom: 6vh;
+  height: 13vh;
+  padding: 0px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 5vw;
 `;
 export const Li = styled.li`
   list-style: none;
   position: relative;
+  &:hover {
+    transition-duration: 0.4s;
+    transform: scale(1.04);
+  }
 `;
 export const Img = styled.img`
   filter: brightness(0.7);
