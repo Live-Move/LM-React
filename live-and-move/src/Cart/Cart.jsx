@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CloseButton,
   Col,
@@ -22,6 +23,8 @@ import {
 import { isSessionExists } from "../Login/Account/AccountChk";
 
 function Cart(props) {
+  const navigate = useNavigate();
+
   const deliveryCost = useRef(10000);
   const discountCost = useRef(0);
 
@@ -175,6 +178,21 @@ function Cart(props) {
     console.log(`[ data ] >> ${data.code}`);
   };
 
+  const billAreaList = [
+    {
+      title: "총 구독상품 금액",
+      value: totalGD,
+    },
+    {
+      title: "총 할인 금액",
+      value: discountCost.current,
+    },
+    {
+      title: "총 배송비",
+      value: deliveryCost.current,
+    },
+  ];
+
   return (
     <>
       <Container>
@@ -278,30 +296,19 @@ function Cart(props) {
               선택상품삭제
             </ButtonDel>
           </Col>
-          <ColJM md={3} key="costAmountArea" id="costAmount">
+          <ColJM md={3} id="costAmount">
             <Container
               key="billArea"
               style={{ width: "370px", fontSize: "18px" }}
             >
-              <h3 style={{ marginBottom: "20px" }}>주문 예상 금액</h3>
-              {[
-                {
-                  title: "총 구독상품 금액",
-                  value: totalGD,
-                },
-                {
-                  title: "총 할인 금액",
-                  value: discountCost.current,
-                },
-                {
-                  title: "총 배송비",
-                  value: deliveryCost.current,
-                },
-              ].map(({ title, value }, index) => {
+              <h3 key="title" style={{ marginBottom: "20px" }}>
+                주문 예상 금액
+              </h3>
+              {billAreaList.map(({ title, value }, index) => {
                 return (
                   <>
                     <p
-                      key={title + index}
+                      key={`${title}${index}`}
                       style={{
                         display: "flex",
                         flexDirection: "row",
@@ -326,7 +333,6 @@ function Cart(props) {
               })}
               <hr />
               <p
-                key="cost"
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -350,7 +356,7 @@ function Cart(props) {
                 원
               </p>
               <ButtonJM variant="light">
-                <Div3>
+                <Div3 onClick={() => navigate("/paymentpage")}>
                   상품 주문하기
                   <Icon1 />
                 </Div3>
