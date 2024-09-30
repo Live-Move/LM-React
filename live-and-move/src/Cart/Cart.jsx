@@ -11,6 +11,7 @@ import {
 import {
   Button1,
   ButtonInCart,
+  CartMainContainer,
   ColCard,
   ColJM,
   Div1,
@@ -120,7 +121,10 @@ function Cart(props) {
     }
   };
 
-  const isDeleteChk = () => {
+  // 선택된 항목 삭제
+  const handleDeleteSelected = () => {
+    // isDeleteChk();
+
     Swal.fire({
       title: "상품을 삭제하시겠습니까?",
       text: `장바구니에서 해당 상품을 삭제합니다`,
@@ -135,56 +139,73 @@ function Cart(props) {
         Swal.fire({
           title: "상품이 삭제되었습니다!",
           icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
         });
-        return true;
+        console.log("[ 상품 삭제 ]");
+        const updatedChoice = cartData.cartInfo.filter(
+          (item) => !checkItems.includes(item.cart_id)
+        );
+
+        const updatedItemNum = cartData.itemNum.filter(
+          (_, index) => !checkItems.includes(cartData.cartInfo[index].cart_id)
+        );
+
+        // 서버로 보낼 삭제 목록 추출
+        const deleteTarget = cartData.cartInfo
+          .filter((item) => checkItems.includes(item.cart_id))
+          .map((item, index) => item.cart_id);
+
+        console.log(`** deleteTarget : ${deleteTarget}`);
+        fetchDeleteData(deleteTarget);
+
+        setCheckItems([]);
+        setCartData({
+          ...cartData,
+          cartInfo: updatedChoice,
+          itemNum: updatedItemNum,
+        });
       }
-      return false;
     });
-  };
-
-  // 선택된 항목 삭제
-  const handleDeleteSelected = () => {
-    if (isDeleteChk()) {
-      const updatedChoice = cartData.cartInfo.filter(
-        (item) => !checkItems.includes(item.cart_id)
-      );
-
-      const updatedItemNum = cartData.itemNum.filter(
-        (_, index) => !checkItems.includes(cartData.cartInfo[index].cart_id)
-      );
-
-      // 서버로 보낼 삭제 목록 추출
-      const deleteTarget = cartData.cartInfo
-        .filter((item) => checkItems.includes(item.cart_id))
-        .map((item, index) => item.cart_id);
-
-      console.log(`** deleteTarget : ${deleteTarget}`);
-      fetchDeleteData(deleteTarget);
-
-      setCheckItems([]);
-      setCartData({
-        ...cartData,
-        cartInfo: updatedChoice,
-        itemNum: updatedItemNum,
-      });
-    }
   };
 
   // 개별 항목 삭제
   const handleDeleteItem = (index) => {
-    if (isDeleteChk()) {
-      const updatedChoice = cartData.cartInfo.filter((_, idx) => idx !== index);
-      const updatedItemNum = cartData.itemNum.filter((_, idx) => idx !== index);
-      const target = [cartData.cartInfo[index].cart_id];
+    Swal.fire({
+      title: "상품을 삭제하시겠습니까?",
+      text: `장바구니에서 해당 상품을 삭제합니다`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#edd6b9",
+      cancelButtonColor: "#c1ab86",
+      confirmButtonText: "삭제하겠습니다!",
+      cancelButtonText: "조금 더 고민해볼게요",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "상품이 삭제되었습니다!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        console.log("[ 상품 삭제 ]");
+        const updatedChoice = cartData.cartInfo.filter(
+          (_, idx) => idx !== index
+        );
+        const updatedItemNum = cartData.itemNum.filter(
+          (_, idx) => idx !== index
+        );
+        const target = [cartData.cartInfo[index].cart_id];
 
-      fetchDeleteData(target);
+        fetchDeleteData(target);
 
-      setCartData({
-        ...cartData,
-        cartInfo: updatedChoice,
-        itemNum: updatedItemNum,
-      });
-    }
+        setCartData({
+          ...cartData,
+          cartInfo: updatedChoice,
+          itemNum: updatedItemNum,
+        });
+      }
+    });
   };
 
   const fetchDeleteData = async (index) => {
@@ -221,7 +242,7 @@ function Cart(props) {
 
   return (
     <>
-      <Container style={{ fontFamily: "apple" }}>
+      <CartMainContainer>
         <h1 style={{ fontWeight: "bold", margin: "3rem" }}> 장바구니 </h1>
         <Row>
           <Col md={8}>
@@ -395,7 +416,7 @@ function Cart(props) {
             </Container>
           </ColJM>
         </Row>
-      </Container>
+      </CartMainContainer>
     </>
   );
 }
