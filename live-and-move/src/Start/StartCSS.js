@@ -25,8 +25,8 @@ export const Div001 = styled.div`
   // box-shadow: 0px 0px 100px black;
   background: linear-gradient(
     to top,
-    rgba(20, 79, 255, 0.3),
-    rgba(20, 79, 255, 0)
+    rgba(149, 119, 90, 0.8),
+    rgba(149, 119, 90, 0)
   );
   position: relative;
   overflow: hidden;
@@ -52,29 +52,10 @@ export const Div002 = styled.div`
     font-weight: 900;
   }
 
-  @keyframes typing {
-    from { width: 0; }
-    to  { width: 12ch; } /* 최종 너비 */
-    }
-
-  // 커서 깜빡임 애니메이션 정의
-  @keyframes caret {
-    50% { border-right-color: transparent; }
-    }
-
-  .move-text {
-  // font: bold 100% Consolas, Monaco, monospace;
-  width: 12ch; /* 글자 수에 따라 너비 설정 */
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 0.05em solid;
-  animation: typing 8s steps(12),
-  caret 1s steps(1) infinite;
-  }
-
   .animated-text {
     opacity: 0;
     animation: fadeIn 3s ease-in forwards;
+    
   }
 
   @keyframes fadeIn {
@@ -83,6 +64,7 @@ export const Div002 = styled.div`
   }
   
   .static-text { opacity: 1; }
+  font-family: 'apple'
 `;
 
 export const Button001 = styled(Button)`
@@ -102,6 +84,10 @@ export const Button001 = styled(Button)`
   display: flex; /* Flexbox 사용 */
   justify-content: center; /* 가로 중앙 정렬 */
   align-items: center; /* 세로 중앙 정렬 */
+  &:hover {
+    background-color: #b37840; /* 호버 시 색상 */
+    }
+    font-family: 'apple'
 `;
 export const Img02 = styled.img`
   position: absolute; /* 부모 요소를 기준으로 절대 위치 설정 */

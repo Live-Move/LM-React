@@ -4,6 +4,9 @@ import styled from "styled-components";
 
 
 
+export const Divfont = styled.div`
+font-family: 'apple'
+`;   
 export const TopContainer = styled.div`
   padding: 20px;
   display: flex;
@@ -27,9 +30,8 @@ export const MyInfoContainer = styled.div`
   justify-content: center;
   // border: 1.5px solid #076ca39f;
   border-radius: 7%;
-  // background-color: #0484ca;
-  background-color: #6db3df;
-  color: white;
+  background-color: #b37840;
+  color: #e6e3e1;
   box-shadow: 0px 0px 5px #474747;
   position: fixed;
   opacity: 0.9;
@@ -39,14 +41,14 @@ export const Div01 = styled.div`
  position: absolute; /* 절대 위치로 설정 */
   top: 10px; /* 위쪽 여백 */
   left: 10px; /* 왼쪽 여백 */
-  color: white; /* 텍스트 색상 */
+  color: #e6e3e1; /* 텍스트 색상 */
   font-size: 1rem; /* 텍스트 크기 조정 */
 `;
 export const Div02 = styled.div`
  position: absolute; /* 절대 위치로 설정 */
   bottom: 10px; /* 위쪽 여백 */
   left: 10px; /* 왼쪽 여백 */
-  color: white; /* 텍스트 색상 */
+  color: #e6e3e1;
   font-size: 0.9rem; /* 텍스트 크기 조정 */
 `;
 
@@ -63,10 +65,11 @@ export const Div1 = styled.div` // 바로가기
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
-  background-color: #f5f5f5;
+  background-color: #e6e3e1;
   color: ;
   align-items:center ;
   margin-bottom: 20px
+  
 `;
 export const Div2 = styled.div`// 구독상품 리스트
   display: flex;
@@ -83,7 +86,7 @@ export const Div3 = styled.div` //내정보
   // justify-content:space-between;
   align-items:center ;
   padding: 1em;
-  text-align: cent
+  text-align: cent;
 `;
 export const ColCard = styled(Col)` //구독중인 상품 
   //border-top: 1px solid #878787;
@@ -109,11 +112,11 @@ export const ButtonDel = styled(Button)` // 선택상품삭제 버튼
   height: 3em;
   color:white;
   margin-bottom: 5em; 
-  background-color:#0C0F67;
-  border:1px solid #ccc;
+  background-color:#95775a;
+  border:none;
   &:hover {
     transform: scale(1.04);
-    background-color:#B0B8E6;
+    background-color:#baa388;
     }
     &:active {
       transform: scale(0.98);
@@ -142,7 +145,7 @@ export const ColJM = styled(Col)` // 주문 예상 금액
 
 export const Icon1 = styled(SlArrowRightCircle)` 
   font-size: 2rem;
-  background: #ffffff;
+  background: #d1c8b8;
   border-radius: 50%;
   display: block; /* 아이콘을 아래로 내림 */
   margin-top: 50px;
@@ -171,7 +174,7 @@ export const TopCol = styled(Col)`
   // justify-content: center; 
   height: 30vh; 
   margin-left: 100px;
-  opacity: 0.6;
+  opacity: 1;
 `;
 export const MyInfoCol = styled(Col)`
   display: flex;
@@ -194,7 +197,7 @@ export const Card01 = styled(Card)`
   // margin-right: 100px;
   // justify-content: center; 
   border-radius: 0.3em;
-  background-color:#f5f5f5;
+  background-color:#e6e3e1;
   box-shadow: 0px 0px 2px #474747;
   
   `;
