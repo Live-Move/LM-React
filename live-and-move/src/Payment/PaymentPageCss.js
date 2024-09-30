@@ -110,6 +110,6 @@ export const PayButton = styled.button`
   }
 
   &:active {
-    background: #95775a;
+    background: #95775a !important;
   }
 `;

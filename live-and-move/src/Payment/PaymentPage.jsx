@@ -235,7 +235,7 @@ function PaymentPage(props) {
                   {Number(user.point) -
                     Number(totalPrice) -
                     Number(deliveryFee)}
-                  point
+                  &nbsp;point
                 </td>
               </tr>
             </tbody>
