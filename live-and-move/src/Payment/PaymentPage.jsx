@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ButtonContainer,
   Container,
@@ -14,7 +14,9 @@ import { Button, Modal } from "react-bootstrap";
 function PaymentPage(props) {
   const navigate = useNavigate();
   // 유저 정보
-  const user = isSessionExists();
+  // const [user, setUser] = useState(isSessionExists());
+  const user = useRef(isSessionExists());
+
   // 장바구니 정보 및 상품 정보 상태 추가
   const [cartItems, setCartItems] = useState([]);
   const [productInfo, setProductInfo] = useState([]);
@@ -35,7 +37,7 @@ function PaymentPage(props) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_id: user.user_id }), // user_id를 포함하여 서버로 전송
+        body: JSON.stringify({ user_id: user.current.user_id }), // user_id를 포함하여 서버로 전송
       });
 
       if (response.ok) {
@@ -73,7 +75,7 @@ function PaymentPage(props) {
   // 결제 요청을 처리하는 함수 (대여테이블에 상품 정보 create)
   const handlePayment = async () => {
     const totalPayment = Number(totalPrice) + Number(deliveryFee);
-    if (user.point < totalPayment) {
+    if (user.current.point < totalPayment) {
       alert("포인트가 부족합니다. 결제를 진행할 수 없습니다.");
       return; // 결제 진행 중단
     }
@@ -86,7 +88,7 @@ function PaymentPage(props) {
       endDate.setMonth(endDate.getMonth() + item.month); // item.month 만큼 개월을 더함
 
       return {
-        user_id: user.user_id, // 실제 사용자 ID
+        user_id: user.current.user_id, // 실제 사용자 ID
         product_id: item.product_id, // 상품 ID
         rental_fee: item.price, // 렌탈 요금
         start_date: startDate.toISOString().split("T")[0], // 시작일 (YYYY-MM-DD)
@@ -120,8 +122,8 @@ function PaymentPage(props) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user_id: user.user_id, // user_id 포함
-            point: user.point - totalPayment, // 결제 금액 추가
+            user_id: user.current.user_id, // user_id 포함
+            point: user.current.point - totalPayment, // 결제 금액 추가
           }),
         }
       );
@@ -129,6 +131,24 @@ function PaymentPage(props) {
       if (!clearCartResponse.ok) {
         throw new Error("Failed to clear cart after payment.");
       }
+
+      const updateUserResponse = await fetch(
+        "http://localhost:8080/api/user/updateInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user.current),
+        }
+      );
+
+      // 세션 유저 데이터 업데이트 ( 포인트 갱신 )
+      const res_userInfo = await updateUserResponse.json();
+      user.current = res_userInfo.data;
+
+      sessionStorage.clear();
+      sessionStorage.setItem("userData", JSON.stringify(user.current));
 
       // 결제 완료 후 페이지 이동
       alert("결제가 완료되었습니다.");
@@ -227,12 +247,12 @@ function PaymentPage(props) {
               </tr>
               <tr>
                 <td>보유 포인트</td>
-                <td>{user.point} point</td>
+                <td>{user.current.point} point</td>
               </tr>
               <tr>
                 <td>남는 포인트</td>
                 <td>
-                  {Number(user.point) -
+                  {Number(user.current.point) -
                     Number(totalPrice) -
                     Number(deliveryFee)}
                   &nbsp;point
@@ -253,7 +273,7 @@ function PaymentPage(props) {
               <tbody>
                 <tr>
                   <td>주문코드</td>
-                  <td>{user.point + 13579}</td>
+                  <td>{user.current.point + 13579}</td>
                 </tr>
                 <tr>
                   <td>주문일</td>
@@ -261,15 +281,15 @@ function PaymentPage(props) {
                 </tr>
                 <tr>
                   <td>이름</td>
-                  <td>{user.name}</td>
+                  <td>{user.current.name}</td>
                 </tr>
                 <tr>
                   <td>휴대폰번호</td>
-                  <td>{user.phone}</td>
+                  <td>{user.current.phone}</td>
                 </tr>
                 <tr>
                   <td>이메일</td>
-                  <td>{user.email}</td>
+                  <td>{user.current.email}</td>
                 </tr>
               </tbody>
             </table>
@@ -285,15 +305,15 @@ function PaymentPage(props) {
               <tbody>
                 <tr>
                   <td>이름</td>
-                  <td>{user.name}</td>
+                  <td>{user.current.name}</td>
                 </tr>
                 <tr>
                   <td>휴대폰번호</td>
-                  <td>{user.phone}</td>
+                  <td>{user.current.phone}</td>
                 </tr>
                 <tr>
                   <td>배송지주소</td>
-                  <td>{user.address}</td>
+                  <td>{user.current.address}</td>
                 </tr>
               </tbody>
             </table>
