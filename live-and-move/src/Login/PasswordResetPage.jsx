@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -9,13 +9,26 @@ import {
   Container,
   PageContainer,
 } from "./CSS/PasswordResetPageCss";
+import { isSessionExists } from "./Account/AccountChk";
 
 function PasswordResetPage(props) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const isRender = useRef(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("[ useEffect ]");
+    if (isRender.current) {
+      isRender.current = false;
+
+      if (sessionStorage.getItem("isPwUpdate")) {
+        setCurrentPassword(isSessionExists().password);
+      }
+    }
+  }, [isRender]);
 
   // 비밀번호 변경 요청 처리
   const handlePasswordChange = (e) => {
@@ -28,6 +41,7 @@ function PasswordResetPage(props) {
     }
 
     const data = {
+      user_id: isSessionExists().user_id,
       currentPassword: currentPassword,
       newPassword: newPassword,
     };
@@ -50,7 +64,11 @@ function PasswordResetPage(props) {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate("/login"); // 비밀번호 변경 후 로그인 페이지로 이동
+
+          sessionStorage.clear(); // 세션 업데이트
+          sessionStorage.setItem("userData", JSON.stringify(data.data_upd));
+
+          navigate("/"); // 시작 페이지로 이동
         } else {
           setErrorMessage("비밀번호 변경에 실패했습니다.");
         }
@@ -73,6 +91,7 @@ function PasswordResetPage(props) {
             style={{ color: "darkgrey" }}
           >
             <Form.Control
+              type="password"
               style={{ borderRadius: 0 }}
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
