@@ -36,7 +36,10 @@ function AccountPage(props) {
       value: userAddress,
       type: "text",
       onChange: setUserAddress,
-      messages: ["회원가입 시 입력한 이메일을 입력해주세요"],
+      messages: [
+        "회원가입 시 입력한 주소을 입력해주세요",
+        "* 이메일이 아닙니다!",
+      ],
     },
   ];
 
@@ -106,11 +109,13 @@ function AccountPage(props) {
               text: `* 새로운 비밀번호로 재설정 하시겠습니까?`,
               icon: "success",
               showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, delete it!",
+              confirmButtonColor: "#c1ab86",
+              cancelButtonColor: "#edd6b9",
+              confirmButtonText: "재설정 하겠습니다!",
+              cancelButtonText: "다음에 변경하겠습니다",
             }).then((result) => {
               if (result.isConfirmed) {
+                sessionStorage.clear();
                 sessionStorage.setItem("userData", JSON.stringify(data.data));
                 sessionStorage.setItem("isPwUpdate", true);
                 navigate("/PasswordResetPage");
@@ -119,6 +124,11 @@ function AccountPage(props) {
               }
             });
           }
+        } else {
+          Swal.fire({
+            title: `정보를 다시 입력해주세요`,
+            icon: "error",
+          });
         }
       });
   };
