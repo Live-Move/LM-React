@@ -43,61 +43,8 @@ function MyPageMain(props) {
   const [show2, setShow2] = useState(false);
   const handleShow2 = () => setShow2(true);
   const handleClose2 = () => setShow2(false);
-  const User = {
-    user_id: "1",
-    login_id: "test@gmail.com",
-    password: "test",
-    name: "admin", // 사용자의 이름
-    address: "test-address",
-    phone: "0000",
-    birth: "1999-11-17",
-    piont: "10000",
-  };
 
-  const arrChoice = [
-    {
-      id: 1,
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      name: "가구1",
-      content: "의자1",
-      price: 60000,
-      path: "/",
-    },
-    {
-      id: 2,
-      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-      name: "가구2",
-      content: "의자2",
-      price: 50000,
-      path: "/",
-    },
-    {
-      id: 3,
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      name: "가구3",
-      content: "의자3",
-      price: 40000,
-      path: "/",
-    },
-    {
-      id: 4,
-      src: "https://www.ikea.com/kr/ko/images/products/poaeng-low-back-armchair-natural-colour-beige-katorp-natural-colour-beige__1315067_pe940386_s5.jpg?f=m",
-      name: "가구4",
-      content: "의자4",
-      price: 40000,
-      path: "/",
-    },
-    {
-      id: 5,
-      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
-      name: "가구5",
-      content: "의자5",
-      price: 40000,
-      path: "/",
-    },
-  ];
-
-  const [choice, setChoice] = useState(arrChoice);
+  const [choice, setChoice] = useState([]);
   const [itemNum, setItemNum] = useState(choice.map(() => 1)); // 제품 수량
 
   //총 구독상품 금액
@@ -129,7 +76,19 @@ function MyPageMain(props) {
     console.log("[ getRentalInfo ]");
     console.log(data.data_rental);
 
-    const getData = data.data_rental.map(({ rental_id }, index) => {});
+    const getData = await data.data_rental.map(({ rental_id }, index) => {
+      return {
+        id: rental_id,
+        src: data.data_product[index].thumbnail,
+        name: data.data_product[index].productName,
+        content: data.data_product[index].category,
+        price: data.data_product[index].price,
+        path: `/listdetail/${data.data_product[index].product_id}`,
+        brand: data.data_product[index].brand,
+      };
+    });
+
+    setChoice(getData);
     // {
     //   id: 5,
     //   src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
@@ -215,14 +174,26 @@ function MyPageMain(props) {
                             justifyContent: "space-between",
                           }}
                         >
-                          <span>{itemNum[index]}개</span>
-                          <span>
+                          <span>{item.name}개</span>
+                          {/* <span>
                             {(item.price * itemNum[index]).toLocaleString(
                               "ko-KR"
                             )}{" "}
                             원
-                          </span>
+                          </span> */}
                         </div>
+                        {/* <span style={{ width: "290px", margin: "0px 15px" }}>
+                          <p
+                            style={{
+                              fontSize: "19px",
+                              fontWeight: "bold",
+                              marginBottom: "0px",
+                            }}
+                          >
+                            {item.brand}
+                          </p>
+                          {item.name}
+                        </span> */}
                       </Card.Body>
                       <Image01 src={item.src} />
                       <Card.ImgOverlay></Card.ImgOverlay>

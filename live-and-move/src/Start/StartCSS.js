@@ -32,6 +32,40 @@ export const Div001 = styled.div`
   overflow: hidden;
   background-size: cover;
 `;
+
+const flicker = keyframes`
+  7%, 9%, 21%, 23%, 19%, 21%, 23%,  0%,4%, 56%, 100% {
+    opacity: 1; /* 깜빡임 */
+  }
+  0%, 22%, 24%,20%, 22%, 24%, 0%, 3%, 55% {
+    opacity: 0; /* 어두워지기 */
+  }
+`;
+export const Light2 = styled.span`
+  
+  width: 200px; /* 원의 크기 */
+  height: 200px;
+  
+  border-radius: 50% ; /* 원 모양 */
+  background: radial-gradient(circle, rgba(225,225,500, 0.5), rgba(255, 255,90, 0.3), rgba(0, 0, 0, 0.1)); /* 그라데이션 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+`;
+export const AnimatedText = styled.span`
+  display: inline-block;
+  white-space: nowrap;
+  // overflow: hidden;
+  opacity: 0;
+  animation: ${flicker} 6s ease-in-out infinite; /* 깜빡이는 애니메이션 */
+  animation-delay: 4s; /* 3초 후에 애니메이션 시작 */
+// color: #b37840;
+  font-border: 20px solid #black;
+`;
+
+
+
 export const Div002 = styled.div`
   position: absolute; /* 부모 요소를 기준으로 절대 위치 설정 */
   top: 35%; /* 수직 중앙 */
@@ -42,7 +76,6 @@ export const Div002 = styled.div`
   text-align: center;
   font-weight: bold;
   width: 50em;
-
   @media (min-width: 1150px) {
     font-size: 5rem;
     font-weight: 900;
@@ -67,6 +100,9 @@ export const Div002 = styled.div`
   font-family: 'apple'
 `;
 
+
+
+
 export const Button001 = styled(Button)`
   position: absolute; /* 부모 요소를 기준으로 절대 위치 설정 */
   top: 60%; /* 수직 중앙 */
@@ -88,6 +124,8 @@ export const Button001 = styled(Button)`
     background-color: #b37840; /* 호버 시 색상 */
     }
     font-family: 'apple'
+
+    
 `;
 export const Img02 = styled.img`
   position: absolute; /* 부모 요소를 기준으로 절대 위치 설정 */
