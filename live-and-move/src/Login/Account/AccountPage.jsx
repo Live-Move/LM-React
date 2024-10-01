@@ -102,7 +102,7 @@ function AccountPage(props) {
             });
           } else {
             Swal.fire({
-              title: `[PW] : ${data.data}`,
+              title: `[PW] : ${data.data.password}`,
               text: `* 새로운 비밀번호로 재설정 하시겠습니까?`,
               icon: "success",
               showCancelButton: true,
@@ -111,14 +111,14 @@ function AccountPage(props) {
               confirmButtonText: "Yes, delete it!",
             }).then((result) => {
               if (result.isConfirmed) {
+                sessionStorage.setItem("userData", JSON.stringify(data.data));
+                sessionStorage.setItem("isPwUpdate", true);
                 navigate("/PasswordResetPage");
               } else {
                 navigate("/user/login");
               }
             });
           }
-
-          // path: /PasswordResetPage
         }
       });
   };
