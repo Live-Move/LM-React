@@ -8,14 +8,13 @@ import {
   Offcanvas,
   Row,
 } from "react-bootstrap";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   CarouselContainer,
   CheckCircle,
   SpanColor,
   QuestionCircle,
   ButtonJB,
-  ImageBT,
   Button1,
   Div1,
   Input1,
@@ -26,6 +25,7 @@ import { GoArrowRight } from "react-icons/go";
 import OffcanvasBS from "./OffcanvasBS";
 import { isSessionExists } from "../Login/Account/AccountChk";
 import DetailBottomImages from "./DetailBottomImages";
+import Swal from "sweetalert2";
 
 function ListDetailpage(props) {
   const navigate = useNavigate();
@@ -106,7 +106,19 @@ function ListDetailpage(props) {
 
       const data = await response.json();
       if (data.code === "fail") {
-        alert("* 장바구니에 등록된 상품입니다.");
+        Swal.fire({
+          icon: "error",
+          title: "담기 실패!",
+          text: "이미 장바구니에 저장된 상품입니다.",
+        });
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "장바구니에 저장되었습니다!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
       console.log(data.code);
     }
@@ -158,11 +170,11 @@ function ListDetailpage(props) {
                 <GoArrowRight style={{ fontSize: "2rem" }} />
               </Div3>
               <hr />
-              <Div3 type="button">
+              {/* <Div3 type="button">
                 <h2>상품평</h2>
                 <GoArrowRight style={{ fontSize: "2rem" }} />
               </Div3>
-              <hr />
+              <hr /> */}
             </Col>
             <Offcanvas
               placement="end"
@@ -305,10 +317,14 @@ function ListDetailpage(props) {
               >
                 최소사용기간 12개월 / 배송비별도
               </p>
-              <ButtonJB variant="secondary"onClick={handleSubmit} bg_color="#c1ab86">
+              <ButtonJB
+                variant="secondary"
+                onClick={handleSubmit}
+                bg_color="#c1ab86"
+              >
                 장바구니 담기
               </ButtonJB>
-              <ButtonJB variant="secondary"href="/cart" bg_color="#edd6b9">
+              <ButtonJB variant="secondary" href="/cart" bg_color="#edd6b9">
                 장바구니 이동
               </ButtonJB>
             </Col>

@@ -13,7 +13,7 @@ function AppSrceen(props) {
     <>
       {!isStartPage && <Header />}
       <AppPages />
-      <Footer />
+      {!isStartPage && <Footer />}
     </>
   );
 }

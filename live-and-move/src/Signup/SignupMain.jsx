@@ -1,12 +1,17 @@
 import React from "react";
 import SignupPage from "./SignupPage";
-import LM_logo from "../Logo/logo.svg";
 import { MainContainerSignup } from "./CSS/SignupCss";
+import { A } from "../Main/HeaderNavigationMenuCss";
 
 function SignupMain(props) {
   return (
     <MainContainerSignup>
-      <img src={LM_logo} alt="refresh this page" />
+      <A href="/main">
+        <img
+          src="https://github.com/Live-Move/LM-Photos/blob/main/MainPage%20Image/logo_white.png?raw=true"
+          alt="logo"
+        />
+      </A>
       <SignupPage />
     </MainContainerSignup>
   );

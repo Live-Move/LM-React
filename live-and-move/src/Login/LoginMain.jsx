@@ -7,11 +7,11 @@ const MainContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
+  justify-content: first baseline;
   align-items: center;
   min-height: calc(var(--vh, 3vh) * 15);
   width: 100vw;
-  height: 70vh;
+  height: 78vh;
   background-color: #333333;
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.3),

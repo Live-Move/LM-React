@@ -1,4 +1,3 @@
-import { ToggleButton } from "react-bootstrap";
 import Button from "react-bootstrap/esm/Button";
 import KakaoLogin from "react-kakao-login";
 import styled from "styled-components";
@@ -15,14 +14,16 @@ export const MainContainer = styled.div`
   display: flex;
   font-family: "apple";
   flex-direction: column;
+  justify-content: center;
   background-color: ${(props) => props.bg_color};
   border-radius: 5px;
   opacity: 0.6;
   max-width: 400px;
   min-width: 500px;
+  min-height: 520px;
   color: white;
-  margin: 20px;
-  padding: 45px;
+  margin-top: 100px;
+  padding: 40px 45px 20px 45px;
   gap: 4px;
 `;
 
@@ -61,6 +62,22 @@ export const SpanCol = styled.span`
   justify-content: center;
   color: ${(props) => props.font_color};
   font-size: ${(props) => props.font_size};
+`;
+
+export const DivSignup = styled.div`
+  display: flex;
+  font-family: "apple";
+  flex-direction: column;
+  justify-content: center;
+  background-color: ${(props) => props.bg_color};
+  border-radius: 5px;
+  opacity: 0.6;
+  max-width: 400px;
+  min-width: 500px;
+  min-height: 520px;
+  color: white;
+  padding: 20px 45px 20px 45px;
+  gap: 4px;
 `;
 
 // KakaoLogin

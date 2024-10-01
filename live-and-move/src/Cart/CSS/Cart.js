@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Col, FormCheck } from "react-bootstrap";
+import { Button, Col, Container, FormCheck } from "react-bootstrap";
 import { IoArrowForwardCircle } from "react-icons/io5";
 
 //Cart page
@@ -96,4 +96,10 @@ export const JMContainer = styled.div`
 
 export const Icon1 = styled(IoArrowForwardCircle)`
   font-size: 2rem;
+`;
+
+export const CartMainContainer = styled(Container)`
+  font-family: "apple";
+  height: 68vh;
+  min-height: 300px;
 `;

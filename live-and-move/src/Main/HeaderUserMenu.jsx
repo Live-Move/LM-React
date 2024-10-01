@@ -7,10 +7,33 @@ import {
 import { BsCart4 } from "react-icons/bs";
 import { FaHeadset } from "react-icons/fa";
 import { isSessionExists } from "../Login/Account/AccountChk";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 function HeaderUserMenu(props) {
+  const navigate = useNavigate();
+
   const handleLogout = (e) => {
-    alert("로그아웃");
-    sessionStorage.clear();
+    e.preventDefault();
+    Swal.fire({
+      title: "로그아웃 하시겠습니까?",
+      text: "저희 서비스를 방문해주셔서 감사합니다!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#edd6b9",
+      cancelButtonColor: "#c1ab86",
+      confirmButtonText: "로그아웃!",
+      cancelButtonText: "아니요, 아직입니다!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "로그아웃!",
+          text: "이용해주셔서 감사합니다",
+          icon: "success",
+        });
+        sessionStorage.clear();
+        navigate("/");
+      }
+    });
   };
 
   const LogoutStatueMenu = [
