@@ -35,7 +35,14 @@ function MyPageMain(props) {
   // userInfo 상태 정의
   const [userInfo, setUserInfo] = useState(isSessionExists()); // 초기값은 빈 객체
   console.log(userInfo)
+  const [rentalData, setRentalData] = useState([]);
+  console.log(rentalData)
+
+
   
+
+
+
 
 
 
