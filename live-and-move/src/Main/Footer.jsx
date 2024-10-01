@@ -108,7 +108,7 @@ function Footer(props) {
   ];
 
   return (
-
+    <FooterDiv>
       <Container>
         <div className="Left">
           <Top>
