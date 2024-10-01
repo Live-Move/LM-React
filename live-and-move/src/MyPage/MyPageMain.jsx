@@ -34,8 +34,14 @@ function MyPageMain(props) {
 
   // userInfo 상태 정의
   const [userInfo, setUserInfo] = useState(isSessionExists()); // 초기값은 빈 객체
+
   const isRenderInit = useRef(true);
   // console.log(userInfo);
+
+  
+
+
+
 
   ////////////////////////
   const [show, setShow] = useState(false); //택배가능지역
