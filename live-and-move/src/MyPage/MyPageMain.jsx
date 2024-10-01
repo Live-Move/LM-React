@@ -280,8 +280,8 @@ function MyPageMain(props) {
           <hr />
           <h4>보유 포인트 : {userInfo.point.toLocaleString("ko-KR")}</h4>
           <hr />
-          <ButtonDel variant="secondary">비밀번호 변경</ButtonDel>{" "}
-          <ButtonDel variant="secondary">회원탈퇴</ButtonDel>
+          <ButtonDel variant="secondary"href="/PasswordResetPage">비밀번호 변경</ButtonDel>{" "}
+          <ButtonDel variant="secondary" >회원탈퇴</ButtonDel>
         </Offcanvas.Body>
       </Offcanvas>
     </Divfont>

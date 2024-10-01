@@ -1,0 +1,78 @@
+[33mc3fbba7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mEunSeok[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mc3fbba7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mEunSeok[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: pull origin main: Fast-forward
+[33m8565879[m[33m ([m[1;31morigin/EunSeok[m[33m)[m HEAD@{2}: commit: feat[Start,Mypage,Footer]update
+[33ma3010c4[m HEAD@{3}: pull origin main: Fast-forward
+[33mc77862f[m HEAD@{4}: pull origin main: Fast-forward
+[33m1ccf8f1[m HEAD@{5}: pull origin main: Fast-forward
+[33m69e9452[m HEAD@{6}: commit: feat[CSS update]
+[33m595f884[m HEAD@{7}: pull origin main: Fast-forward
+[33mf84d526[m HEAD@{8}: pull origin main: Fast-forward
+[33mca52a82[m HEAD@{9}: pull origin main: Fast-forward
+[33ma7ae17a[m HEAD@{10}: pull origin main: Fast-forward
+[33m119f784[m HEAD@{11}: pull origin main: Fast-forward
+[33mcb760ff[m HEAD@{12}: commit: feat:[start]update
+[33m1d18344[m HEAD@{13}: pull origin main: Fast-forward
+[33mafd6b8a[m HEAD@{14}: commit: feat[StartPage]update,header remove
+[33m62c1555[m HEAD@{15}: pull origin main: Fast-forward
+[33m0147843[m HEAD@{16}: pull origin main: Fast-forward
+[33mb98a07f[m HEAD@{17}: commit: feat[StartPage]create
+[33m50c4084[m HEAD@{18}: pull origin main: Fast-forward
+[33md4f02b4[m HEAD@{19}: commit: feat[Startpage]create
+[33m789cf91[m HEAD@{20}: pull origin main: Fast-forward
+[33m9a17813[m HEAD@{21}: pull origin main: Fast-forward
+[33m3b01385[m HEAD@{22}: commit: feat[Cart]
+[33m0b744fb[m HEAD@{23}: commit (merge): resolve conflict commit
+[33m462d5cd[m HEAD@{24}: commit (merge): resolve conflict commit
+[33m609843b[m HEAD@{25}: commit: feat[Mypage]update
+[33mfb8b9bc[m HEAD@{26}: pull origin main: Fast-forward
+[33m2652c30[m HEAD@{27}: pull origin main: Fast-forward
+[33m6852d18[m HEAD@{28}: commit: feat[MyPageMain]update
+[33me886823[m HEAD@{29}: pull origin main: Fast-forward
+[33m9033ea4[m HEAD@{30}: pull origin main: Fast-forward
+[33mb04dc1f[m HEAD@{31}: pull origin main: Fast-forward
+[33md297f65[m HEAD@{32}: pull origin main: Fast-forward
+[33m30e85fc[m HEAD@{33}: commit: feat[Cart,Detail]update
+[33macd3604[m HEAD@{34}: pull origin main: Fast-forward
+[33m1ff00f8[m HEAD@{35}: commit: feat[listpage]update
+[33mf84aa68[m HEAD@{36}: pull origin main: Fast-forward
+[33m8ce7dec[m HEAD@{37}: pull origin main: Fast-forward
+[33m568f8d6[m HEAD@{38}: pull origin main: Fast-forward
+[33m42d1a6f[m HEAD@{39}: pull origin main: Fast-forward
+[33mdcf959b[m HEAD@{40}: pull origin main: Fast-forward
+[33m8015ae6[m HEAD@{41}: pull origin main: Fast-forward
+[33mae925b2[m HEAD@{42}: pull origin main: Fast-forward
+[33mcf90c58[m HEAD@{43}: commit: feat[Cart]update
+[33m12779cc[m HEAD@{44}: commit: feat[Cart]update
+[33m6b7cd14[m HEAD@{45}: commit: feat:[Cart]update
+[33mc426ec9[m HEAD@{46}: pull origin main: Fast-forward
+[33mdae7a5f[m HEAD@{47}: pull origin main: Fast-forward
+[33ma72f47b[m HEAD@{48}: commit: feat:[cart,detail]update
+[33m2701ecd[m HEAD@{49}: pull origin main: Fast-forward
+[33mcb1503b[m HEAD@{50}: pull origin main: Fast-forward
+[33m4d24cc8[m HEAD@{51}: pull origin main: Fast-forward
+[33maa67f18[m HEAD@{52}: commit: feat:CartPage
+[33mf371471[m HEAD@{53}: pull origin main: Fast-forward
+[33m8dae058[m HEAD@{54}: pull origin main: Fast-forward
+[33m8bdee54[m HEAD@{55}: commit: feat[Detail]
+[33mdcdb771[m HEAD@{56}: pull origin main: Fast-forward
+[33mea74432[m HEAD@{57}: pull origin main: Fast-forward
+[33mc89ce8a[m HEAD@{58}: pull origin main: Fast-forward
+[33m2435c8d[m HEAD@{59}: pull origin main: Fast-forward
+[33m6df494f[m HEAD@{60}: pull origin main: Fast-forward
+[33m0fa1622[m HEAD@{61}: commit: feat[LIstDetailpage]
+[33mb4dad4c[m HEAD@{62}: pull origin main: Fast-forward
+[33me093edf[m HEAD@{63}: commit: feat:[ListDetail] detail first commit
+[33m89bf9d7[m HEAD@{64}: reset: moving to HEAD
+[33m89bf9d7[m HEAD@{65}: pull origin main: Fast-forward
+[33m04add69[m HEAD@{66}: pull origin main: Fast-forward
+[33m92c2e22[m HEAD@{67}: reset: moving to HEAD
+[33m92c2e22[m HEAD@{68}: pull origin main: Fast-forward
+[33mb4d014c[m HEAD@{69}: reset: moving to HEAD
+[33mb4d014c[m HEAD@{70}: reset: moving to HEAD
+[33mb4d014c[m HEAD@{71}: reset: moving to HEAD
+[33mb4d014c[m HEAD@{72}: pull origin main: Fast-forward
+[33mdaf3f4a[m HEAD@{73}: pull origin main: Fast-forward
+[33me7abc61[m[33m ([m[1;32mmain[m[33m)[m HEAD@{74}: reset: moving to HEAD
+[33me7abc61[m[33m ([m[1;32mmain[m[33m)[m HEAD@{75}: checkout: moving from main to EunSeok
+[33me7abc61[m[33m ([m[1;32mmain[m[33m)[m HEAD@{76}: commit: list 연습
+[33m87f25a8[m HEAD@{77}: clone: from https://github.com/Live-Move/LM-React.git

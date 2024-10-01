@@ -17,7 +17,7 @@ function Startpage(props) {
         <Img01 src="https://img.freepik.com/free-photo/3d-model-of-house-room_23-2150761134.jpg?size=626&ext=jpg&ga=GA1.1.237269809.1725974705&semt=ais_hybrid" />
         <Div002>
           <span className="animated-text">가구의 모든 것 </span><br />
-          <AnimatedText >live&move<span style={{color:"black"}}>에서</span></AnimatedText>
+          <span className="animated-text">live&move에서</span>
           <span className="animated-text"> 쉽고 간편하게</span>
         </Div002>
         <Button001 variant="secondary"href="/main">

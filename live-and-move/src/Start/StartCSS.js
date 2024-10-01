@@ -34,10 +34,10 @@ export const Div001 = styled.div`
 `;
 
 const flicker = keyframes`
-  7%, 9%, 21%, 23%, 19%, 21%, 23%,  0%,4%, 56%, 100% {
+  100% {
     opacity: 1; /* 깜빡임 */
   }
-  0%, 22%, 24%,20%, 22%, 24%, 0%, 3%, 55% {
+  0%,{
     opacity: 0; /* 어두워지기 */
   }
 `;
@@ -59,7 +59,7 @@ export const AnimatedText = styled.span`
   // overflow: hidden;
   opacity: 0;
   animation: ${flicker} 6s ease-in-out infinite; /* 깜빡이는 애니메이션 */
-  animation-delay: 4s; /* 3초 후에 애니메이션 시작 */
+  animation-delay: 2s; /* 3초 후에 애니메이션 시작 */
 // color: #b37840;
   font-border: 20px solid #black;
 `;
