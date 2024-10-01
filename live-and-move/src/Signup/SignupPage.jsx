@@ -54,7 +54,7 @@ function SignupPage(props) {
               ? `첫 가입 ${100000} 포인트를 지급 해드렸습니다.`
               : "이미 존재하는 아이디 입니다",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
         });
         console.log(data.code); // ok , fail
 

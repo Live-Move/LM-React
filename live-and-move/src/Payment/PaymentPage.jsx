@@ -88,7 +88,8 @@ function PaymentPage(props) {
       endDate.setMonth(endDate.getMonth() + item.month); // item.month 만큼 개월을 더함
 
       return {
-        user_id: user.current.user_id, // 실제 사용자 ID
+        user_id: user.current.user_id, // 사용자 회원번호
+        loginId: user.current.loginId, // 사용자 ID
         product_id: item.product_id, // 상품 ID
         rental_fee: item.price, // 렌탈 요금
         start_date: startDate.toISOString().split("T")[0], // 시작일 (YYYY-MM-DD)

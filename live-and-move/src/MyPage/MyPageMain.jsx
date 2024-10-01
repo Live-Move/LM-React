@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   BodyContainer,
@@ -34,12 +34,8 @@ function MyPageMain(props) {
 
   // userInfo 상태 정의
   const [userInfo, setUserInfo] = useState(isSessionExists()); // 초기값은 빈 객체
-  console.log(userInfo)
-  
-
-
-
-
+  const isRenderInit = useRef(true);
+  // console.log(userInfo);
 
   ////////////////////////
   const [show, setShow] = useState(false); //택배가능지역
@@ -114,18 +110,50 @@ function MyPageMain(props) {
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
-    console.log("Current Scroll Y:", currentScrollY);
+    // console.log("Current Scroll Y:", currentScrollY);
     const position = window.scrollY;
-    console.log("Bar Position:", position);
+    // console.log("Bar Position:", position);
     setBarPosition(position);
   };
+
+  const getRentalInfo = async () => {
+    const response = await fetch("http://localhost:8080/api/rental/list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    });
+
+    const data = await response.json();
+    console.log("[ getRentalInfo ]");
+    console.log(data.data_rental);
+
+    const getData = data.data_rental.map(({ rental_id }, index) => {});
+    // {
+    //   id: 5,
+    //   src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR73qr3k_i1LIenLXL9iAogEQSP-L_YRljZug&s",
+    //   name: "가구5",
+    //   content: "의자5",
+    //   price: 40000,
+    //   path: "/",
+    // },
+  };
+
   useEffect(() => {
+    console.log("[ useEffect ]");
     window.addEventListener("scroll", handleScroll);
+
+    if (isRenderInit.current) {
+      isRenderInit.current = false;
+
+      getRentalInfo(); // 장바구니 정보 불러오기
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isRenderInit]);
 
   return (
     <Divfont>
@@ -141,7 +169,6 @@ function MyPageMain(props) {
                   Live and Move를 방문해주셔서 감사합니다.
                   <br />이 곳에서 회원님의 모든정보를 한눈에 확인할 수 있습니다.
                 </h6>
-                
               </div>
             </TopCol>
 
@@ -224,7 +251,7 @@ function MyPageMain(props) {
                     <div>아이디 : {userInfo.loginId}</div>
                     <span>포인트 : </span>
                     <span style={{ color: "#fedd06" }}>
-                    {userInfo.point.toLocaleString("ko-KR")} {" "}
+                      {userInfo.point.toLocaleString("ko-KR")}{" "}
                     </span>
                     <span>점</span>
                   </Div02>
@@ -282,7 +309,7 @@ function MyPageMain(props) {
           <hr />
           <h4>보유 포인트 : {userInfo.point.toLocaleString("ko-KR")}</h4>
           <hr />
-          <ButtonDel variant="secondary">비밀번호 변경</ButtonDel> {' '}
+          <ButtonDel variant="secondary">비밀번호 변경</ButtonDel>{" "}
           <ButtonDel variant="secondary">회원탈퇴</ButtonDel>
         </Offcanvas.Body>
       </Offcanvas>
