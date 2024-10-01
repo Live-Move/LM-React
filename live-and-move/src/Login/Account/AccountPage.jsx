@@ -5,6 +5,8 @@ import {
   MainContainer,
   AccountStateButton,
 } from "../CSS/LoginCss";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function AccountPage(props) {
   const [userName, setUserName] = useState("");
@@ -12,6 +14,7 @@ function AccountPage(props) {
   const [userAddress, setUserAddress] = useState("");
   const [userId, setUserId] = useState("");
   const [isFindId, setIsFindId] = useState(true);
+  const navigate = useNavigate();
 
   const FormDatasFindId = [
     {
@@ -91,8 +94,31 @@ function AccountPage(props) {
       .then((data) => {
         console.log(data.code); // ok , fail
         if (data.code === "ok") {
-          if (data.type === "ID") alert(`[ 회원 아이디 ] >> ${data.data}`);
-          else alert(`[ 회원 비밀번호 ] >> ${data.data}`);
+          if (data.type === "ID") {
+            Swal.fire({
+              title: `ID : ${data.data}`,
+              text: "live and move가 찾아준 회원님의 아이디입니다!",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: `[PW] : ${data.data}`,
+              text: `* 새로운 비밀번호로 재설정 하시겠습니까?`,
+              icon: "success",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                navigate("/PasswordResetPage");
+              } else {
+                navigate("/user/login");
+              }
+            });
+          }
+
+          // path: /PasswordResetPage
         }
       });
   };
