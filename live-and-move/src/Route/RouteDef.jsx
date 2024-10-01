@@ -13,6 +13,7 @@ import MyPageMain from "../MyPage/MyPageMain";
 import CompletionPaymentPage from "../Payment/CompletionPaymentPage";
 import PaymentPage from "../Payment/PaymentPage";
 import Startpage from "../Start/Startpage";
+import PasswordResetPage from "../Login/PasswordResetPage";
 
 const MainScreens = {
   SocialLogin: {
@@ -70,6 +71,10 @@ const MainScreens = {
   StartPage: {
     path: "/",
     element: <Startpage />,
+  },
+  PasswordResetPage: {
+    path: "/PasswordResetPage",
+    element: <PasswordResetPage />,
   },
 };
 
